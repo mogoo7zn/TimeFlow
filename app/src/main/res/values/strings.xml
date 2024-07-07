@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TimeFlow</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="name_dict">用户名</string>
+    <string name="email_address">EmailAddress</string>
+    <string name="profile_photo">ProfilePhoto</string>
+
+    <string name="update">云更新</string>
+
+    <string name="menu_setting">设置</string>
+    <string name="menu_profile">个人资料</string>
+    <string name="menu_slideshow">Slideshow</string>
+</resources>
