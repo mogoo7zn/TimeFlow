@@ -1,5 +1,6 @@
 package cn.edu.ustc.timeflow.bean;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Goal {
@@ -11,10 +12,9 @@ public class Goal {
      * 任务名称
      */
     String content;
-    /**
-     * 任务时间
-     */
-    String time;
+
+    LocalDateTime start;
+    LocalDateTime end;
     /**
      * 任务目的
      */
@@ -22,6 +22,7 @@ public class Goal {
 
     String measure;
 
+    int priority;
     List<Milestone> milestones;
     List<Action> actions;
 

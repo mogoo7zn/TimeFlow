@@ -14,10 +14,25 @@ public class Action {
     String location;
     String note;
     boolean remind;
+    /**
+     * 任务类型
+     *  1. 重复任务
+     *  2. 固定任务
+     */
+    String type;
     List<Restriction> restrictions;
+
 
     public Action(int goal_id, String name) {
         this.goal_id = goal_id;
         this.name = name;
     }
+    public int getGoal_id() {
+        return goal_id;
+    }
+    public int getId() {
+        return id;
+    }
+
+
 }

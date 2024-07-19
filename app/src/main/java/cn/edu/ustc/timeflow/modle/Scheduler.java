@@ -1,8 +1,13 @@
 package cn.edu.ustc.timeflow.modle;
 
-import cn.edu.ustc.timeflow.bean.TimeTable;
+import cn.edu.ustc.timeflow.util.TimeTable;
 
 public abstract class Scheduler {
-    public abstract void schedule();
+    Valuer valuer;
+
+    public Scheduler(Valuer valuer) {
+        this.valuer = valuer;
+    }
+
     public abstract TimeTable getTimeTable();
 }
