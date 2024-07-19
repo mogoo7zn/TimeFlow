@@ -15,4 +15,9 @@ public class Action {
     String note;
     boolean remind;
     List<Restriction> restrictions;
+
+    public Action(int goal_id, String name) {
+        this.goal_id = goal_id;
+        this.name = name;
+    }
 }
