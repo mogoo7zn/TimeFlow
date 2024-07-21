@@ -2,16 +2,18 @@ package com.example.timeflow
 
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
+import android.widget.RadioGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
 import com.example.timeflow.databinding.ActivityMainBinding
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +28,21 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
+
+        val radioGroup = binding.appBarMain.navBar;
+        radioGroup.setOnCheckedChangeListener( RadioGroup.OnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.nav_settings -> {
+                    //Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_settings)
+                }
+                R.id.plan_overview -> {
+                    //Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_profile)
+                }
+            }
+        }
+        )
 
         //This is the floating action button that is displayed on the bottom right of the screen.
         binding.appBarMain.fab.setOnClickListener { view ->

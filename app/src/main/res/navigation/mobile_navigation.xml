@@ -9,13 +9,21 @@
         android:id="@+id/nav_settings"
         android:name="com.example.timeflow.ui.settings.SettingFragment"
         android:label="@string/menu_setting"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_nav_settings_to_nav_profile"
+            app:destination="@id/nav_profile" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.timeflow.ui.gallery.GalleryFragment"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_nav_profile_to_nav_settings"
+            app:destination="@id/nav_settings" />
+    </fragment>
 
 <!--    <fragment-->
 <!--        android:id="@+id/nav_slideshow"-->
