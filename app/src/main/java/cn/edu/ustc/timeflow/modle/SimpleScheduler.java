@@ -1,5 +1,7 @@
 package cn.edu.ustc.timeflow.modle;
 
+import java.time.LocalDateTime;
+
 import cn.edu.ustc.timeflow.util.TimeTable;
 
 public class SimpleScheduler extends Scheduler {
@@ -10,8 +12,8 @@ public class SimpleScheduler extends Scheduler {
     }
 
     @Override
-    public TimeTable getTimeTable() {
-        // TODO implement here
+    public TimeTable getTimeTable(LocalDateTime start, LocalDateTime end) {
+
         return null;
     }
 }

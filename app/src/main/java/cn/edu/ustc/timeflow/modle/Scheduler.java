@@ -1,5 +1,7 @@
 package cn.edu.ustc.timeflow.modle;
 
+import java.time.LocalDateTime;
+
 import cn.edu.ustc.timeflow.util.TimeTable;
 
 public abstract class Scheduler {
@@ -9,5 +11,5 @@ public abstract class Scheduler {
         this.valuer = valuer;
     }
 
-    public abstract TimeTable getTimeTable();
+    public abstract TimeTable getTimeTable(LocalDateTime start, LocalDateTime end);
 }
