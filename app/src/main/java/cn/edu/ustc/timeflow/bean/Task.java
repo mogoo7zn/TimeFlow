@@ -9,7 +9,7 @@ public class Task {
     String content;
     int action_id;
     String evaluation;
-    Boolean is_finished;
+    Boolean finished;
     public Task(Action action, LocalDateTime start, LocalDateTime end){
         //tOdO: implement
     }

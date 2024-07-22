@@ -19,7 +19,21 @@ public class TaskData {
     public static List<Task> getTaskByTime(LocalDateTime start, LocalDateTime end){
         return List.of();
     }
-
+    public static Task getTaskByID(int id){
+        return null;
+    }
+    public static void addTask(Task task){
+    }
+    public static void deleteTask(Task task){
+    }
+    public static void deleteTask(int taskID){
+    }
+    public static void deleteTaskByActionID(int actionID){
+    }
+    public static void deleteTaskByGoalID(int goalID){
+    }
     public static void updateTask(Task task){
+    }
+    public static void updateTaskStatus(int taskID, boolean status){
     }
 }
