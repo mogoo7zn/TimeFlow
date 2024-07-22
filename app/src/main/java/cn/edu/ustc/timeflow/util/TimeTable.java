@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import cn.edu.ustc.timeflow.bean.Action;
 import cn.edu.ustc.timeflow.bean.Task;
 import cn.edu.ustc.timeflow.data.TaskData;
 import kotlin.Pair;
@@ -38,6 +39,8 @@ public class TimeTable {
         return tasks;
     }
     public List<Pair<LocalDateTime,LocalDateTime> > getAvailableTime(){
-        return List.of();
+        return null;
     }
+
+
 }

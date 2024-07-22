@@ -4,7 +4,12 @@ import cn.edu.ustc.timeflow.bean.Action;
 import cn.edu.ustc.timeflow.data.GoalData;
 
 public class SimpleValuer implements Valuer {
-    public double value(Action action) {
+    /**
+     * 这是一个简单的估值器，它根据action所属的goal的优先级来估值
+     * @param action action对象
+     * @return 返回action所属的goal的优先级
+     */
+    public double valuate(Action action) {
         return GoalData.getGoalPriorityByActionID(action.getId());
     }
 }
