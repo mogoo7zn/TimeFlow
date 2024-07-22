@@ -2,8 +2,6 @@ package cn.edu.ustc.timeflow.modle;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import cn.edu.ustc.timeflow.bean.Action;
@@ -11,6 +9,9 @@ import cn.edu.ustc.timeflow.bean.Task;
 import cn.edu.ustc.timeflow.data.ActionData;
 import cn.edu.ustc.timeflow.util.TimeTable;
 
+/**
+ * 这是一个简单的调度器，它会将所有固定任务加入时间表，然后对非固定任务进行排序，按照价值最高的顺序加入时间表
+ */
 public class SimpleScheduler extends Scheduler {
 
 
