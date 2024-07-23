@@ -1,4 +1,4 @@
-package com.example.timeflow.ui.settings
+package com.example.timeflow.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.timeflow.databinding.FragmentSettingsBinding
 
-class SettingFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
 
@@ -22,14 +22,14 @@ class SettingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val settingViewModel =
-            ViewModelProvider(this).get(SettingViewModel::class.java)
+        val homeViewModel =
+            ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textHome
-        settingViewModel.text.observe(viewLifecycleOwner) {
+        homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

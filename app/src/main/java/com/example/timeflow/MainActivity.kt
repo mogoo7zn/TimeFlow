@@ -3,7 +3,6 @@ package com.example.timeflow
 import android.os.Bundle
 import android.view.Menu
 import android.widget.RadioGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -28,13 +27,13 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-
+        //This is the bottom navigation bar that is displayed on the bottom of the screen.
         val radioGroup = binding.appBarMain.navBar;
         radioGroup.setOnCheckedChangeListener( RadioGroup.OnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.nav_settings -> {
+                R.id.nav_home -> {
                     //Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_settings)
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_home)
                 }
                 R.id.plan_overview -> {
                     //Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
@@ -50,6 +49,7 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fab).show()
         }
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_settings, R.id.nav_profile
+                R.id.nav_home, R.id.nav_profile
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
