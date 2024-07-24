@@ -10,6 +10,7 @@ import java.time.Duration;
 import java.util.List;
 
 import cn.edu.ustc.timeflow.util.DurationConverter;
+import cn.edu.ustc.timeflow.util.RestrictionConverter;
 
 /**
  * Represents an action associated with a task.
@@ -36,8 +37,8 @@ public class Action {
     @ColumnInfo(name = "action_finished")
     boolean finished;
 
-    //TODO: Deal with how to store restrictions
-    @Ignore
+    @ColumnInfo(name = "action_restrictions")
+    @TypeConverters(RestrictionConverter.class)
     List<Restriction> restrictions;
 
 
