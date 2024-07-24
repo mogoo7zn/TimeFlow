@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import cn.edu.ustc.timeflow.dao.DateTimeConverter
+import cn.edu.ustc.timeflow.util.DateTimeConverter
 import java.time.LocalDateTime
 
 @Entity (tableName = "test_data")

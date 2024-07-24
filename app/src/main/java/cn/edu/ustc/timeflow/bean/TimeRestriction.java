@@ -6,5 +6,4 @@ import java.time.LocalDateTime;
 public class TimeRestriction extends Restriction{
     LocalDateTime start;
     LocalDateTime end;
-
 }

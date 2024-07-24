@@ -1,22 +1,45 @@
 package cn.edu.ustc.timeflow.bean;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
 import java.time.Duration;
 import java.util.List;
+
+import cn.edu.ustc.timeflow.util.DurationConverter;
 
 /**
  * Represents an action associated with a task.
  */
+@Entity (tableName = "action")
 public class Action {
+    @PrimaryKey(autoGenerate = true)
     int id;
+    @ColumnInfo(name = "goal_id")
     int goal_id;
+    @ColumnInfo(name = "action_name")
     String name;
+    @ColumnInfo(name = "action_duration")
+    @TypeConverters(DurationConverter.class)
     Duration duration;
+    @ColumnInfo(name = "action_location")
     String location;
+    @ColumnInfo(name = "action_note")
     String note;
+    @ColumnInfo(name = "action_remind")
     boolean remind;
+    @ColumnInfo(name = "action_type")
     String type; // Task type: 1. Repeating, 2. Fixed
+    @ColumnInfo(name = "action_finished")
     boolean finished;
+
+    //TODO: Deal with how to store restrictions
+    @Ignore
     List<Restriction> restrictions;
+
 
     public Action(int goal_id, String name) {
         this.goal_id = goal_id;

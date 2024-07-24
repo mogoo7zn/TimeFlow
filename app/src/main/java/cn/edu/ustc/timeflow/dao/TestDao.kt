@@ -10,7 +10,6 @@ import cn.edu.ustc.timeflow.entity.TestData
 import java.time.LocalDateTime
 
 @Dao
-//@TypeConverters(DateTimeConverter::class)
 interface TestDao {
     @Query("SELECT * FROM test_data")
     fun getAll(): List<TestData>
@@ -21,14 +20,3 @@ interface TestDao {
 
 }
 
-public class DateTimeConverter {
-    @TypeConverter
-    fun toLocalDateTime(value: String?): LocalDateTime? {
-        return value?.let { LocalDateTime.parse(it) }
-    }
-
-    @TypeConverter
-    fun fromLocalDateTime(date: LocalDateTime?): String? {
-        return date?.toString()
-    }
-}

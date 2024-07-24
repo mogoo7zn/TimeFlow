@@ -1,4 +1,4 @@
-package cn.edu.ustc.timeflow.modle;
+package cn.edu.ustc.timeflow.model;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

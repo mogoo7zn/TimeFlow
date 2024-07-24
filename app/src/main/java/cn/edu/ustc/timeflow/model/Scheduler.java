@@ -1,6 +1,5 @@
-package cn.edu.ustc.timeflow.modle;
+package cn.edu.ustc.timeflow.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import cn.edu.ustc.timeflow.util.TimeTable;
