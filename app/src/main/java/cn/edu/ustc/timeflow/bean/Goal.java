@@ -47,6 +47,4 @@ public class Goal {
     @ColumnInfo(name = "goal_milestones")
     List<Milestone> milestones;
 
-
-
 }
