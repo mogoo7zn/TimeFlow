@@ -12,6 +12,7 @@ public class FixedTimeRestriction extends Restriction{
     List<Integer> days;
 
     public FixedTimeRestriction(String code){
+        days = new java.util.ArrayList<>();
         String[] codes=code.split(" ");
         start=LocalTime.parse(codes[0]);
         end=LocalTime.parse(codes[1]);
@@ -33,5 +34,38 @@ public class FixedTimeRestriction extends Restriction{
             res.append(" ").append(days.get(i));
         }
         return res.toString();
+    }
+
+
+    public LocalTime getStart() {
+        return start;
+    }
+
+    public void setStart(LocalTime start) {
+        this.start = start;
+    }
+
+    public LocalTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalTime end) {
+        this.end = end;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public List<Integer> getDays() {
+        return days;
+    }
+
+    public void setDays(List<Integer> days) {
+        this.days = days;
     }
 }

@@ -19,6 +19,18 @@ public class SimpleScheduler extends Scheduler {
         super(valuer);
     }
 
+    /**
+     * - 先安排固定时间任务（Fixed Model）
+     *     - 调出所有含Fixed（通过Type判断）的任务，检查时间范围是否符合其他限制，符合则加入。
+     * - 按照Value所得的优先级，依此向时间表填充任务
+     *     - 除去上述任务，按Value排序
+     *     - 取出当前空余时间
+     *     - 检查是否满足其他限制，并依此填充，优先填大于该任务duration的最短时段
+     * - 同步时间表至数据库
+     * @param start 开始时间
+     * @param end 结束时间
+     * @return 时间表
+     */
     @Override
     public TimeTable getTimeTable(LocalDateTime start, LocalDateTime end) {
         TimeTable timeTable = new TimeTable(start, end);
