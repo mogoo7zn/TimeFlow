@@ -6,7 +6,8 @@ import java.util.List;
 
 import cn.edu.ustc.timeflow.bean.Action;
 import cn.edu.ustc.timeflow.bean.Task;
-import cn.edu.ustc.timeflow.data.ActionData;
+import cn.edu.ustc.timeflow.dao.ActionDao;
+import cn.edu.ustc.timeflow.database.ActionDB;
 import cn.edu.ustc.timeflow.util.TimeTable;
 
 /**
@@ -33,8 +34,12 @@ public class SimpleScheduler extends Scheduler {
      */
     @Override
     public TimeTable getTimeTable(LocalDateTime start, LocalDateTime end) {
-        TimeTable timeTable = new TimeTable(start, end);
-        List<Action> actions = ActionData.getUnfinishedActions();
+        TimeTable timeTable = new TimeTable(context, start, end);
+
+        ActionDao actionDao = ActionDB.Companion.getDatabase(context).actionDao();
+
+        List<Action> actions = actionDao.getAll();
+
         //遍历所有任务，将固定任务加入时间表
         for (Action action : actions) {
             if(action.getType().equals("fixed")){

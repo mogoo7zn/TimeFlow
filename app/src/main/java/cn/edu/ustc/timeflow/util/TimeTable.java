@@ -1,15 +1,16 @@
 package cn.edu.ustc.timeflow.util;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import cn.edu.ustc.timeflow.bean.Action;
+
 import cn.edu.ustc.timeflow.bean.Task;
-import cn.edu.ustc.timeflow.data.TaskData;
+import cn.edu.ustc.timeflow.dao.TaskDao;
+import cn.edu.ustc.timeflow.database.TaskDB;
 import kotlin.Pair;
 
 /**
@@ -17,16 +18,22 @@ import kotlin.Pair;
  * Provides functionality to add tasks and retrieve available time slots.
  */
 public class TimeTable {
+    Context context;
     LocalDateTime start;
     LocalDateTime end;
     List<Task> tasks;
 
-    public TimeTable(@NonNull LocalDate date){
-        this(date.atStartOfDay(), date.atStartOfDay().plusDays(1));
+    public TimeTable(Context context, @NonNull LocalDate date){
+        this.context = context;
+        TaskDao taskDao = TaskDB.Companion.getDatabase(context).taskDao();
+        tasks = taskDao.getByTime(date.atStartOfDay(), date.atTime(23, 59, 59));
+        this.start = date.atStartOfDay();
+        this.end = date.atTime(23, 59, 59);
     }
 
-    public TimeTable(LocalDateTime start, LocalDateTime end){
-        tasks = TaskData.getTaskByTime(start, end);
+    public TimeTable(Context context, LocalDateTime start, LocalDateTime end){
+        TaskDao taskDao = TaskDB.Companion.getDatabase(context).taskDao();
+        tasks = taskDao.getByTime(start, end);
         this.start = start;
         this.end = end;
     }
@@ -48,9 +55,11 @@ public class TimeTable {
     }
 
     public void sync(){
+        TaskDao taskDao = TaskDB.Companion.getDatabase(context).taskDao();
+
         for (Task task : tasks) {
-            TaskData.updateTask(task);
+            taskDao.insert(task);
         }
-        tasks = TaskData.getTaskByTime(start, end);
+        tasks = taskDao.getByTime(start, end);
     }
 }
