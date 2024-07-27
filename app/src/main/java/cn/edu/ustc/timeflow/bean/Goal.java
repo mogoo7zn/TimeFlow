@@ -44,7 +44,8 @@ public class Goal {
     String measure;
     @ColumnInfo(name = "goal_priority")
     int priority;
-    @ColumnInfo(name = "goal_milestones")
+
+    @Ignore
     List<Milestone> milestones;
 
 }

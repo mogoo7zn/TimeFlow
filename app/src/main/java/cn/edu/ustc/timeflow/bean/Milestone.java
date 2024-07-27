@@ -33,4 +33,6 @@ public class Milestone {
     @TypeConverters(DateTimeConverter.class)
     LocalDateTime time;
 
+    @ColumnInfo(name = "milestone_finished")
+    boolean finished;
 }
