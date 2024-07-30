@@ -35,4 +35,44 @@ public class Milestone {
 
     @ColumnInfo(name = "milestone_finished")
     boolean finished;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getGoal_id() {
+        return goal_id;
+    }
+
+    public void setGoal_id(int goal_id) {
+        this.goal_id = goal_id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
 }

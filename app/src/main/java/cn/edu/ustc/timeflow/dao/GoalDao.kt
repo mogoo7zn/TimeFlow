@@ -5,8 +5,11 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import androidx.room.Update
 import cn.edu.ustc.timeflow.bean.Goal
+import cn.edu.ustc.timeflow.util.DateTimeConverter
 import java.time.LocalDateTime
 
 @Dao
@@ -30,9 +33,11 @@ interface GoalDao {
     fun getByPriority(priority: Int): List<Goal>
 
     @Query("SELECT * FROM goal WHERE goal_start >= :startDate")
+    @TypeConverters(DateTimeConverter::class)
     fun getByStartDate(startDate: LocalDateTime): List<Goal>
 
     @Query("SELECT * FROM goal WHERE goal_end <= :endDate")
+    @TypeConverters(DateTimeConverter::class)
     fun getByEndDate(endDate: LocalDateTime): List<Goal>
 
     @Query("DELETE FROM goal WHERE id = :id")

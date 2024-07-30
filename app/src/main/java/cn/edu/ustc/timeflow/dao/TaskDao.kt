@@ -5,8 +5,10 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.TypeConverters
 import androidx.room.Update
 import cn.edu.ustc.timeflow.bean.Task
+import cn.edu.ustc.timeflow.util.DateTimeConverter
 import java.time.LocalDateTime
 
 @Dao
@@ -30,12 +32,15 @@ interface TaskDao {
     fun getByActionId(actionId: Int): List<Task>
 
     @Query("SELECT * FROM task WHERE task_start >= :startDate AND task_end <= :endDate")
+    @TypeConverters(DateTimeConverter::class)
     fun getByTime(startDate: LocalDateTime, endDate: LocalDateTime): List<Task>
 
     @Query("SELECT * FROM task WHERE task_start >= :startDate")
+    @TypeConverters(DateTimeConverter::class)
     fun getByStartDate(startDate: LocalDateTime): List<Task>
 
     @Query("SELECT * FROM task WHERE task_end <= :endDate")
+    @TypeConverters(DateTimeConverter::class)
     fun getByEndDate(endDate: LocalDateTime): List<Task>
 
     @Query("SELECT * FROM task WHERE finished = :finished")

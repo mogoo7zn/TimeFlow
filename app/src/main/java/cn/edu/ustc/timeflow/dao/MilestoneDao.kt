@@ -5,8 +5,10 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.TypeConverters
 import androidx.room.Update
 import cn.edu.ustc.timeflow.bean.Milestone
+import cn.edu.ustc.timeflow.util.DateTimeConverter
 import java.time.LocalDateTime
 
 @Dao
@@ -30,6 +32,7 @@ interface MilestoneDao {
     fun getByGoalId(goalId: Int): List<Milestone>
 
     @Query("SELECT * FROM milestone WHERE milestone_time >= :time")
+    @TypeConverters(DateTimeConverter::class)
     fun getByTime(time: LocalDateTime): List<Milestone>
     @Query("DELETE FROM milestone WHERE id = :id")
     fun deleteById(id: Int)
