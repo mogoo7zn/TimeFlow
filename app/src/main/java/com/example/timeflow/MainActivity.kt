@@ -31,18 +31,18 @@ class MainActivity : AppCompatActivity() {
         val radioGroup = binding.appBarMain.navBar
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.nav_home -> {
+                R.id.fragment_home -> {
                     //Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_home)
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.fragment_home)
                 }
 
                 R.id.plan_overview -> {
                     //Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.plan_overview)
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.fragment_plan_overview)
                 }
 
                 R.id.deadline_list -> {
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.deadline_list)
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.fragment_deadline_list)
                 }
             }
         }
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.plan_overview, R.id.deadline_list
+                R.id.fragment_home, R.id.plan_overview, R.id.deadline_list
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
