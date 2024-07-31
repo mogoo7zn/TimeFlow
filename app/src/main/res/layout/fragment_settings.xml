@@ -10,7 +10,7 @@
         android:layout_gravity="top"
         android:id="@+id/head_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/menu_setting" />
 

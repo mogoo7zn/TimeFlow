@@ -28,20 +28,24 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarMain.toolbar)
 
         //This is the bottom navigation bar that is displayed on the bottom of the screen.
-        val radioGroup = binding.appBarMain.navBar;
-        radioGroup.setOnCheckedChangeListener( RadioGroup.OnCheckedChangeListener { _, checkedId ->
+        val radioGroup = binding.appBarMain.navBar
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.nav_home -> {
                     //Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
                     findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_home)
                 }
+
                 R.id.plan_overview -> {
                     //Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_profile)
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.plan_overview)
+                }
+
+                R.id.deadline_list -> {
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.deadline_list)
                 }
             }
         }
-        )
 
         //This is the floating action button that is displayed on the bottom right of the screen.
         binding.appBarMain.fab.setOnClickListener { view ->
@@ -57,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_profile
+                R.id.nav_home, R.id.plan_overview, R.id.deadline_list
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
