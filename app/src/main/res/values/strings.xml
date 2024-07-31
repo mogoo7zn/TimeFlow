@@ -9,6 +9,10 @@
 
     <string name="update">云更新</string>
 
+    <string name="home">主页</string>
+    <string name="overview">计划一览</string>
+    <string name="clock">催债单</string>
+
     <string name="menu_setting">设置</string>
     <string name="menu_profile">个人资料</string>
     <string name="menu_slideshow">Slideshow</string>

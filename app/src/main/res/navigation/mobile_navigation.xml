@@ -6,28 +6,28 @@
     app:startDestination="@+id/nav_home">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/fragment_home"
         android:name="com.example.timeflow.ui.home.HomeFragment"
-        android:label="@string/menu_setting"
-        tools:layout="@layout/fragment_settings" >
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_nav_settings_to_nav_profile"
-            app:destination="@id/nav_profile" />
+            android:id="@+id/action_fragment_home_to_fragment_plan_overview"
+            app:destination="@id/fragment_plan_overview" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_profile"
-        android:name="com.example.timeflow.ui.gallery.GalleryFragment"
-        android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" >
+        android:id="@+id/fragment_plan_overview"
+        android:name="com.example.timeflow.ui.overview.PlanOverviewFragment"
+        android:label="@string/overview"
+        tools:layout="@layout/fragment_plan_overview" >
         <action
-            android:id="@+id/action_nav_profile_to_nav_settings"
-            app:destination="@id/nav_home" />
+            android:id="@+id/action_fragment_plan_overview_to_fragment_deadline_list"
+            app:destination="@id/fragment_deadline_list" />
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_slideshow"-->
-<!--        android:name="com.example.timeflow.ui.slideshow.SlideshowFragment"-->
-<!--        android:label="@string/menu_slideshow"-->
-<!--        tools:layout="@layout/fragment_slideshow" />-->
+    <fragment
+        android:id="@+id/fragment_deadline_list"
+        android:name="com.example.timeflow.ui.clock.DeadlineFragment"
+        android:label="@string/clock"
+        tools:layout="@layout/fragment_deadline_list" />
 </navigation>
