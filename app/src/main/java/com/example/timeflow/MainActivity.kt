@@ -2,7 +2,6 @@ package com.example.timeflow
 
 import android.os.Bundle
 import android.view.Menu
-import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         val radioGroup = binding.appBarMain.navBar
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.fragment_home -> {
+                R.id.home -> {
                     //Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
                     findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.fragment_home)
                 }
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.fragment_home, R.id.plan_overview, R.id.deadline_list
+                R.id.home, R.id.plan_overview, R.id.deadline_list
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
