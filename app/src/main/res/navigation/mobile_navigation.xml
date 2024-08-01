@@ -30,4 +30,5 @@
         android:name="com.example.timeflow.ui.clock.DeadlineFragment"
         android:label="@string/clock"
         tools:layout="@layout/fragment_deadline_list" />
+
 </navigation>
