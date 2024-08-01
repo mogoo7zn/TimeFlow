@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TimeFlow"
 include(":app")
- 
+include(":WidgetLib")
