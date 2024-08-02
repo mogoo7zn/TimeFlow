@@ -6,4 +6,5 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.kapt) apply false
     id("androidx.room") version "2.6.1" apply false
     alias(libs.plugins.android.library) apply false
+
 }

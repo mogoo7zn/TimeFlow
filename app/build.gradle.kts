@@ -6,6 +6,7 @@ plugins {
     id("androidx.room") version "2.6.1" apply false
 }
 
+
 android {
     namespace = "com.example.timeflow"
     compileSdk = 34
@@ -61,6 +62,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation("com.haibin:calendarview:3.6.8")
+    //implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     val roomVersion = "2.6.1"
 
     implementation(libs.androidx.room.runtime)
