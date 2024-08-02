@@ -2,13 +2,13 @@ package cn.edu.ustc.timeflow.bean;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.time.Duration;
 import java.util.List;
 
+import cn.edu.ustc.timeflow.restriction.Restriction;
 import cn.edu.ustc.timeflow.util.DurationConverter;
 import cn.edu.ustc.timeflow.util.RestrictionConverter;
 

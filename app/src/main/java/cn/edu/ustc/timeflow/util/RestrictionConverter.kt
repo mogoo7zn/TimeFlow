@@ -1,10 +1,10 @@
 package cn.edu.ustc.timeflow.util
 
 import androidx.room.TypeConverter
-import cn.edu.ustc.timeflow.bean.FixedTimeRestriction
-import cn.edu.ustc.timeflow.bean.RepeatRestriction
-import cn.edu.ustc.timeflow.bean.Restriction
-import cn.edu.ustc.timeflow.bean.TimeRestriction
+import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
+import cn.edu.ustc.timeflow.restriction.RepeatRestriction
+import cn.edu.ustc.timeflow.restriction.Restriction
+import cn.edu.ustc.timeflow.restriction.TimeRestriction
 
 class RestrictionConverter {
     @TypeConverter

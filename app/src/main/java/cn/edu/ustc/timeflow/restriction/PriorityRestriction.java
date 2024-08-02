@@ -1,4 +1,4 @@
-package cn.edu.ustc.timeflow.bean;
+package cn.edu.ustc.timeflow.restriction;
 
 public class PriorityRestriction extends Restriction{
     int priority;

@@ -1,10 +1,10 @@
 package com.example.timeflow
 
 import cn.edu.ustc.timeflow.bean.Action
-import cn.edu.ustc.timeflow.bean.FixedTimeRestriction
-import cn.edu.ustc.timeflow.bean.RepeatRestriction
-import cn.edu.ustc.timeflow.bean.Restriction
-import cn.edu.ustc.timeflow.bean.TimeRestriction
+import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
+import cn.edu.ustc.timeflow.restriction.RepeatRestriction
+import cn.edu.ustc.timeflow.restriction.Restriction
+import cn.edu.ustc.timeflow.restriction.TimeRestriction
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -40,7 +40,8 @@ class FixedTimeRestrictionTest {
 
     @Test
     fun initializationWithCode() {
-        val restriction = FixedTimeRestriction("08:00 10:00 0 1 2 3")
+        val restriction =
+            FixedTimeRestriction("08:00 10:00 0 1 2 3")
         assertEquals(LocalTime.of(8, 0), restriction.start)
         assertEquals(LocalTime.of(10, 0), restriction.end)
         assertEquals(0, restriction.type)
@@ -52,7 +53,12 @@ class FixedTimeRestrictionTest {
         val start = LocalTime.of(8, 0)
         val end = LocalTime.of(10, 0)
         val days = listOf(1, 2, 3)
-        val restriction = FixedTimeRestriction(start, end, 0, days)
+        val restriction = FixedTimeRestriction(
+            start,
+            end,
+            0,
+            days
+        )
         assertEquals(start, restriction.start)
         assertEquals(end, restriction.end)
         assertEquals(0, restriction.type)
@@ -61,13 +67,15 @@ class FixedTimeRestrictionTest {
 
     @Test
     fun toStringRepresentation() {
-        val restriction = FixedTimeRestriction("08:00 10:00 0 1 2 3")
+        val restriction =
+            FixedTimeRestriction("08:00 10:00 0 1 2 3")
         assertEquals("FixedTimeRestriction:08:00 10:00 0 1 2 3", restriction.toString())
     }
 
     @Test
     fun emptyDaysList() {
-        val restriction = FixedTimeRestriction("08:00 10:00 0")
+        val restriction =
+            FixedTimeRestriction("08:00 10:00 0")
         assertTrue(restriction.days.isEmpty())
     }
 

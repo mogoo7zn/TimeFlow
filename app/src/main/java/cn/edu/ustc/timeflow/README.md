@@ -21,5 +21,35 @@
 > 示例；
 > 固定时间任务：在每年/月/周/日的某个时间点执行的任务，包含固定时间限制与时间限制（可选）。
 > 重复任务：重复执行的任务，包含重复限制和时间限制。
+ 
+## Dao
+## Database
+(略)
+
 ## model
++ `interface Valuer`: 评估一项行为的优先级 
++ `abstract Scheduler` : 根据传入的Valuer, 按照特定规则进行规划,产生一个对应时间的`TimeTable`
+
++ `SimpleValuer`: 一个简单的实现, 按目标重要性安排
++ `SimpleScheduler`: 
+
++ `DeadlineValuer`: 按结束时间来安排
+
+## util
+
++ `TimeTable`: 提供与TaskDB最直接的交互, 包括: 
+  - 任务时间展示
+  - 任务时间调整
+  - 任务完成度反馈
+  - 数据同步
+  - 如果可以, 反馈其他东西(优先级等限制的调整)
+  
+## Converter
+
+用于存入数据库时类型的转换.
+略.
+
+
+
+
 

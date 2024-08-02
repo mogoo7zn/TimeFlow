@@ -1,4 +1,4 @@
-package cn.edu.ustc.timeflow.bean;
+package cn.edu.ustc.timeflow.restriction;
 
 import androidx.annotation.NonNull;
 
