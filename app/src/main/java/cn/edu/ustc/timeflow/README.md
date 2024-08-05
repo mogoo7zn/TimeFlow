@@ -40,16 +40,52 @@
 + `TimeTable`: 提供与TaskDB最直接的交互, 包括: 
   - 任务时间展示
   - 任务时间调整
+  - 添加/删除任务
   - 任务完成度反馈
   - 数据同步
   - 如果可以, 反馈其他东西(优先级等限制的调整)
+  
+可以把他看成特定时间段的taskDB接口.
   
 ## Converter
 
 用于存入数据库时类型的转换.
 略.
 
+# 如何使用？
 
+
+## 数据存入
+直接调用数据库存。
+示例：
+```kotlin
+    val db = TestDB.getDatabase(appContext)
+    val dao = db.testDao()
+    val testData = TestData(para1,para2,para3)
+    dao.insert(testData)
+```
+
+## 数据查询
+
+示例:
+```kotlin
+    val db = TestDB.getDatabase(appContext)
+    val dao = db.testDao()
+    val testData = dao.getAll()
+```
+> 注: 用这种方式处理Goal/Action/Milestone的数据
+> `Task` 不推荐手动操作
+
+## 自动规划
+
+```kotlin
+import cn.edu.ustc.timeflow.model.Scheduler
+import cn.edu.ustc.timeflow.util.TimeTable
+
+val scheduler: Scheduler = new()//用具体某种Scheduler来初始化
+var timeTable: TimeTable = scheduler.getTimeTable(start,end)//获得规划后的TimeTable
+
+```
 
 
 
