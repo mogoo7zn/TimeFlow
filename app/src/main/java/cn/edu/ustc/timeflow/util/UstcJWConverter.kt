@@ -1,4 +1,5 @@
 package cn.edu.ustc.timeflow.util
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -32,9 +33,17 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
 
         var str1 = ""
         for (action in actions) {
-            str1 += action.toString() + "\n"
+            str1 += action.name + "\n"
         }
         Log.d(TAG, "parse: $str1")
+
+        //TODO: 测试用对话, 之后删除
+        val dialog = AlertDialog.Builder(context)
+            .setMessage("已获取数据: \n$str1")
+            .setCancelable(true)
+            .create()
+        dialog.show()
+
     }
 
     private fun parseCourses(html: String): List<Course> {
