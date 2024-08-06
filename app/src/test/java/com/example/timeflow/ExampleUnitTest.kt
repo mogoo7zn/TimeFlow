@@ -5,6 +5,7 @@ import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
 import cn.edu.ustc.timeflow.restriction.RepeatRestriction
 import cn.edu.ustc.timeflow.restriction.Restriction
 import cn.edu.ustc.timeflow.restriction.TimeRestriction
+import cn.edu.ustc.timeflow.util.ScheduleConverter
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -109,4 +110,132 @@ class FixedTimeRestrictionTest {
         }
     }
 }
+class ScheduleParseTest {
 
+    @Test
+    fun parseSingleWeekCourse() {
+        val code = "3周 3C102 :3(8,9) 叶盛"
+        val converter = ScheduleConverter(code)
+        val items = converter.parse()
+        assertEquals(1, items.size)
+
+        val item = items[0]
+        assertEquals(listOf(3), item.StartWeeks)
+        assertEquals(listOf(3), item.EndWeeks)
+        assertEquals("3C102", item.Room)
+        assertEquals("3(8,9)", item.Time)
+        assertEquals("叶盛", item.Teacher)
+        assertEquals(listOf(0), item.EvenOrOddWeeks)
+    }
+
+    @Test
+    fun parseEvenWeeksCourse() {
+        val code = "2~6(双)周 3C102 :3(3,4) 叶盛"
+        val converter = ScheduleConverter(code)
+        val items = converter.parse()
+        assertEquals(1, items.size)
+
+        val item = items[0]
+        assertEquals(listOf(2), item.StartWeeks)
+        assertEquals(listOf(6), item.EndWeeks)
+        assertEquals("3C102", item.Room)
+        assertEquals("3(3,4)", item.Time)
+        assertEquals("叶盛", item.Teacher)
+        assertEquals(listOf(2), item.EvenOrOddWeeks)
+    }
+
+    @Test
+    fun parseOddWeeksCourse() {
+        val code = "1~5(单)周 3C102 :2(1,2) 蔡振翼"
+        val converter = ScheduleConverter(code)
+        val items = converter.parse()
+        assertEquals(1, items.size)
+
+        val item = items[0]
+        assertEquals(listOf(1), item.StartWeeks)
+        assertEquals(listOf(5), item.EndWeeks)
+        assertEquals("3C102", item.Room)
+        assertEquals("2(1,2)", item.Time)
+        assertEquals("蔡振翼", item.Teacher)
+        assertEquals(listOf(1), item.EvenOrOddWeeks)
+    }
+
+    @Test
+    fun parseMultipleWeekRanges() {
+        val code = "2~4,6~18周 3C102 :1(3,4) 叶盛"
+        val converter = ScheduleConverter(code)
+        val items = converter.parse()
+        assertEquals(1, items.size)
+
+        val item = items[0]
+        assertEquals(listOf(2, 6), item.StartWeeks)
+        assertEquals(listOf(4, 18), item.EndWeeks)
+        assertEquals("3C102", item.Room)
+        assertEquals("1(3,4)", item.Time)
+        assertEquals("叶盛", item.Teacher)
+        assertEquals(listOf(0, 0), item.EvenOrOddWeeks)
+    }
+
+    @Test
+    fun parseComplexCourses() {
+        val code = """
+            2~4,6~18周 3C102 :1(3,4) 叶盛
+            2~6(双),7~18周 3C102 :3(3,4) 叶盛
+            3周 3C102 :3(8,9) 叶盛
+            2~3,6~18周 3C102 :5(3,4) 叶盛
+            5周 3C102 :6(3,4) 叶盛
+            6周 3C102 :7(3,4) 叶盛
+        """.trimIndent()
+        val converter = ScheduleConverter(code)
+        val items = converter.parse()
+        assertEquals(6, items.size)
+
+        val item1 = items[0]
+        assertEquals(listOf(2, 6), item1.StartWeeks)
+        assertEquals(listOf(4, 18), item1.EndWeeks)
+        assertEquals("3C102", item1.Room)
+        assertEquals("1(3,4)", item1.Time)
+        assertEquals("叶盛", item1.Teacher)
+        assertEquals(listOf(0, 0), item1.EvenOrOddWeeks)
+
+        val item2 = items[1]
+        assertEquals(listOf(2, 7), item2.StartWeeks)
+        assertEquals(listOf(6, 18), item2.EndWeeks)
+        assertEquals("3C102", item2.Room)
+        assertEquals("3(3,4)", item2.Time)
+        assertEquals("叶盛", item2.Teacher)
+        assertEquals(listOf(2, 0), item2.EvenOrOddWeeks)
+
+        val item3 = items[2]
+        assertEquals(listOf(3), item3.StartWeeks)
+        assertEquals(listOf(3), item3.EndWeeks)
+        assertEquals("3C102", item3.Room)
+        assertEquals("3(8,9)", item3.Time)
+        assertEquals("叶盛", item3.Teacher)
+        assertEquals(listOf(0), item3.EvenOrOddWeeks)
+
+        val item4 = items[3]
+        assertEquals(listOf(2, 6), item4.StartWeeks)
+        assertEquals(listOf(3, 18), item4.EndWeeks)
+        assertEquals("3C102", item4.Room)
+        assertEquals("5(3,4)", item4.Time)
+        assertEquals("叶盛", item4.Teacher)
+        assertEquals(listOf(0, 0), item4.EvenOrOddWeeks)
+
+        val item5 = items[4]
+        assertEquals(listOf(5), item5.StartWeeks)
+        assertEquals(listOf(5), item5.EndWeeks)
+        assertEquals("3C102", item5.Room)
+        assertEquals("6(3,4)", item5.Time)
+        assertEquals("叶盛", item5.Teacher)
+        assertEquals(listOf(0), item5.EvenOrOddWeeks)
+
+        val item6 = items[5]
+        assertEquals(listOf(6), item6.StartWeeks)
+        assertEquals(listOf(6), item6.EndWeeks)
+        assertEquals("3C102", item6.Room)
+        assertEquals("7(3,4)", item6.Time)
+        assertEquals("叶盛", item6.Teacher)
+        assertEquals(listOf(0), item6.EvenOrOddWeeks)
+    }
+}

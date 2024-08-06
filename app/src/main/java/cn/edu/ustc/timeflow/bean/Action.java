@@ -2,6 +2,7 @@ package cn.edu.ustc.timeflow.bean;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -41,10 +42,26 @@ public class Action {
     @TypeConverters(RestrictionConverter.class)
     List<Restriction> restrictions;
 
-
+    public Action() {
+        // Default constructor required for calls to DataSnapshot.getValue(Action.class)
+    }
+    @Ignore
     public Action(int goal_id, String name) {
         this.goal_id = goal_id;
         this.name = name;
+    }
+    @Ignore
+    public Action(int id, int goal_id, String name, Duration duration, String location, String note, boolean remind, String type, boolean finished, List<Restriction> restrictions) {
+        this.id = id;
+        this.goal_id = goal_id;
+        this.name = name;
+        this.duration = duration;
+        this.location = location;
+        this.note = note;
+        this.remind = remind;
+        this.type = type;
+        this.finished = finished;
+        this.restrictions = restrictions;
     }
 
     // Getters and setters
@@ -68,4 +85,20 @@ public class Action {
     public void setFinished(boolean finished) { this.finished = finished; }
     public List<Restriction> getRestrictions() { return restrictions; }
     public void setRestrictions(List<Restriction> restrictions) { this.restrictions = restrictions; }
+
+    @Override
+    public String toString() {
+        return "Action{" +
+                "id=" + id +
+                ", goal_id=" + goal_id +
+                ", name='" + name + '\'' +
+                ", duration=" + duration +
+                ", location='" + location + '\'' +
+                ", note='" + note + '\'' +
+                ", remind=" + remind +
+                ", type='" + type + '\'' +
+                ", finished=" + finished +
+                ", restrictions=" + new  RestrictionConverter().toString(restrictions) +
+                '}';
+    }
 }
