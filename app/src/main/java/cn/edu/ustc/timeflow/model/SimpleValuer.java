@@ -1,7 +1,10 @@
 package cn.edu.ustc.timeflow.model;
 
+import android.content.Context;
+
 import cn.edu.ustc.timeflow.bean.Action;
-import cn.edu.ustc.timeflow.data.GoalData;
+import cn.edu.ustc.timeflow.database.GoalDB;
+import cn.edu.ustc.timeflow.util.DBHelper;
 
 public class SimpleValuer implements Valuer {
     /**
@@ -9,7 +12,13 @@ public class SimpleValuer implements Valuer {
      * @param action
      * @return 返回action所属的goal的优先级
      */
+    Context context;
+    public SimpleValuer(Context context) {
+        this.context = context;
+    }
+
+    @Override
     public double valuate(Action action) {
-        return GoalData.getGoalPriorityByActionID(action.getId());
+        return new DBHelper(context).getGoalDao().getById(action.getGoal_id()).getPriority();
     }
 }

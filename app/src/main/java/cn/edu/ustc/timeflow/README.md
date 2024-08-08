@@ -69,8 +69,10 @@
 
 示例:
 ```kotlin
+import cn.edu.ustc.timeflow.model.DBHelper
     val db = TestDB.getDatabase(appContext)
     val dao = db.testDao()
+    
     val testData = dao.getAll()
 ```
 > 注: 用这种方式处理Goal/Action/Milestone的数据
@@ -84,7 +86,6 @@ import cn.edu.ustc.timeflow.util.TimeTable
 
 val scheduler: Scheduler = new()//用具体某种Scheduler来初始化
 var timeTable: TimeTable = scheduler.getTimeTable(start,end)//获得规划后的TimeTable
-
 ```
 
 
