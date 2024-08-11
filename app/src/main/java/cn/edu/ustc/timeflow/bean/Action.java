@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 import java.time.Duration;
 import java.util.List;
 
+import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction;
 import cn.edu.ustc.timeflow.restriction.Restriction;
 import cn.edu.ustc.timeflow.util.DurationConverter;
 import cn.edu.ustc.timeflow.util.RestrictionConverter;
@@ -24,6 +25,8 @@ public class Action {
     int goal_id;
     @ColumnInfo(name = "action_name")
     String name;
+
+    // 不能为null！！！
     @ColumnInfo(name = "action_duration")
     @TypeConverters(DurationConverter.class)
     Duration duration;
@@ -100,5 +103,23 @@ public class Action {
                 ", finished=" + finished +
                 ", restrictions=" + new  RestrictionConverter().toString(restrictions) +
                 '}';
+    }
+
+    public Restriction getRestriction(String type) {
+        for (Restriction restriction : restrictions) {
+            if (restriction.getClass().getSimpleName().equals(type)) {
+                return restriction;
+            }
+        }
+        return null;
+    }
+    public List<Restriction> getRestrictions(String type) {
+        List<Restriction> res = new java.util.ArrayList<>();
+        for (Restriction restriction : restrictions) {
+            if (restriction.getClass().getSimpleName().equals(type)) {
+                res.add(restriction);
+            }
+        }
+        return res;
     }
 }

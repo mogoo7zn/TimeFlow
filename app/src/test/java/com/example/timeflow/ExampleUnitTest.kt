@@ -67,10 +67,10 @@ class FixedTimeRestrictionTest {
     }
 
     @Test
-    fun toStringRepresentation() {
+    fun codingRepresentation() {
         val restriction =
             FixedTimeRestriction("08:00 10:00 0 1 2 3")
-        assertEquals("FixedTimeRestriction:08:00 10:00 0 1 2 3", restriction.toString())
+        assertEquals("FixedTimeRestriction:08:00 10:00 0 1 2 3", restriction.coding())
     }
 
     @Test

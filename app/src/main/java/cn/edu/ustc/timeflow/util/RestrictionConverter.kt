@@ -18,7 +18,7 @@ class RestrictionConverter {
     }
     @TypeConverter
     fun toString(value: List<Restriction>): String {
-        return value.joinToString(",") { it.toString() }
+        return value.joinToString(",") { it.coding() }
     }
 }
 
@@ -37,6 +37,7 @@ class RestrictionFactory(private var code: String) {
             "RepeatRestriction" -> {
                 RepeatRestriction(t[1])
             }
+
             else -> {
                 throw IllegalArgumentException("Unknown type")
             }

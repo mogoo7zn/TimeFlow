@@ -28,7 +28,7 @@ interface TaskDao {
     @Query("SELECT * FROM task WHERE id = :id")
     fun getById(id: Int): Task
 
-    @Query("SELECT * FROM task WHERE action_id = :actionId")
+    @Query("SELECT * FROM task WHERE action_id = :actionId ORDER BY task_end")
     fun getByActionId(actionId: Int): List<Task>
 
     @Query("SELECT * FROM task WHERE task_start >= :startDate AND task_end <= :endDate")
@@ -52,5 +52,8 @@ interface TaskDao {
     @Query("DELETE FROM task WHERE action_id = :actionId")
     fun deleteByActionId(actionId: Int)
 
+    @Query("SELECT COUNT(*) FROM task WHERE action_id = :actionId AND task_start >= :start AND task_end <= :end")
+    @TypeConverters(DateTimeConverter::class)
+    fun countByActionIdWithTime(actionId: Int, start: LocalDateTime, end: LocalDateTime): Int
 
 }
