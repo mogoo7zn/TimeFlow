@@ -9,7 +9,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
-        jcenter()
+//        jcenter()
     }
 }
 dependencyResolutionManagement {
@@ -17,10 +17,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter()
+//        jcenter()
     }
 }
 
 rootProject.name = "TimeFlow"
 include(":app")
 include(":WidgetLib")
+

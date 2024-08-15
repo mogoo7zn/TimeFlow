@@ -52,7 +52,6 @@ public class SimpleScheduler extends Scheduler {
         });
         //遍历非固定任务，将其加入时间表
         for (Action action : actions) {
-
             if(action.getType().equals("flexible")){
                 List<kotlin.Pair<LocalDateTime, LocalDateTime>> AvailableTime = timeTable.getAvailableTime();
                 //遍历时间表，找到第一个合适的时间段，将任务加入时间表
@@ -64,7 +63,6 @@ public class SimpleScheduler extends Scheduler {
                         timeTable.AddTask(task);
                         break;
                     }
-
                 }
             }
         }

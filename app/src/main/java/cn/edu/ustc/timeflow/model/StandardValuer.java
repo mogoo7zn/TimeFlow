@@ -14,22 +14,18 @@ import cn.edu.ustc.timeflow.dao.TaskDao;
 import cn.edu.ustc.timeflow.restriction.RepeatRestriction;
 import cn.edu.ustc.timeflow.restriction.TimeRestriction;
 import cn.edu.ustc.timeflow.util.DBHelper;
-
-///其中权重运算法则包含两条，即绝对紧迫性和相对紧迫性。前者代表和时间节点实际间隔长短，是确定值；后者有两种情况，一是剩余任务量分配给指定剩余时间造成的紧迫性，二是未规划任务虽时间积累而变的紧迫性（比如体育锻炼，其紧迫性会与上一次体育锻炼的时间间隔变长而随之变大），有默认的紧迫性指标（比如一周五次）
-//
-//设任务量 W ∝ 任务时间 T ，绝对紧迫性为Ia，相对紧迫性为Ir，离ddl时间dt，绝对紧迫比重wa(absolute)，相对紧迫比重wr(relative)，其默认紧迫指标wrb(base)
-//
-//有公式
-//
-//$$
-//t_k = la_k+lr_k=\sum_{i=1}^n wa_k \cdot W_k + wr_k \cdot W_k
-//$$
-//
-//其中
-//
-//$$
-//wa_k =\frac 1 {dt^α}
-//$$
+/**
+    * 标准估值器
+ * 估值器用于估算任务的紧迫性
+ * 紧迫性=绝对紧迫性+相对紧迫性
+ * 绝对紧迫性=1/剩余时间^alpha
+ * 相对紧迫性=工作量紧迫性+间隔紧迫性+重复紧迫性
+ * 工作量紧迫性=剩余任务量*任务时间/剩余时间
+ * 间隔紧迫性=当前时间-上次任务时间
+ * 重复紧迫性=剩余次数/间隔时间
+ * alpha为紧迫性权重
+ * @see Valuer
+ */
 public class StandardValuer implements Valuer{
     /**
      * 紧迫性权重

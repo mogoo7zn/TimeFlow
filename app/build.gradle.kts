@@ -63,7 +63,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation("com.haibin:calendarview:3.6.8")
+//    implementation("com.haibin:calendarview:3.6.8")
     //implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     val roomVersion = "2.6.1"
 
