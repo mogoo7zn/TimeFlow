@@ -22,6 +22,8 @@ public class Task {
     @ColumnInfo(name = "task_content")
     String content;
 
+    int importance;
+
     @ColumnInfo(name = "action_id")
     int action_id;
     @ColumnInfo(name = "evaluation")
@@ -90,5 +92,13 @@ public class Task {
 
     public void setFinished(Boolean finished) {
         this.finished = finished;
+    }
+
+    public int getImportance() {
+        return importance;
+    }
+
+    public void setImportance(int importance) {
+        this.importance = importance;
     }
 }

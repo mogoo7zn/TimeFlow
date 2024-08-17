@@ -3,6 +3,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+
     <string name="name_dict">用户名</string>
     <string name="email_address">EmailAddress</string>
     <string name="profile_photo">ProfilePhoto</string>
@@ -16,4 +17,171 @@
     <string name="menu_setting">设置</string>
     <string name="menu_profile">个人资料</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="week">星期</string>
+    <string name="hour">时</string>
+    <string name="min">分</string>
+
+    <string name="schedule">日程</string>
+    <string name="schedule_day">日程-日</string>
+    <string name="schedule_week">日程-周</string>
+    <string name="schedule_month">日程-月</string>
+    <string name="deadline">计时</string>
+    <string name="todolist">任务</string>
+
+    <string name="time0">00:00</string>
+    <string name="time2">02:00</string>
+    <string name="time4">04:00</string>
+    <string name="time6">06:00</string>
+    <string name="time8">08:00</string>
+    <string name="time10">10:00</string>
+    <string name="time12">12:00</string>
+    <string name="time14">14:00</string>
+    <string name="time16">16:00</string>
+    <string name="time18">18:00</string>
+    <string name="time20">20:00</string>
+    <string name="time22">22:00</string>
+    <string name="time24">24:00</string>
+
+    <string name="sun">Sun</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+
+    <string name="left">还有</string>
+    <string name="past">已过</string>
+    <string name="days">天</string>
+
+    <string name="courses">课程</string>
+    <string name="homework">作业</string>
+    <string name="exercise">锻炼</string>
+    <string name="reading">阅读</string>
+    <string name="task">事件</string>
+
+    <string name="add_event">加入事件</string>
+    <string name="title">事件名称</string>
+    <string name="title_hint">事件名称（不超过15个字）</string>
+    <string name="type">类型</string>
+    <string name="date">日期</string>
+    <string name="time">时间</string>
+    <string name="time_start">开始时间</string>
+    <string name="time_end">结束时间</string>
+    <string name="importance">重要性</string>
+    <string name="is_repeat">是否重复</string>
+    <string name="period">周期</string>
+    <string name="place">地点</string>
+    <string name="place_hint">地点（不超过10个字）</string>
+    <string name="position">教室</string>
+    <string name="position_hint">教室（不超过10个字）</string>
+    <string name="description">描述</string>
+    <string name="description_hint">描述（不超过100个字）</string>
+    <string name="repetitive">是否重复</string>
+    <string name="cycle">重复周期</string>
+    <string name="save">保存</string>
+    <string name="teacher">老师</string>
+    <string name="teacher_hint">老师（不超过100个字）</string>
+    <string name="workload">预计工作量（小时）</string>
+    <string name="workload_hint">预计工作量（小于1000小时）</string>
+    <string name="add_course">添加课程</string>
+    <string name="add_task">添加事件</string>
+    <string name="add_todo">添加待办</string>
+    <string name="import_courses">导入课程</string>
+
+    <string name="OK">确定</string>
+    <string name="commit">提交</string>
+    <string name="cancel">取消</string>
+    <string name="quit">退出登录</string>
+    <string name="sign_in">登录</string>
+    <string name="back">返回</string>
+
+    <string name="move">日程转移</string>
+    <string name="save_template">保存模板</string>
+    <string name="share">分享日程</string>
+    <string name="remind_book">借阅提醒</string>
+    <string name="school_bus">校车时刻</string>
+    <string name="setting">设置</string>
+    <string name="about">关于</string>
+    <string name="help">帮助</string>
+
+    <string name="personal_info">个人信息</string>
+    <string name="profile_check">登录统一身份认证</string>
+    <string name="check_update">检查更新</string>
+    <string name="auto_update">自动更新</string>
+    <string name="permission_manager">权限管理</string>
+    <string name="reminder_manager">通知管理</string>
+    <string name="personalization">个性化</string>
+    <string name="focus">禅</string>
+    <string name="profile_check_summary">开启后课表可自动导入</string>
+
+    <string name="least_important">重要</string>
+    <string name="important">较重要</string>
+    <string name="most_important">很重要</string>
+
+    <string name="name">姓名</string>
+    <string name="ID">学号</string>
+    <string name="current_version">当前版本</string>
+
+    <string name="version">最新版本</string>
+
+    <string name="delete_title">确认删除？</string>
+    <string name="delete_text">选择无法撤销,请慎重。</string>
+    <string name="delete">删除</string>
+
+    <string name="password">密码</string>
+
+    <string name="start">开始</string>
+    <string name="exit">退出</string>
+    <string name="stop">暂停</string>
+    <string name="resume">返回</string>
+    <string name="yes">确定</string>
+    <string name="cont"> 继续</string>
+
+    <string-array name="task_type_array_name">
+        <item>作业</item>
+        <item>阅读</item>
+    </string-array>
+
+    <string-array name="todo_type_array_name">
+        <item>锻炼</item>
+        <item>DDL</item>
+    </string-array>
+
+    <item name="Tag_id" type="id" />
+    <item name="Tag_table_name" type="id" />
+
+    <item name="Tag_todo" type="id" />
+    <item name="Tag_month_list" type="id" />
+
+    <item name="Tag_Homework" type="id" />
+    <item name="Tag_Reading" type="id" />
+    <item name="Tag_Fitting" type="id" />
+    <item name="Tag_DDL" type="id" />
+
+    <string-array name="importance_array_name">
+        <item>很重要</item>
+        <item>重要</item>
+        <item>一般</item>
+    </string-array>
+
+    <string-array name="yes_or_no">
+        <item>否</item>
+        <item>是</item>
+    </string-array>
+
+    <string-array name="period_array_name">
+        <item>日</item>
+        <item>周</item>
+        <item>月</item>
+        <item>年</item>
+    </string-array>
+
+    <string-array name="DDL_or_task">
+        <item>DDL</item>
+        <item>任务</item>
+    </string-array>
 </resources>

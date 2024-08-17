@@ -1,12 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="blue_500">#FF2196F3</color>
+
+
+    <color name="blue">#FF2C7AEE</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="blue_200">#FF64B5F6</color>
-    <color name="blue_500">#FF2196F3</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="back_white">#E5FFFFFF</color>
+
+    <color name="blue_200">#FF96BBF8</color>
+    <color name="blue_700">#FF0C64F6</color>
+
+    <color name="shadow">#20000000</color>
+
+    <color name="button">#E50C64F6</color>
+
+    <color name="text_deep">#E5000000</color>
+    <color name="normal">#99000000</color>
+    <color name="text_light">#FF9E9E9E</color>
+
+    <color name="today_bg">#7FF3F3F3</color>
+    <color name="calendar_div">#08000000</color>
+    <color name="today_cir">#FF96BBF8</color>
+    <color name="text_week_day">#FF767676</color>
+
+    <color name="div_line">#FFEEEEEE</color>
+    <color name="time_line">#339E9E9E</color>
+    <color name="time_label_line">#FFDCDCDC</color>
+
+    <color name="current_time_line">#FFF8B9BE</color>
+    <color name="current_time_label_bg">#FFF78D94</color>
+    <color name="current_time_label_line">#FFD81D11</color>
+
+    <color name="deadline">#FFE50012</color>
+    <color name="deadline_label">#E5D81D11</color>
+    <color name="future_deadline_label_bg">#FFF1657F</color>
+
+    <color name="blue_label_bg_light">#FFFDFEFF</color>
+    <color name="blue_label_bg">#FFECF2FE</color>
+    <color name="blue_label_bg_deep">#FFD4E3FC</color>
+    <color name="blue_label_line">#33699EF5</color>
+    <color name="blue_label_text">#FF2B7CF0</color>
+
+    <color name="yellow_label_bg_light">#FFFFFBF7</color>
+    <color name="yellow_label_bg">#FFFEF3E6</color>
+    <color name="yellow_label_bg_deep">#FFF9E0C7</color>
+    <color name="yellow_label_line">#33F2995F</color>
+    <color name="yellow_label_text">#FFED7B2F</color>
+
+    <color name="green_label_bg_light">#FFF3FFFF</color>
+    <color name="green_label_bg">#FFE8F8F2</color>
+    <color name="green_label_bg_deep">#FFBCEBDC</color>
+    <color name="green_label_line">#3348C7C9</color>
+    <color name="green_label_text">#FF00A870</color>
 </resources>
