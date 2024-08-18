@@ -62,12 +62,19 @@ public class DayListFragment extends Fragment {
     {
         View schedule_view=inflater.inflate(R.layout.fragment_day_list_item, container, false);
 
-        long starting_time=schedule.getStart().toEpochSecond(ZoneOffset.of("+8"));
-        long ending_time=schedule.getEnd().toEpochSecond(ZoneOffset.of("+8"));
+       // Convert start and end times to milliseconds, adjusted for GMT+8 timezone
+        long starting_time = schedule.getStart().toEpochSecond(ZoneOffset.of("+8")) * 1000;
+        long ending_time = schedule.getEnd().toEpochSecond(ZoneOffset.of("+8")) * 1000;
 
-        double height=1.01*(Math.abs(ending_time-starting_time))/72000;
-        long day_start_temp=((starting_time+8*3600*1000)/(86400*1000))*(86400*1000)-8*3600*1000;
-        double pos=1.01*(Math.min(starting_time,ending_time)-day_start_temp)/72000+6.5;//6是line到layout顶部的高度
+        // Calculate the height of the schedule item based on its duration
+        double height = 1.01 * (Math.abs(ending_time - starting_time)) / 72000;
+
+        // Calculate the start of the day in milliseconds, adjusted for GMT+8 timezone
+        long day_start_temp = ((starting_time + 8 * 3600 * 1000) / (86400 * 1000)) * (86400 * 1000) - 8 * 3600 * 1000;
+
+        // Calculate the position of the schedule item in the layout
+        // 6.5 is an offset to account for the layout's top margin
+        double pos = 1.01 * (Math.min(starting_time, ending_time) - day_start_temp) / 72000 + 6.5;
 
         CardView card=(CardView)schedule_view.findViewById(R.id.lesson_card_day);
         card.setOnLongClickListener(new View.OnLongClickListener()

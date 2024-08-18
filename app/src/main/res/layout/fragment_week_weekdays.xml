@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_sun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sun"
+        android:textColor="@color/text_week_day"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/text_mon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_mon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mon"
+        android:textColor="@color/text_week_day"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/text_sun"
+        app:layout_constraintEnd_toStartOf="@id/text_tue"
+        app:layout_constraintTop_toTopOf="@id/text_sun"
+        app:layout_constraintBottom_toBottomOf="@id/text_sun"
+        />
+
+    <TextView
+        android:id="@+id/text_tue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tue"
+        android:textColor="@color/text_week_day"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/text_mon"
+        app:layout_constraintEnd_toStartOf="@id/text_wed"
+        app:layout_constraintTop_toTopOf="@id/text_sun"
+        app:layout_constraintBottom_toBottomOf="@id/text_sun" />
+
+    <TextView
+        android:id="@+id/text_wed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wed"
+        android:textColor="@color/text_week_day"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/text_tue"
+        app:layout_constraintEnd_toStartOf="@id/text_thu"
+        app:layout_constraintTop_toTopOf="@id/text_sun"
+        app:layout_constraintBottom_toBottomOf="@id/text_sun" />
+
+    <TextView
+        android:id="@+id/text_thu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/thu"
+        android:textColor="@color/text_week_day"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/text_wed"
+        app:layout_constraintEnd_toStartOf="@id/text_fri"
+        app:layout_constraintTop_toTopOf="@id/text_sun"
+        app:layout_constraintBottom_toBottomOf="@id/text_sun" />
+<!--android:textStyle="bold"-->
+    <TextView
+        android:id="@+id/text_fri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fri"
+        android:textColor="@color/text_week_day"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/text_thu"
+        app:layout_constraintEnd_toStartOf="@id/text_sat"
+        app:layout_constraintTop_toTopOf="@id/text_sun"
+        app:layout_constraintBottom_toBottomOf="@id/text_sun" />
+
+    <TextView
+        android:id="@+id/text_sat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sat"
+        android:textColor="@color/text_week_day"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@id/text_fri"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_sun"
+        app:layout_constraintBottom_toBottomOf="@id/text_sun" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

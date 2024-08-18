@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_home"
-        android:name="cn.edu.ustc.ustcschedule.fragment.DayScheduleFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.WeekScheduleFragment"
 
         android:label="@string/home"
         tools:layout="@layout/fragment_home" >
