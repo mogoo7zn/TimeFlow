@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_ustcschedule"
+    app:startDestination="@id/dayScheduleFragment">
+
+    <fragment
+        android:id="@+id/dayScheduleFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.DayScheduleFragment"
+        android:label="DayScheduleFragment" >
+        <action
+            android:id="@+id/action_dayScheduleFragment_to_monthScheduleFragment"
+            app:destination="@id/monthScheduleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/weekScheduleFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.WeekScheduleFragment"
+        android:label="WeekScheduleFragment" >
+        <action
+            android:id="@+id/action_weekScheduleFragment_to_dayScheduleFragment"
+            app:destination="@id/dayScheduleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/monthScheduleFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.MonthScheduleFragment"
+        android:label="MonthScheduleFragment" >
+        <action
+            android:id="@+id/action_monthScheduleFragment_to_weekScheduleFragment"
+            app:destination="@id/weekScheduleFragment" />
+    </fragment>
+</navigation>

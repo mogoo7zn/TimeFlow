@@ -2,7 +2,7 @@
 <resources>
 
     <color name="blue_500">#FF2196F3</color>
-
+    <color name="theme_color">#aa1176f3</color>
 
     <color name="blue">#FF2C7AEE</color>
     <color name="purple_200">#FFBB86FC</color>

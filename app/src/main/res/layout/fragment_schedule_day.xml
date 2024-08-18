@@ -4,32 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:showIn="@layout/app_bar_main"
+    android:orientation="vertical"
+    >
 
     <include
         layout="@layout/top_fragment" />
 
-    <ImageButton
-        android:id="@+id/day_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_day_mode"
-        android:backgroundTint="@color/button"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toTopOf="@id/side_bar"
-        app:layout_constraintBottom_toBottomOf="@id/side_bar"
-        app:layout_constraintEnd_toStartOf="@id/side_bar"  />
 
-    <ImageButton
-        android:id="@+id/add_events"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_add"
-        android:backgroundTint="@color/button"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@id/scroll"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
         android:id="@+id/filter"
@@ -37,17 +19,17 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ic_filter"
         android:backgroundTint="@color/button"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintTop_toTopOf="@id/add_events"
-        app:layout_constraintBottom_toBottomOf="@id/add_events"
-        app:layout_constraintEnd_toStartOf="@id/add_events" />
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/scroll"
+        app:layout_constraintEnd_toEndOf="parent"  />
 
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="24dp"
 
         android:background="@color/back_white"

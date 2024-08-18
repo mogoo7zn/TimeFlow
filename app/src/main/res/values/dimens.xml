@@ -26,4 +26,8 @@
     <dimen name="current_time_label_padding_right">4dp</dimen>
 
     <dimen name="days_label_padding">2dp</dimen>
+
+    <dimen name="action_bar_size" >56dp</dimen>
+
+    <dimen name="button_nav_size">54dp</dimen>
 </resources>

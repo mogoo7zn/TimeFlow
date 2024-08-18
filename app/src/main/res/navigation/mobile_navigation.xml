@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/fragment_home">
+    app:startDestination="@+id/dayScheduleFragment">
 
     <fragment
         android:id="@+id/fragment_home"
-        android:name="cn.edu.ustc.ustcschedule.fragment.MonthScheduleFragment"
+        android:name="com.example.timeflow.ui.home.HomeFragment"
 
         android:label="@string/home"
         tools:layout="@layout/fragment_home" >
@@ -32,6 +32,33 @@
         android:label="@string/clock"
         tools:layout="@layout/fragment_deadline_list" />
 
+    <fragment
+        android:id="@+id/dayScheduleFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.DayScheduleFragment"
+        android:label="@string/schedule_day"
+        >
+        <action
+            android:id="@+id/action_dayScheduleFragment_to_monthScheduleFragment"
+            app:destination="@id/monthScheduleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/weekScheduleFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.WeekScheduleFragment"
+        android:label="@string/schedule_week" >
+        <action
+            android:id="@+id/action_weekScheduleFragment_to_dayScheduleFragment"
+            app:destination="@id/dayScheduleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/monthScheduleFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.MonthScheduleFragment"
+        android:label="@string/schedule_month" >
+        <action
+            android:id="@+id/action_monthScheduleFragment_to_weekScheduleFragment"
+            app:destination="@id/weekScheduleFragment" />
+    </fragment>
 
 
 </navigation>
