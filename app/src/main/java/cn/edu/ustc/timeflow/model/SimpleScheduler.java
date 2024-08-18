@@ -43,7 +43,7 @@ public class SimpleScheduler extends Scheduler {
         //遍历所有任务，将固定任务加入时间表
         for (Action action : actions) {
             if(action.getType().equals("fixed")){
-                timeTable.AddTask(new Task(action, start, end));
+                timeTable.addTask(new Task(action, start, end));
             }
         }
         //对非固定任务进行排序
@@ -60,7 +60,7 @@ public class SimpleScheduler extends Scheduler {
                     LocalDateTime end1 = pair.getSecond();
                     if(Duration.between(start1, end1).toMinutes() > action.getDuration().toMinutes()){
                         Task task = new Task(action, start1, start1.plus(action.getDuration()));
-                        timeTable.AddTask(task);
+                        timeTable.addTask(task);
                         break;
                     }
                 }

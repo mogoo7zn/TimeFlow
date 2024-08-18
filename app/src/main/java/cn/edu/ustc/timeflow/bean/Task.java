@@ -34,6 +34,15 @@ public class Task {
     public Task(Action action, LocalDateTime start, LocalDateTime end){
         //tOdO: implement
     }
+    public Task(LocalDateTime start, LocalDateTime end, String content, int importance,String evaluation, Boolean finished, int action_id ) {
+        this.start = start;
+        this.end = end;
+        this.content = content;
+        this.importance = importance;
+        this.action_id = action_id;
+        this.evaluation = evaluation;
+        this.finished = finished;
+    }
     public Task(){
 
     }

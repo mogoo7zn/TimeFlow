@@ -52,6 +52,9 @@ interface TaskDao {
     @Query("DELETE FROM task WHERE action_id = :actionId")
     fun deleteByActionId(actionId: Int)
 
+    @Query("DELETE FROM task")
+    fun deleteAll()
+
     @Query("SELECT COUNT(*) FROM task WHERE action_id = :actionId AND task_start >= :start AND task_end <= :end")
     @TypeConverters(DateTimeConverter::class)
     fun countByActionIdWithTime(actionId: Int, start: LocalDateTime, end: LocalDateTime): Int

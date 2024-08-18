@@ -3,11 +3,13 @@ package cn.edu.ustc.ustcschedule.fragment;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.example.timeflow.R;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +30,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import cn.edu.ustc.timeflow.bean.Task;
+import cn.edu.ustc.timeflow.util.DBHelper;
+import cn.edu.ustc.timeflow.util.TimeTable;
 import cn.edu.ustc.ustcschedule.dialog.DeleteDialog;
 
 public class DayListFragment extends Fragment {
@@ -48,15 +53,29 @@ public class DayListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ca.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 
-
-
         View view= inflater.inflate(R.layout.fragment_day_list, container, false);
-        ConstraintLayout layout=(ConstraintLayout)view.findViewById(R.id.day_list_layout);
+        ConstraintLayout layout= view.findViewById(R.id.day_list_layout);
         magnify_ratio=(float)(layout.getLayoutParams()).height/1226.0;
 
+        //TODO: For Testing, remove later
+        // Get the tasks for the current day
+        DBHelper dbHelper = new DBHelper(getContext());
+        dbHelper.generateTestTaskData(true);
+
+        TimeTable timeTable = new TimeTable(getContext(), LocalDate.now());
+        showData(inflater, container, timeTable, layout);
 
         return view;
     }
+
+    private void showData(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, TimeTable timeTable, ConstraintLayout layout) {
+        java.util.List<Task> tasks = timeTable.getTasks();
+        Log.d("TimeTable", "showData: " + tasks.size());
+        for (Task task : tasks) {
+            add_schedule(layout, task, inflater, container);
+        }
+    }
+
 
     public void add_schedule(ConstraintLayout layout, Task schedule, LayoutInflater inflater, ViewGroup container)
     {
