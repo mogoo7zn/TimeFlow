@@ -24,6 +24,7 @@ abstract class ActionDB : RoomDatabase() {
                     "action_database"
                 )
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 return instance

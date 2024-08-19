@@ -21,6 +21,7 @@ abstract class GoalDB : RoomDatabase() {
                     "goal_database"
                 )
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 return instance

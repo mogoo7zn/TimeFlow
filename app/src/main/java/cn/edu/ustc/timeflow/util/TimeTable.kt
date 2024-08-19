@@ -23,18 +23,23 @@ class TimeTable {
         this.start = date.atStartOfDay()
         this.end = date.atTime(23, 59, 59)
 
-        //fixme: 无法从数据库中获取数据
-        CoroutineScope(Dispatchers.Main).launch {
-            Log.d("TimeTable", "Enter: [当前线程为：${Thread.currentThread().name}]")
-            tasks = withContext(Dispatchers.IO) {
-                val taskDao = TaskDB.getDatabase(context!!).taskDao()
-                val tasks = taskDao.getByTime(start, end)
-                Log.d("TimeTable", "Exit: [当前线程为：${Thread.currentThread().name}] Task size: ${tasks.size}")
-                tasks.toMutableList()
-            }
-        }
 
-        Log.d("TimeTable", "Exit: [当前线程为：${Thread.currentThread().name}]  Task size: ${tasks.size}")
+
+//        //TODO: 考虑多线程的实现。
+//        CoroutineScope(Dispatchers.Main).launch {
+//            Log.d("TimeTable", "Enter: [当前线程为：${Thread.currentThread().name}]")
+//            tasks = withContext(Dispatchers.IO) {
+//                val taskDao = TaskDB.getDatabase(context!!).taskDao()
+//                val tasks = taskDao.getByTime(start, end)
+//                Log.d("TimeTable", "Exit: [当前线程为：${Thread.currentThread().name}] Task size: ${tasks.size}")
+//                tasks.toMutableList()
+//            }
+//        }
+//
+//        Log.d("TimeTable", "Exit: [当前线程为：${Thread.currentThread().name}]  Task size: ${tasks.size}")
+
+        val taskDao = TaskDB.getDatabase(context!!).taskDao()
+         tasks = taskDao.getByTime(start, end).toMutableList()
     }
 
     constructor(context: Context?, start: LocalDateTime, end: LocalDateTime) {
@@ -56,6 +61,8 @@ class TimeTable {
     }
 
     fun sync() {
+
+        //TODO：waiting for Test.
         CoroutineScope(Dispatchers.IO).launch {
             val taskDao = TaskDB.getDatabase(context!!).taskDao()
             tasks.forEach { taskDao.insert(it) }

@@ -21,6 +21,7 @@ abstract class MilestoneDB : RoomDatabase() {
                     "milestone_database"
                 )
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 return instance
