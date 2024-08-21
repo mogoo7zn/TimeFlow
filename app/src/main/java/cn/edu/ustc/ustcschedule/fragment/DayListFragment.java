@@ -80,7 +80,7 @@ public class DayListFragment extends Fragment {
     public void add_schedule(ConstraintLayout layout, Task schedule, LayoutInflater inflater, ViewGroup container)
     {
         View schedule_view=inflater.inflate(R.layout.fragment_day_list_item, container, false);
-
+        // 计算相关参数
        // Convert start and end times to milliseconds, adjusted for GMT+8 timezone
         long starting_time = schedule.getStart().toEpochSecond(ZoneOffset.of("+8")) * 1000;
         long ending_time = schedule.getEnd().toEpochSecond(ZoneOffset.of("+8")) * 1000;
@@ -96,6 +96,8 @@ public class DayListFragment extends Fragment {
         double pos = 1.01 * (Math.min(starting_time, ending_time) - day_start_temp) / 72000 + 6.5;
 
         CardView card=(CardView)schedule_view.findViewById(R.id.lesson_card_day);
+
+        // Set the long click listener for the card
         card.setOnLongClickListener(new View.OnLongClickListener()
             {
                 final int event_id= schedule.getId();
@@ -111,7 +113,14 @@ public class DayListFragment extends Fragment {
             }
 
         });
+
+        // Set the height, top margin, and width of the card
         ConstraintLayout.LayoutParams card_params = (ConstraintLayout.LayoutParams) card.getLayoutParams();
+        card_params.height=(int)(magnify_ratio*height);//放大倍数乘值
+        card_params.topMargin=(int)(magnify_ratio*pos);
+        card_params.width=ConstraintLayout.LayoutParams.MATCH_PARENT;
+
+        // 写入内容
         ((TextView)card.findViewById(R.id.lesson_text_day)).setText(schedule.getContent());
 //        ((TextView)card.findViewById(R.id.lesson_teacher)).setText(schedule.getTeacher());
 //        ((TextView)card.findViewById(R.id.lesson_place)).setText(schedule.getPlace());
@@ -136,14 +145,8 @@ public class DayListFragment extends Fragment {
                 break;
         }
 
-
-        card_params.height=(int)(magnify_ratio*height);//放大倍数乘值
-        card_params.topMargin=(int)(magnify_ratio*pos);
-
         card.setLayoutParams(card_params);
-
         schedule_view.setTag(R.id.Tag_id,schedule.getId());
-
         layout.addView(schedule_view);
 
     }
