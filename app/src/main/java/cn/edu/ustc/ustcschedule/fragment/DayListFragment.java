@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 
@@ -24,12 +25,15 @@ import com.example.timeflow.R;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import cn.edu.ustc.timeflow.bean.Task;
+import cn.edu.ustc.timeflow.dao.TaskDao;
 import cn.edu.ustc.timeflow.util.DBHelper;
 import cn.edu.ustc.timeflow.util.TimeTable;
 import cn.edu.ustc.ustcschedule.dialog.DeleteDialog;
@@ -47,35 +51,63 @@ public class DayListFragment extends Fragment {
     String day_start_str=Long.toString(day_start);
     String day_end_str=Long.toString(day_end);
 
+    LayoutInflater inflater;
+    ViewGroup container;
+    ConstraintLayout layout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        this.inflater=inflater;
+        this.container=container;
+
         ca.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 
         View view= inflater.inflate(R.layout.fragment_day_list, container, false);
-        ConstraintLayout layout= view.findViewById(R.id.day_list_layout);
+        layout= view.findViewById(R.id.day_list_layout);
         magnify_ratio=(float)(layout.getLayoutParams()).height/1226.0;
+
 
         //TODO: For Testing, remove later
         // Get the tasks for the current day
         DBHelper dbHelper = new DBHelper(getContext());
-        dbHelper.generateTestTaskData(true);
+        dbHelper.generateTestTaskData();
 
-        TimeTable timeTable = new TimeTable(getContext(), LocalDate.now());
-        showData(inflater, container, timeTable, layout);
-
+        show_schedule();
         return view;
     }
 
-    private void showData(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, TimeTable timeTable, ConstraintLayout layout) {
+    public void clean_schedule()
+    {
+        // Remove all schedule items from the layout
+        List<View> viewsToRemove = new ArrayList<>();
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            View child = layout.getChildAt(i);
+            Log.d("child", String.valueOf(child.getId()));
+            if(child.getId()== -1) {
+                viewsToRemove.add(child);
+
+            }
+        }
+        for (View view : viewsToRemove) {
+            layout.removeView(view);
+        }
+
+    }
+
+    public void show_schedule()
+    {
+
+
+        TimeTable timeTable = new TimeTable(getContext(), LocalDate.now());
+
         java.util.List<Task> tasks = timeTable.getTasks();
-        Log.d("TimeTable", "showData: " + tasks.size());
+
         for (Task task : tasks) {
             add_schedule(layout, task, inflater, container);
         }
     }
-
 
     public void add_schedule(ConstraintLayout layout, Task schedule, LayoutInflater inflater, ViewGroup container)
     {
@@ -109,6 +141,22 @@ public class DayListFragment extends Fragment {
                     deleteDialog.setEvent_id(event_id);
                     deleteDialog.setTable_name(table_name);
                     deleteDialog.show(getActivity().getSupportFragmentManager(), "delete");
+                    deleteDialog.setListener(new DeleteDialog.DeleteDialogListener() {
+                        @Override
+                        public void onDialogPositiveClick(DialogFragment dialog) {
+                            // Delete the schedule item from the database
+                            DBHelper dbHelper = new DBHelper(getContext());
+                            TaskDao taskDao = dbHelper.getTaskDao();
+                            taskDao.deleteById(event_id);
+                            clean_schedule();
+                            show_schedule();
+                        }
+
+                        @Override
+                        public void onDialogNegativeClick(DialogFragment dialog) {
+
+                        }
+                    });
                 return false;
             }
 
@@ -120,7 +168,7 @@ public class DayListFragment extends Fragment {
         card_params.topMargin=(int)(magnify_ratio*pos);
         card_params.width=ConstraintLayout.LayoutParams.MATCH_PARENT;
 
-        // 写入内容
+        // TODO: 写入内容
         ((TextView)card.findViewById(R.id.lesson_text_day)).setText(schedule.getContent());
 //        ((TextView)card.findViewById(R.id.lesson_teacher)).setText(schedule.getTeacher());
 //        ((TextView)card.findViewById(R.id.lesson_place)).setText(schedule.getPlace());
@@ -146,7 +194,7 @@ public class DayListFragment extends Fragment {
         }
 
         card.setLayoutParams(card_params);
-        schedule_view.setTag(R.id.Tag_id,schedule.getId());
+        schedule_view.setTag(R.id.Tag_id,-1);
         layout.addView(schedule_view);
 
     }

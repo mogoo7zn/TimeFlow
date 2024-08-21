@@ -49,18 +49,22 @@ class DBHelper (val context :Context){
     fun generateTestTaskData() {
 
         val taskDao = getTaskDao()
+
+        taskDao.deleteAll()
+
+        val currentDate = LocalDate.now()
+
+
         val tasks = listOf(
-            Task(LocalDateTime.of(2024, 8, 18, 9, 0), LocalDateTime.of(2024, 8, 18, 10, 0), "Task 1", 1, "Good", false, 3),
-            Task(LocalDateTime.of(2024, 8, 18, 11, 0), LocalDateTime.of(2024, 8, 18, 12, 0), "Task 2", 1, "Average", false, 2),
-            Task(LocalDateTime.of(2024, 8, 18, 9, 0), LocalDateTime.of(2024, 8, 18, 10, 0), "Task 3", 2, "Excellent", true, 5),
-            Task(LocalDateTime.of(2024, 8, 18, 11, 0), LocalDateTime.of(2024, 8, 18,12, 0), "Task 4", 2, "Poor", true, 1)
+            Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 9, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 10, 0), "Task 1", 1, "Good", false, 3),
+            Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 11, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 12, 0), "Task 2", 1, "Average", false, 2),
+            Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 9, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 10, 0), "Task 3", 2, "Excellent", true, 5),
+            Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 11, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 12, 0), "Task 4", 2, "Poor", true, 1)
         )
 
         // Insert tasks into the database
-        for (task in tasks) {
-            taskDao.insert(task)
-        }
-        close()
+        tasks.forEach { taskDao.insert(it) }
+
 
     }
 

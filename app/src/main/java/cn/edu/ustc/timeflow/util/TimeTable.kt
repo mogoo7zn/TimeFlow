@@ -23,21 +23,6 @@ class TimeTable {
         this.start = date.atStartOfDay()
         this.end = date.atTime(23, 59, 59)
 
-
-
-//        //TODO: 考虑多线程的实现。
-//        CoroutineScope(Dispatchers.Main).launch {
-//            Log.d("TimeTable", "Enter: [当前线程为：${Thread.currentThread().name}]")
-//            tasks = withContext(Dispatchers.IO) {
-//                val taskDao = TaskDB.getDatabase(context!!).taskDao()
-//                val tasks = taskDao.getByTime(start, end)
-//                Log.d("TimeTable", "Exit: [当前线程为：${Thread.currentThread().name}] Task size: ${tasks.size}")
-//                tasks.toMutableList()
-//            }
-//        }
-//
-//        Log.d("TimeTable", "Exit: [当前线程为：${Thread.currentThread().name}]  Task size: ${tasks.size}")
-
         val taskDao = TaskDB.getDatabase(context!!).taskDao()
          tasks = taskDao.getByTime(start, end).toMutableList()
     }
@@ -88,6 +73,22 @@ class TimeTable {
             availableTime.add(Pair(tasks[tasks.size - 1].end, end))
         }
         return availableTime
+    }
 
+    fun getTasks(): List<Task> {
+        return tasks
+    }
+
+    fun checkOverlap(task: Task): Boolean {
+        for (t in tasks) {
+            if (task.start < t.end && task.end > t.start) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun checkOverlap(){
+        
     }
 }

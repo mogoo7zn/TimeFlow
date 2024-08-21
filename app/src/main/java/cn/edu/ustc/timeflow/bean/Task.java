@@ -2,6 +2,7 @@ package cn.edu.ustc.timeflow.bean;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -21,7 +22,7 @@ public class Task {
     LocalDateTime end;
     @ColumnInfo(name = "task_content")
     String content;
-
+    //TODO: importance
     int importance;
 
     @ColumnInfo(name = "action_id")
@@ -31,9 +32,20 @@ public class Task {
     @ColumnInfo(name = "finished")
     Boolean finished;
 
+    @Ignore
+    Integer overlap;
+
+    @Ignore
     public Task(Action action, LocalDateTime start, LocalDateTime end){
-        //tOdO: implement
+//        this.start = start;
+//        this.end = end;
+//        this.content = action.getContent();
+//        this.importance = action.getImportance();
+//        this.action_id = action.getId();
+//        this.evaluation = action.getEvaluation();
+//        this.finished = false;
     }
+    @Ignore
     public Task(LocalDateTime start, LocalDateTime end, String content, int importance,String evaluation, Boolean finished, int action_id ) {
         this.start = start;
         this.end = end;
