@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="cn.edu.ustc.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -67,19 +67,19 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:checked="true"
-                    android:drawableTop="@drawable/ic_home" />
+                    android:drawableTop="@drawable/nav_home_selector" />
                 <RadioButton
                     android:id="@+id/plan_overview"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     style="@style/TabButton"
-                    android:drawableTop="@drawable/ic_plan"/>
+                    android:drawableTop="@drawable/nav_plan_selector"/>
                 <RadioButton
                     android:id="@+id/deadline_list"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     style="@style/TabButton"
-                    android:drawableTop="@drawable/ic_clock"/>
+                    android:drawableTop="@drawable/nav_clock_selector"/>
 
             </RadioGroup>
 

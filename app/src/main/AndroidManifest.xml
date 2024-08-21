@@ -13,10 +13,10 @@
         android:theme="@style/Theme.TimeFlow"
         tools:targetApi="31">
         <activity
-            android:name=".ui.WebActivity"
+            android:name="cn.edu.ustc.ui.WebActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name="cn.edu.ustc.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.TimeFlow.NoActionBar">

@@ -11,6 +11,9 @@ import cn.edu.ustc.timeflow.bean.Task
 import cn.edu.ustc.timeflow.util.DateTimeConverter
 import java.time.LocalDateTime
 
+/**
+ * The task data access object
+ */
 @Dao
 interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

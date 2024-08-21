@@ -1,4 +1,4 @@
-package com.example.timeflow
+package cn.edu.ustc
 
 import android.os.Bundle
 import android.view.Menu
@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.timeflow.R
 import com.example.timeflow.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -31,12 +32,12 @@ class MainActivity : AppCompatActivity() {
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.home -> {
-                    //Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.fragment_home)
+                    //Toast.makeText(this, "home", Toast.LENGTH_SHORT).show()
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.dayScheduleFragment)
                 }
 
                 R.id.plan_overview -> {
-                    //Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "plan_overview", Toast.LENGTH_SHORT).show()
                     findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.fragment_plan_overview)
                 }
 
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.fragment_home, R.id.fragment_plan_overview, R.id.fragment_deadline_list
+                R.id.dayScheduleFragment, R.id.fragment_plan_overview, R.id.fragment_deadline_list
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
