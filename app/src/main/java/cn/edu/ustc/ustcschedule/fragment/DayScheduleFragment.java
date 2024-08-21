@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import com.example.timeflow.R;
@@ -36,7 +38,7 @@ public class DayScheduleFragment extends Fragment {
         ClassTextInit textInit = new ClassTextInit();
 //        ClassPopUpMenu popUpMenu = new ClassPopUpMenu();
         ScrollView scrollView = view.findViewById(R.id.scroll);
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         textInit.initText(view);
         scrollView.post(() -> scrollView.scrollTo(0, scrollView.getHeight() / 2));
 //        view.findViewById(R.id.day_mode).setOnClickListener(view1 -> Navigation.findNavController(
@@ -44,5 +46,14 @@ public class DayScheduleFragment extends Fragment {
 //        view.findViewById(R.id.side_bar).setOnClickListener(view2 -> MainActivity.result.openDrawer());
 //        view.findViewById(R.id.add_events).setOnClickListener(view3 -> popUpMenu.onAddEvent(view3, fragmentManager));
 //        view.findViewById(R.id.filter).setOnClickListener(popUpMenu::onFilter);
+
+        TextView textCurrentMonth = view.findViewById(R.id.text_current_month);
+        textCurrentMonth.setOnClickListener(view1 ->
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_schedule_day_layout, new MonthScheduleFragment(), null)
+                        .addToBackStack(null)
+                        .commit()
+        );
     }
 }
