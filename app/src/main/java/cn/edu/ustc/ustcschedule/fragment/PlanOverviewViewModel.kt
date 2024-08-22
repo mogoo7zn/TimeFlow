@@ -1,4 +1,4 @@
-package cn.edu.ustc.ui.overview
+package cn.edu.ustc.ustcschedule.fragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

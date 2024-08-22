@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -49,8 +50,13 @@ public class DayScheduleFragment extends Fragment {
 //        view.findViewById(R.id.add_events).setOnClickListener(view3 -> popUpMenu.onAddEvent(view3, fragmentManager));
 //        view.findViewById(R.id.filter).setOnClickListener(popUpMenu::onFilter);
 
-        TextView textCurrentMonth = view.findViewById(R.id.text_current_month);
-        textCurrentMonth.setOnClickListener(view1 -> Navigation.findNavController(view1).navigate(R.id.monthScheduleFragment)
+        Button buttonMonth = view.findViewById(R.id.button_month);
+        buttonMonth.setOnClickListener(view1 -> Navigation.findNavController(view1).navigate(R.id.monthScheduleFragment)
         );
+
+        Button buttonWeek = view.findViewById(R.id.button_week);
+        buttonWeek.setOnClickListener(view1 -> Navigation.findNavController(view1).navigate(R.id.weekScheduleFragment)
+        );
+
     }
 }

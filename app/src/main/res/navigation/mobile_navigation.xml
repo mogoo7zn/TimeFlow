@@ -13,11 +13,14 @@
         <action
             android:id="@+id/action_dayScheduleFragment_to_monthScheduleFragment"
             app:destination="@id/monthScheduleFragment" />
+        <action
+            android:id="@+id/action_dayScheduleFragment_to_fragment_plan_overview"
+            app:destination="@id/fragment_plan_overview" />
     </fragment>
 
     <fragment
         android:id="@+id/fragment_plan_overview"
-        android:name="cn.edu.ustc.ui.overview.PlanOverviewFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.PlanOverviewFragment"
         android:label="@string/overview"
         tools:layout="@layout/fragment_plan_overview" >
         <action
@@ -29,7 +32,11 @@
         android:id="@+id/fragment_deadline_list"
         android:name="cn.edu.ustc.ui.clock.DeadlineFragment"
         android:label="@string/clock"
-        tools:layout="@layout/fragment_deadline_list" />
+        tools:layout="@layout/fragment_deadline_list" >
+        <action
+            android:id="@+id/action_fragment_deadline_list_to_dayScheduleFragment"
+            app:destination="@id/dayScheduleFragment" />
+    </fragment>
 
 
 
