@@ -46,8 +46,7 @@ public class DayListFragment extends Fragment {
     long day_start=((date.getTime()+8*3600*1000)/(86400*1000))*(86400*1000)-8*3600*1000;//清除小时和分钟
     long day_end=day_start+86400*1000;
     double magnify_ratio=2.63;//default
-    String day_start_str=Long.toString(day_start);
-    String day_end_str=Long.toString(day_end);
+
 
     LayoutInflater inflater;
     ViewGroup container;

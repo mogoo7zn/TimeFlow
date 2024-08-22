@@ -54,27 +54,22 @@ public class MonthScheduleFragment extends Fragment {
         Calendar c = Calendar.getInstance(Locale.CHINA);
         c.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         CalendarView calendarView = view.findViewById(R.id.calendar);
-        TextView textYear = view.findViewById(R.id.text_current_year_month);
-        TextView textMonth1 = view.findViewById(R.id.text_current_month1);
+
         TextView textMonth2 = view.findViewById(R.id.text_current_month2);
         TextView textDay = view.findViewById(R.id.text_current_day_month);
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatYear = new SimpleDateFormat("yyyy", Locale.CHINA);
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatMonth = new SimpleDateFormat("MM", Locale.CHINA);
-        @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatDay = new SimpleDateFormat("dd", Locale.CHINA);
-        textYear.setText(formatYear.format(c.getTimeInMillis()));
-        textMonth1.setText(formatMonth.format(c.getTimeInMillis()));
+
         textMonth2.setText(formatMonth.format(c.getTimeInMillis()));
-        textDay.setText(formatDay.format(c.getTimeInMillis()));
+
 
         calendarView.setOnDateChangeListener((calendarView1, year, month, day) -> {
-            textYear.setText(String.valueOf(year));
             String monthString;
             if (month<9) {
                 monthString = "0"+ (month + 1);
             } else {
                 monthString = String.valueOf(month+1);
             }
-            textMonth1.setText(monthString);
             textMonth2.setText(monthString);
             String dayString;
             if (day<10) {

@@ -7,62 +7,6 @@
     android:background="@android:color/background_light"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text_current_year_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="10dp"
-        android:lineSpacingExtra="8sp"
-        android:text="2024"
-        android:textColor="@color/text_deep"
-        android:textAlignment="textStart"
-        android:textSize="36sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/text_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="10dp"
-        android:lineSpacingExtra="8sp"
-        android:text="@string/year"
-        android:textColor="@color/text_deep"
-        android:textAlignment="textStart"
-        android:textSize="36sp"
-        app:layout_constraintStart_toEndOf="@id/text_current_year_month"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/text_current_month1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginBottom="2dp"
-        android:lineSpacingExtra="4sp"
-        android:text="5"
-        android:textColor="@color/text_deep"
-        android:textAlignment="textStart"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="@id/text_current_year_month"
-        app:layout_constraintStart_toEndOf="@id/text_year"/>
-
-    <TextView
-        android:id="@+id/text_month1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginBottom="2dp"
-        android:lineSpacingExtra="4sp"
-        android:text="@string/month"
-        android:textColor="@color/text_deep"
-        android:textAlignment="textStart"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="@id/text_current_year_month"
-        app:layout_constraintStart_toEndOf="@id/text_current_month1"/>
-
     <CalendarView
         android:id="@+id/calendar"
         android:layout_width="wrap_content"
@@ -70,14 +14,14 @@
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_current_year_month" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/text_current_month2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="2dp"
         android:lineSpacingExtra="4sp"
         android:text="5"
@@ -85,7 +29,7 @@
         android:textAlignment="textStart"
         android:textSize="24sp"
         app:layout_constraintTop_toBottomOf="@id/calendar"
-        app:layout_constraintStart_toStartOf="@id/text_current_year_month"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/text_month2"
@@ -161,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="440dp"
+        android:layout_marginTop="380dp"
         android:layout_marginEnd="24dp"
 
         android:background="@color/back_white"
