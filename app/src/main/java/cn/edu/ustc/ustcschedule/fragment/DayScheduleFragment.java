@@ -1,5 +1,7 @@
 package cn.edu.ustc.ustcschedule.fragment;
 
+
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,12 +50,7 @@ public class DayScheduleFragment extends Fragment {
 //        view.findViewById(R.id.filter).setOnClickListener(popUpMenu::onFilter);
 
         TextView textCurrentMonth = view.findViewById(R.id.text_current_month);
-        textCurrentMonth.setOnClickListener(view1 ->
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_schedule_day_layout, new MonthScheduleFragment(), null)
-                        .addToBackStack(null)
-                        .commit()
+        textCurrentMonth.setOnClickListener(view1 -> Navigation.findNavController(view1).navigate(R.id.monthScheduleFragment)
         );
     }
 }
