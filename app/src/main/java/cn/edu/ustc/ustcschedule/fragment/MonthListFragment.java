@@ -15,11 +15,16 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.timeflow.R;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,109 +32,27 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import cn.edu.ustc.timeflow.bean.Task;
+import cn.edu.ustc.timeflow.util.TimeTable;
+import cn.edu.ustc.ustcschedule.adapter.TaskAdapter;
+
 public class MonthListFragment extends Fragment {
 
     Calendar ca=Calendar.getInstance(Locale.CHINA);
+    CalendarView calendarView;
+    View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         ca.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-        View view=inflater.inflate(R.layout.fragment_month_list, container, false);
-        ListView layout=(ListView) view.findViewById(R.id.month_ListView);
-
-        CalendarView calendarView = ((View)container.getParent()).findViewById(R.id.calendar);
+        view=inflater.inflate(R.layout.fragment_month_list, container, false);
 
 
-        SimpleDateFormat format_day = new SimpleDateFormat("yyyy/MM/dd",Locale.CHINA);
-        SimpleDateFormat format_time = new SimpleDateFormat("HH:mm",Locale.CHINA);
-        Date date=new Date();
-        Calendar ca=Calendar.getInstance(Locale.CHINA);
-        long day_start=((calendarView.getDate()+8*3600*1000)/(86400*1000))*(86400*1000)-8*3600*1000;//清除小时和分钟
-        long day_end=day_start+86400*1000;
-        double magnify_ratio;
-        String day_start_str=Long.toString(day_start);
-        String day_end_str=Long.toString(day_end);
+        calendarView = ((View)container.getParent()).findViewById(R.id.calendar);
 
-
-
-//        List<BasicSchedule> listitem = new ArrayList<BasicSchedule>();
-//        MainDatabaseHelper db_helper=new MainDatabaseHelper(getContext());
-//        SQLiteDatabase db=db_helper.getReadableDatabase();
-//
-//        Cursor cursor=db.query("SCHEDULE",new String[]{"_id","IS_FINISH","NAME" ,"START_TIME" ,"END_TIME","TIME_LENGTH",
-//                        "IMPORTANCE" ,"IS_REPEAT" ,"PERIOD" , "PLACE" ,"DESCRIPTION"  } ,
-//                "IS_REPEAT=0 AND START_TIME>"+day_start_str+" AND START_TIME<"+day_end_str+" AND END_TIME<"+day_end_str+" AND END_TIME>"+day_start_str,
-//                null,null,null,"START_TIME ASC");
-//        cursor.moveToFirst();
-//        for(int i=0;i< cursor.getCount();i++) {
-//            MySchedule schedule=new MySchedule(cursor);
-//            listitem.add(schedule);
-//            cursor.moveToNext();
-//        }
-//
-//
-//        Cursor cursor_repeat=db.query("SCHEDULE",new String[]{"_id","IS_FINISH","NAME" ,"START_TIME" ,"END_TIME","TIME_LENGTH",
-//                        "IMPORTANCE" ,"IS_REPEAT" ,"PERIOD" , "PLACE" ,"DESCRIPTION"  } ,
-//                "IS_REPEAT=1",
-//                null,null,null,"START_TIME ASC");
-//        cursor_repeat.moveToFirst();
-//        for(int i=0;i< cursor_repeat.getCount();i++) {
-//            MySchedule schedule=new MySchedule(cursor_repeat);
-//            boolean is_today=false;
-//            is_today=is_today_fun(schedule);
-//            if(is_today)
-//            {
-//                listitem.add(schedule);
-//            }
-//            cursor_repeat.moveToNext();
-//        }
-//
-//        Cursor ddl_cursor=db.query("DDL",new String[]{"_id","IS_FINISH","NAME" ,"START_TIME" ,"WORK_LOAD",
-//                        "IMPORTANCE" ,"IS_REPEAT" ,"PERIOD" , "PLACE" ,"DESCRIPTION"  } ,
-//                "IS_REPEAT=0 AND START_TIME>"+day_start_str+" AND START_TIME<"+day_end_str,
-//                null,null,null,"START_TIME ASC");
-//        ddl_cursor.moveToFirst();
-//        for(int i=0;i< ddl_cursor.getCount();i++) {
-//            MyDeadLine ddl=new MyDeadLine(ddl_cursor);
-//            listitem.add(ddl);
-//            ddl_cursor.moveToNext();
-//        }
-//
-//        Cursor ddl_cursor_repeat=db.query("DDL",new String[]{"_id","IS_FINISH","NAME" ,"START_TIME" ,"WORK_LOAD",
-//                        "IMPORTANCE" ,"IS_REPEAT" ,"PERIOD" , "PLACE" ,"DESCRIPTION"  } ,
-//                "IS_REPEAT=1",
-//                null,null,null,"START_TIME ASC");
-//        ddl_cursor_repeat.moveToFirst();
-//        for(int i=0;i< ddl_cursor_repeat.getCount();i++) {
-//            MyDeadLine ddl=new MyDeadLine(ddl_cursor_repeat);
-//            boolean is_today=false;
-//            is_today=is_today_fun(ddl);
-//            if(is_today)
-//            {
-//                listitem.add(ddl);
-//            }
-//            ddl_cursor_repeat.moveToNext();
-//        }
-//
-//        MonthListAdapter myAdapter=new MonthListAdapter(getContext(),listitem);
-//        myAdapter.notifyDataSetChanged();
-//        //ListView listView = (ListView) view.findViewById(R.id.month_ListView);
-//        layout.setAdapter(myAdapter);
-//        layout.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                int event_id= (int)view.getTag(R.id.Tag_id);
-//                String table_name=(String)view.getTag(R.id.Tag_table_name);
-//                DeleteDialog deleteDialog = new DeleteDialog();
-//                deleteDialog.setEvent_id(event_id);
-//                deleteDialog.setTable_name(table_name);
-//                deleteDialog.show(getActivity().getSupportFragmentManager(), "delete");
-//                return false;
-//            }
-//        });
-
+        updateList();
         return view;
     }
 
@@ -169,4 +92,18 @@ public class MonthListFragment extends Fragment {
 //        }
 //        return is_today;
 //    }
+
+    public void updateList() {
+        long dateInMillis = calendarView.getDate();
+
+        LocalDate localDate = Instant.ofEpochMilli(dateInMillis)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        TimeTable timeTable=new TimeTable(getContext(),localDate);
+
+
+        RecyclerView layout = (RecyclerView) view.findViewById(R.id.month_ListView);
+        layout.setLayoutManager(new LinearLayoutManager(getContext()));
+        layout.setAdapter(new TaskAdapter(timeTable.getTasks()));
+    }
 }

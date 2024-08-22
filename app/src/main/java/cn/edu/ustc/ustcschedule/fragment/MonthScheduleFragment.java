@@ -87,12 +87,12 @@ public class MonthScheduleFragment extends Fragment {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, month, day);
             calendarView1.setDate(calendar.getTimeInMillis());
-            FragmentTransaction ft= getParentFragmentManager().beginTransaction().setReorderingAllowed(true);
-            ft.replace(R.id.month_list_container,new MonthListFragment());
-            ft.addToBackStack(null);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-            ft.commit();
-            //this.getView().findViewById(R.id.)
+
+
+            //get the fragment in R.id.month_list_container
+            MonthListFragment fragment =(MonthListFragment) getChildFragmentManager().findFragmentById(R.id.month_list_container);
+            fragment.updateList();
+
         });
     }
 }

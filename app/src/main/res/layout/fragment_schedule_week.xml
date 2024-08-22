@@ -9,16 +9,7 @@
     <include
         layout="@layout/top_fragment" />
 
-    <ImageButton
-        android:id="@+id/week_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_week_mode"
-        android:backgroundTint="@color/button"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toStartOf="@id/side_bar"
-        app:layout_constraintTop_toTopOf="@id/side_bar"
-        app:layout_constraintBottom_toBottomOf="@id/side_bar" />
+
 
     <ImageButton
         android:id="@+id/add_events"
@@ -59,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="175dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="24dp"
         android:background="@color/back_white"
         app:layout_constraintBottom_toBottomOf="parent"
