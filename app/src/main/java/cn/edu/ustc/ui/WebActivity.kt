@@ -1,4 +1,4 @@
-package com.example.timeflow.ui
+package cn.edu.ustc.ui
 
 import android.annotation.SuppressLint
 import android.app.ActivityManager

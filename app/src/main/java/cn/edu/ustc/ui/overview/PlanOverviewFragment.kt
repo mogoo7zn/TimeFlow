@@ -1,17 +1,17 @@
-package com.example.timeflow.ui.clock
-
-import androidx.fragment.app.Fragment
+package cn.edu.ustc.ui.overview;
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.timeflow.databinding.FragmentDeadlineListBinding
+import com.example.timeflow.databinding.FragmentSettingsBinding
+import cn.edu.ustc.ui.home.HomeViewModel
 
-class DeadlineFragment : Fragment(){
-    private var _binding: FragmentDeadlineListBinding? = null
+class PlanOverviewFragment : Fragment() {
+    private var _binding: FragmentSettingsBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,16 +22,16 @@ class DeadlineFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val deadlineViewModel =
-            ViewModelProvider(this)[DeadlineViewModel::class.java]
+        val homeViewModel =
+            ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        _binding = FragmentDeadlineListBinding.inflate(inflater, container, false)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding
-//        deadlineViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
+        val textView: TextView = binding.textHome
+        homeViewModel.text.observe(viewLifecycleOwner) {
+            textView.text = it
+        }
         return root
     }
 

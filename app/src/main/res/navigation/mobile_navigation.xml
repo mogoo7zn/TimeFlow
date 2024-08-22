@@ -6,19 +6,18 @@
     app:startDestination="@+id/dayScheduleFragment">
 
     <fragment
-        android:id="@+id/fragment_home"
-        android:name="com.example.timeflow.ui.home.HomeFragment"
-
+        android:id="@+id/dayScheduleFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.DayScheduleFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home" >
+        >
         <action
-            android:id="@+id/action_fragment_home_to_fragment_plan_overview"
-            app:destination="@id/fragment_plan_overview" />
+            android:id="@+id/action_dayScheduleFragment_to_monthScheduleFragment"
+            app:destination="@id/monthScheduleFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/fragment_plan_overview"
-        android:name="com.example.timeflow.ui.overview.PlanOverviewFragment"
+        android:name="cn.edu.ustc.ui.overview.PlanOverviewFragment"
         android:label="@string/overview"
         tools:layout="@layout/fragment_plan_overview" >
         <action
@@ -28,19 +27,11 @@
 
     <fragment
         android:id="@+id/fragment_deadline_list"
-        android:name="com.example.timeflow.ui.clock.DeadlineFragment"
+        android:name="cn.edu.ustc.ui.clock.DeadlineFragment"
         android:label="@string/clock"
         tools:layout="@layout/fragment_deadline_list" />
 
-    <fragment
-        android:id="@+id/dayScheduleFragment"
-        android:name="cn.edu.ustc.ustcschedule.fragment.DayScheduleFragment"
-        android:label="@string/schedule_day"
-        >
-        <action
-            android:id="@+id/action_dayScheduleFragment_to_monthScheduleFragment"
-            app:destination="@id/monthScheduleFragment" />
-    </fragment>
+
 
     <fragment
         android:id="@+id/weekScheduleFragment"
