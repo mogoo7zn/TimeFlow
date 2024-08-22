@@ -62,6 +62,7 @@
     <string name="exercise">锻炼</string>
     <string name="reading">阅读</string>
     <string name="task">事件</string>
+    <string name="plan">计划</string>
 
     <string name="add_event">加入事件</string>
     <string name="title">事件名称</string>
