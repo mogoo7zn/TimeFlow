@@ -25,10 +25,8 @@ import com.example.timeflow.R;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -54,6 +52,7 @@ public class DayListFragment extends Fragment {
     LayoutInflater inflater;
     ViewGroup container;
     ConstraintLayout layout;
+    TimeTable timeTable;
 
     @Nullable
     @Override
@@ -68,12 +67,11 @@ public class DayListFragment extends Fragment {
         layout= view.findViewById(R.id.day_list_layout);
         magnify_ratio=(float)(layout.getLayoutParams()).height/1226.0;
 
-
         //TODO: For Testing, remove later
         // Get the tasks for the current day
         DBHelper dbHelper = new DBHelper(getContext());
         dbHelper.generateTestTaskData();
-
+        timeTable = new TimeTable(getContext(), LocalDate.now());
         show_schedule();
         return view;
     }
@@ -81,27 +79,18 @@ public class DayListFragment extends Fragment {
     public void clean_schedule()
     {
         // Remove all schedule items from the layout
-        List<View> viewsToRemove = new ArrayList<>();
         for (int i = 0; i < layout.getChildCount(); i++) {
             View child = layout.getChildAt(i);
-            Log.d("child", String.valueOf(child.getId()));
-            if(child.getId()== -1) {
-                viewsToRemove.add(child);
-
+            if (child.getId() == -1) {
+                layout.removeView(child);
+                i--;
             }
         }
-        for (View view : viewsToRemove) {
-            layout.removeView(view);
-        }
-
     }
 
     public void show_schedule()
     {
-
-
-        TimeTable timeTable = new TimeTable(getContext(), LocalDate.now());
-
+        // Get the tasks for the current day
         java.util.List<Task> tasks = timeTable.getTasks();
 
         for (Task task : tasks) {
@@ -109,21 +98,21 @@ public class DayListFragment extends Fragment {
         }
     }
 
-    public void add_schedule(ConstraintLayout layout, Task schedule, LayoutInflater inflater, ViewGroup container)
+    public void add_schedule(ConstraintLayout layout, Task task, LayoutInflater inflater, ViewGroup container)
     {
         View schedule_view=inflater.inflate(R.layout.fragment_day_list_item, container, false);
         // 计算相关参数
        // Convert start and end times to milliseconds, adjusted for GMT+8 timezone
-        long starting_time = schedule.getStart().toEpochSecond(ZoneOffset.of("+8")) * 1000;
-        long ending_time = schedule.getEnd().toEpochSecond(ZoneOffset.of("+8")) * 1000;
+        long starting_time = task.getStart().toEpochSecond(ZoneOffset.of("+8")) * 1000;
+        long ending_time = task.getEnd().toEpochSecond(ZoneOffset.of("+8")) * 1000;
 
-        // Calculate the height of the schedule item based on its duration
+        // Calculate the height of the task item based on its duration
         double height = 1.01 * (Math.abs(ending_time - starting_time)) / 72000;
 
         // Calculate the start of the day in milliseconds, adjusted for GMT+8 timezone
         long day_start_temp = ((starting_time + 8 * 3600 * 1000) / (86400 * 1000)) * (86400 * 1000) - 8 * 3600 * 1000;
 
-        // Calculate the position of the schedule item in the layout
+        // Calculate the position of the task item in the layout
         // 6.5 is an offset to account for the layout's top margin
         double pos = 1.01 * (Math.min(starting_time, ending_time) - day_start_temp) / 72000 + 6.5;
 
@@ -132,7 +121,7 @@ public class DayListFragment extends Fragment {
         // Set the long click listener for the card
         card.setOnLongClickListener(new View.OnLongClickListener()
             {
-                final int event_id= schedule.getId();
+                final int event_id= task.getId();
                 final String table_name="SCHEDULE";
 
                 @Override
@@ -144,10 +133,8 @@ public class DayListFragment extends Fragment {
                     deleteDialog.setListener(new DeleteDialog.DeleteDialogListener() {
                         @Override
                         public void onDialogPositiveClick(DialogFragment dialog) {
-                            // Delete the schedule item from the database
-                            DBHelper dbHelper = new DBHelper(getContext());
-                            TaskDao taskDao = dbHelper.getTaskDao();
-                            taskDao.deleteById(event_id);
+                            // Delete the task item from the database
+                            timeTable.deleteTask(event_id);
                             clean_schedule();
                             show_schedule();
                         }
@@ -166,17 +153,25 @@ public class DayListFragment extends Fragment {
         ConstraintLayout.LayoutParams card_params = (ConstraintLayout.LayoutParams) card.getLayoutParams();
         card_params.height=(int)(magnify_ratio*height);//放大倍数乘值
         card_params.topMargin=(int)(magnify_ratio*pos);
-        card_params.width=ConstraintLayout.LayoutParams.MATCH_PARENT;
 
-        // TODO: 写入内容
-        ((TextView)card.findViewById(R.id.lesson_text_day)).setText(schedule.getContent());
-//        ((TextView)card.findViewById(R.id.lesson_teacher)).setText(schedule.getTeacher());
-//        ((TextView)card.findViewById(R.id.lesson_place)).setText(schedule.getPlace());
+//        ConstraintLayout.LayoutParams schedule_params = (ConstraintLayout.LayoutParams) schedule_view.getLayoutParams();
+//
+//        if(task.getOverlap()>1){
+//            schedule_params.width= schedule_params.width/task.getOverlap();
+//
+//        }
+
+
+
+        // 写入内容
+        ((TextView)card.findViewById(R.id.lesson_text_day)).setText(task.getContent());
+//        ((TextView)card.findViewById(R.id.lesson_teacher)).setText(task.getTeacher());
+//        ((TextView)card.findViewById(R.id.lesson_place)).setText(task.getPlace());
 
         ((TextView)schedule_view.findViewById(R.id.start_time_text)).setText(format_time.format(starting_time));
         ((TextView)schedule_view.findViewById(R.id.end_time_text)).setText(format_time.format(ending_time));
 
-        switch(schedule.getImportance())
+        switch(task.getImportance())
         {
             case 1:
             case 2:
@@ -194,7 +189,11 @@ public class DayListFragment extends Fragment {
         }
 
         card.setLayoutParams(card_params);
+
+
         schedule_view.setTag(R.id.Tag_id,-1);
+
+
         layout.addView(schedule_view);
 
     }

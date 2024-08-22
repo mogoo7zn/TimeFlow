@@ -36,6 +36,9 @@ public class Task {
     Integer overlap;
 
     @Ignore
+    Integer overlapIndex;
+
+    @Ignore
     public Task(Action action, LocalDateTime start, LocalDateTime end){
 //        this.start = start;
 //        this.end = end;
@@ -121,5 +124,21 @@ public class Task {
 
     public void setImportance(int importance) {
         this.importance = importance;
+    }
+
+    public Integer getOverlap() {
+        return overlap;
+    }
+
+    public void setOverlap(Integer overlap) {
+        this.overlap = overlap;
+    }
+
+    public Integer getOverlapIndex() {
+        return overlapIndex;
+    }
+
+    public void setOverlapIndex(Integer overlapIndex) {
+        this.overlapIndex = overlapIndex;
     }
 }

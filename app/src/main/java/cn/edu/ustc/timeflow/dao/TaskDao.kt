@@ -16,6 +16,10 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(task: Task)
 
+    fun insert(tasks: List<Task>) {
+        tasks.forEach { insert(it) }
+    }
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(task: Task)
 
@@ -58,5 +62,9 @@ interface TaskDao {
     @Query("SELECT COUNT(*) FROM task WHERE action_id = :actionId AND task_start >= :start AND task_end <= :end")
     @TypeConverters(DateTimeConverter::class)
     fun countByActionIdWithTime(actionId: Int, start: LocalDateTime, end: LocalDateTime): Int
+
+    @Query("DELETE FROM task WHERE task_start >= :start AND task_end <= :end")
+    @TypeConverters(DateTimeConverter::class)
+    fun deleteByTime(start: LocalDateTime, end: LocalDateTime)
 
 }
