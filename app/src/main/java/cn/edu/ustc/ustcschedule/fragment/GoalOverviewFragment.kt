@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.timeflow.R
 import com.example.timeflow.databinding.FragmentGoalOverviewBinding
 
 class GoalOverviewFragment : Fragment() {
@@ -30,6 +31,15 @@ class GoalOverviewFragment : Fragment() {
 //            textView.text = it
 //        }
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val currentGoalPicker = binding.currentGoalPicker
+        if (currentGoalPicker.isChecked) {
+            //TODO: show current goal's actions
+        }
     }
 
     override fun onDestroyView() {
