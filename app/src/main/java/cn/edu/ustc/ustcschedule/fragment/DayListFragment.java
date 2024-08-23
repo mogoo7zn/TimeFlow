@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -92,7 +93,7 @@ public class DayListFragment extends Fragment {
     public void show_schedule()
     {
         // Get the tasks for the current day
-        java.util.List<Task> tasks = timeTable.getTasks();
+        List<Task> tasks = timeTable.getTasks();
 
         for (Task task : tasks) {
             add_schedule(layout, task, inflater, container);
@@ -155,63 +156,48 @@ public class DayListFragment extends Fragment {
         card_params.height=(int)(magnify_ratio*height);//放大倍数乘值
         card_params.topMargin=(int)(magnify_ratio*pos);
 
-        TextView text = card.findViewById(R.id.lesson_text_day);
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) text.getLayoutParams();
+
+        int margin = 0;
 
         switch (task.getOverlap()) {
             case 0:
                 card.setAlpha(Alpha.ALPHA_FULL);
-                params.setMarginStart((int) TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        26,
-                        getResources().getDisplayMetrics()
-                ));
-
                 break;
             case 1:
                 card.setAlpha(Alpha.ALPHA_HIGH);
-                params.setMarginStart((int) TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        40,
-                        getResources().getDisplayMetrics()
-                ));
-
+                margin = 60;
                 break;
             case 2:
                 card.setAlpha(Alpha.ALPHA_MEDIUM);
-                params.setMarginStart((int) TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        50,
-                        getResources().getDisplayMetrics()
-                ));
+                margin = 120;
                 break;
             case 3:
                 card.setAlpha(Alpha.ALPHA_LOW);
-                params.setMarginStart((int) TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        60,
-                        getResources().getDisplayMetrics()
-                ));
+                margin = 30;
                 break;
             case 4:
                 card.setAlpha(Alpha.ALPHA_VERY_LOW);
-                params.setMarginStart((int) TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        70,
-                        getResources().getDisplayMetrics()
-                ));
+                margin = 90;
                 break;
             default:
                 card.setAlpha(Alpha.ALPHA_MINIMUM);
-                params.setMarginStart((int) TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        80,
-                        getResources().getDisplayMetrics()
-                ));
+                margin = 100;
                 break;
         }
-        text.setLayoutParams(params);
 
+
+
+        card_params.setMarginStart((int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                margin,
+                getResources().getDisplayMetrics()
+        ));
+
+        card_params.setMarginEnd((int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                (int)(margin * 0.7),
+                getResources().getDisplayMetrics()
+        ));
 
 
         // 写入内容

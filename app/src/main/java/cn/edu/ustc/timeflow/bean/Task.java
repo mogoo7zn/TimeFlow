@@ -56,6 +56,7 @@ public class Task {
         this.evaluation = evaluation;
         this.finished = finished;
     }
+
     public Task(){
 
     }

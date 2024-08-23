@@ -32,7 +32,7 @@
                     android:id="@+id/lesson_text_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="26dp"
+                    android:layout_marginStart="24dp"
 
                     android:text="数学分析(B2)"
                     android:textColor="@color/blue_label_text"
@@ -74,11 +74,13 @@
                     android:id="@+id/day_tomato_clock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginTop="50dp"
-                    android:src="@drawable/ic_tomato"/>.
+
+                    android:src="@drawable/ic_tomato"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lesson_place"
+                    app:layout_constraintVertical_bias="0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

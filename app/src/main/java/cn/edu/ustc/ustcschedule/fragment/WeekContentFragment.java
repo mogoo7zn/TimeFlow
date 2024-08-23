@@ -25,7 +25,9 @@ import com.example.timeflow.R;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -43,7 +45,7 @@ public class WeekContentFragment extends Fragment {
     LayoutInflater inflater;
     ViewGroup container;
     ConstraintLayout layout;
-    TimeTable timeTable;
+    List<TimeTable> timeTables;
 
     @Nullable
     @Override
@@ -54,7 +56,10 @@ public class WeekContentFragment extends Fragment {
 
         this.inflater=inflater;
         this.container=container;
-        timeTable = new TimeTable(getContext(),1, LocalDate.now());
+        timeTables = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            timeTables.add(new TimeTable(getContext(), 1, LocalDate.now().plusDays(i - LocalDate.now().getDayOfWeek().getValue() + 1)));
+        }
 
         show_schedule();
         return view;
@@ -74,7 +79,7 @@ public class WeekContentFragment extends Fragment {
     public void show_schedule(){
         GridLayout gridLayout=view.findViewById(R.id.fragment_week_content_layout);
         gridLayout.removeAllViews();
-        for(int day_of_week=1;day_of_week<=7;day_of_week++)
+        for(int day_of_week=0;day_of_week<7;day_of_week++)
         {
             Calendar ca=Calendar.getInstance(Locale.CHINA);
             ca.set(Calendar.DAY_OF_WEEK,day_of_week);
@@ -94,13 +99,11 @@ public class WeekContentFragment extends Fragment {
 
 
 
-            for(Task task:timeTable.getTasks())
+            for(Task task:timeTables.get(day_of_week).getTasks())
             {
-                if(task.getStart().toEpochSecond(ZoneOffset.of("+8"))*1000>=day_start&&
-                        task.getEnd().toEpochSecond(ZoneOffset.of("+8"))*1000<=day_end)
-                {
+
                     add_schedule(layout,task,inflater,container);
-                }
+
             }
             gridLayout.addView(layout,params);
 
@@ -135,7 +138,7 @@ public class WeekContentFragment extends Fragment {
 
                     @Override
                     public void onDialogPositiveClick(DialogFragment dialog) {
-                        timeTable.deleteTask(event_id);
+                        timeTables.get(task.getStart().getDayOfWeek().getValue() - 1).deleteTask(event_id);
                         clear_schedule();
                         show_schedule();
                     }
