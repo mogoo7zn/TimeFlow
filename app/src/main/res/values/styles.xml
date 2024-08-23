@@ -19,17 +19,17 @@
     </style>
 
     <style name="Widget.CalendarView.Custom" parent="Theme.AppCompat.DayNight">
-<!--        不知为什么星期栏不显示-->
+<!--        parent theme不使用DayNight不知为什么星期栏不显示-->
         <!--周字体颜色-->
         <item name="android:weekDayTextAppearance">@style/Widget.Material3.MaterialCalendar.Day</item>
         <!--日字体颜色-->
         <item name="android:dateTextAppearance">@style/MaterialAlertDialog.MaterialComponents.Title.Text</item>
         <!--选中后背景-->
-        <item name="colorAccent">#0080FF</item>
+        <item name="colorAccent">@color/blue_700</item>
         <item name="colorPrimary">@color/blue_200</item>
         <!--选中后字体颜色-->
         <item name="android:textColorPrimaryInverse">@color/white</item>
         <!--标题颜色-->
-        <item name="android:textColorPrimary">@color/blue</item>
+        <item name="android:textColorPrimary">@color/blue_500</item>
     </style>
 </resources>

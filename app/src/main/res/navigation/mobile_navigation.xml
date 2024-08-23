@@ -20,9 +20,9 @@
 
     <fragment
         android:id="@+id/fragment_plan_overview"
-        android:name="cn.edu.ustc.ustcschedule.fragment.PlanOverviewFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.GoalOverviewFragment"
         android:label="@string/overview"
-        tools:layout="@layout/fragment_plan_overview" >
+        tools:layout="@layout/fragment_goal_overview" >
         <action
             android:id="@+id/action_fragment_plan_overview_to_fragment_deadline_list"
             app:destination="@id/fragment_deadline_list" />

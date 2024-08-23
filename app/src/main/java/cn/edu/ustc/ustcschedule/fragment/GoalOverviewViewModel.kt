@@ -3,7 +3,7 @@ package cn.edu.ustc.ustcschedule.fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-class PlanOverviewViewModel {
+class GoalOverviewViewModel {
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
     }

@@ -14,6 +14,10 @@
     <string name="overview">计划一览</string>
     <string name="clock">催债单</string>
 
+    <string name="current_goal">学习划龙舟</string>
+    <string name="goal_connecting_string">个目标  |  当前目标：</string>
+    <string name="goal_tag">运动</string>
+
     <string name="menu_setting">设置</string>
     <string name="menu_profile">个人资料</string>
     <string name="menu_slideshow">Slideshow</string>
