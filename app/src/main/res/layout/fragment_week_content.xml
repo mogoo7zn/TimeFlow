@@ -19,7 +19,6 @@
         android:columnCount="7"
         android:rowCount="1"
         app:layout_constraintTop_toTopOf="parent"
-
         >
 
 
