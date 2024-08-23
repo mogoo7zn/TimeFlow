@@ -8,4 +8,17 @@
     tools:showIn="@layout/app_bar_main"
     android:layout_marginBottom="54dp">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/deadline_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="12dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

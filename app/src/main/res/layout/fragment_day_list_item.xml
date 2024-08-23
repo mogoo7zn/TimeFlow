@@ -69,6 +69,17 @@
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@id/lesson_label_day"
                     app:layout_constraintTop_toTopOf="@id/lesson_text_day" />
+
+                <ImageView
+                    android:id="@+id/day_tomato_clock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/ic_tomato"/>.
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
