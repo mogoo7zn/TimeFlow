@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main"
+    android:layout_marginBottom="54dp">
+
+    <TextView
+        android:id="@+id/current_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_goal"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"/>.
+
+    <RadioButton
+        android:id="@+id/current_goal_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/current_goal"
+        app:layout_constraintTop_toTopOf="@id/current_goal"
+        android:layout_marginTop="4dp"
+        style="@style/TabButton"
+        android:drawableTop="@drawable/ic_goal_picker_selector"/>.
+
+    <TextView
+        android:id="@+id/goal_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/current_goal"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="6dp"/>.
+
+    <TextView
+        android:id="@+id/goal_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goal_connecting_string"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/current_goal"
+        app:layout_constraintStart_toEndOf="@id/goal_count"
+        android:layout_marginTop="6dp"/>
+
+    <TextView
+        android:id="@+id/goal_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="@string/goal_tag"
+        app:layout_constraintTop_toBottomOf="@id/current_goal"
+        app:layout_constraintStart_toEndOf="@id/goal_text"
+        android:layout_marginTop="6dp"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/goal_overview_recycler_view"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/current_goal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        android:scrollbars="vertical"
+        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:padding="12dp"
+        android:visibility="visible">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

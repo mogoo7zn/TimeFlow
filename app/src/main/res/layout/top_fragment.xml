@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="26dp"
-
+            style="@style/TabButton"
             android:lineSpacingExtra="8sp"
             android:text="2022"
             android:textColor="@color/text_deep"
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-
+            style="@style/TabButton"
             android:lineSpacingExtra="8sp"
             android:text="@string/year"
             android:textColor="@color/text_deep"
@@ -50,7 +50,7 @@
             app:layout_constraintTop_toBottomOf="@id/text_year"
             app:layout_constraintBottom_toBottomOf="@id/text_month"
             app:layout_constraintEnd_toStartOf="@id/text_current_week"
-            app:layout_constraintStart_toStartOf="@id/text_current_month"/>
+            app:layout_constraintStart_toStartOf="parent"/>
         <TextView
             android:id="@+id/text_current_month"
             android:layout_width="wrap_content"
@@ -61,6 +61,7 @@
             android:textColor="@color/text_deep"
             android:textAlignment="textStart"
             android:textSize="24sp"
+            style="@style/TextAppearance.MaterialComponents.Headline1"
             app:layout_constraintTop_toBottomOf="@id/text_current_year"
             app:layout_constraintStart_toStartOf="@id/text_current_year"/>
 
@@ -75,6 +76,7 @@
             android:textColor="@color/text_deep"
             android:textAlignment="textStart"
             android:textSize="24sp"
+            style="@style/TextAppearance.MaterialComponents.Headline1"
             app:layout_constraintTop_toBottomOf="@id/text_current_year"
             app:layout_constraintStart_toEndOf="@id/text_current_month"/>
 
@@ -89,6 +91,7 @@
             android:textColor="@color/text_deep"
             android:textAlignment="textStart"
             android:textSize="24sp"
+            style="@style/TextAppearance.MaterialComponents.Headline1"
             app:layout_constraintTop_toBottomOf="@id/text_current_year"
             app:layout_constraintStart_toEndOf="@id/text_month"/>
 
@@ -103,6 +106,7 @@
             android:textColor="@color/text_deep"
             android:textAlignment="textStart"
             android:textSize="24sp"
+            style="@style/TextAppearance.MaterialComponents.Headline1"
             app:layout_constraintTop_toBottomOf="@id/text_current_year"
             app:layout_constraintStart_toEndOf="@id/text_current_day"/>
 
@@ -124,7 +128,7 @@
             android:id="@+id/text_current_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            style="@style/TextAppearance.MaterialComponents.Headline2"
             android:layout_marginStart="4dp"
             android:layout_marginBottom="2dp"
             android:lineSpacingExtra="8sp"
