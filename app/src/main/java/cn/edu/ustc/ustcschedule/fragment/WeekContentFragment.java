@@ -21,12 +21,15 @@ import androidx.fragment.app.Fragment;
 import com.example.timeflow.R;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import cn.edu.ustc.timeflow.bean.Task;
+import cn.edu.ustc.timeflow.util.DBHelper;
+import cn.edu.ustc.timeflow.util.TimeTable;
 import cn.edu.ustc.ustcschedule.dialog.DeleteDialog;
 
 public class WeekContentFragment extends Fragment {
@@ -34,11 +37,39 @@ public class WeekContentFragment extends Fragment {
     double magnify_ratio;
     final SimpleDateFormat format_day = new SimpleDateFormat("yyyy/MM/dd",Locale.CHINA);
     final SimpleDateFormat format_time = new SimpleDateFormat("HH:mm",Locale.CHINA);
+    View view;
+    LayoutInflater inflater;
+    ViewGroup container;
+    ConstraintLayout layout;
+    TimeTable timeTable;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_week_content, container, false);
+
+        view= inflater.inflate(R.layout.fragment_week_content, container, false);
+
+        this.inflater=inflater;
+        this.container=container;
+        timeTable = new TimeTable(getContext(),1, LocalDate.now());
+
+        show_schedule();
+        return view;
+    }
+
+    public void clear_schedule()
+    {
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            View child = layout.getChildAt(i);
+            if (child.getId() == -1) {
+                layout.removeView(child);
+                i--;
+            }
+        }
+    }
+
+    public void show_schedule(){
         GridLayout gridLayout=view.findViewById(R.id.fragment_week_content_layout);
         gridLayout.removeAllViews();
         for(int day_of_week=1;day_of_week<=7;day_of_week++)
@@ -48,12 +79,9 @@ public class WeekContentFragment extends Fragment {
             long day_start=((ca.getTimeInMillis()+8*3600*1000)/(86400*1000))*(86400*1000)-8*3600*1000;//清除小时和分钟
             long day_end=day_start+86400*1000;
 
-            String day_start_str=Long.toString(day_start);
-            String day_end_str=Long.toString(day_end);
 
-            ConstraintLayout layout=(ConstraintLayout)inflater.inflate(R.layout.fragment_week_content_day, container, false);
+            layout=(ConstraintLayout)inflater.inflate(R.layout.fragment_week_content_day, container, false);
             magnify_ratio=(float)(layout.findViewById(R.id.day_list_container).getLayoutParams()).height/1226.0;
-            //TODO: add schedule
 
 
             GridLayout.LayoutParams params=new GridLayout.LayoutParams();
@@ -64,23 +92,27 @@ public class WeekContentFragment extends Fragment {
 
 
 
-
+            for(Task task:timeTable.getTasks())
+            {
+                if(task.getStart().toEpochSecond(ZoneOffset.of("+8"))*1000>=day_start&&
+                        task.getEnd().toEpochSecond(ZoneOffset.of("+8"))*1000<=day_end)
+                {
+                    add_schedule(layout,task,inflater,container);
+                }
+            }
             gridLayout.addView(layout,params);
 
         }
-
-        return view;
     }
 
 
 
-
-    public void add_schedule(ConstraintLayout layout, Task schedule, LayoutInflater inflater, ViewGroup container)
+    public void add_schedule(ConstraintLayout layout, Task task, LayoutInflater inflater, ViewGroup container)
     {
         View schedule_view=inflater.inflate(R.layout.fragment_week_list_item, container, false);
 
-        long starting_time=schedule.getStart().toEpochSecond(ZoneOffset.of("+8"))*1000;
-        long ending_time=schedule.getEnd().toEpochSecond(ZoneOffset.of("+8"))*1000;
+        long starting_time=task.getStart().toEpochSecond(ZoneOffset.of("+8"))*1000;
+        long ending_time=task.getEnd().toEpochSecond(ZoneOffset.of("+8"))*1000;
 
         double height=1.01*(Math.abs(ending_time-starting_time))/72000;
         long day_start_temp=((starting_time+8*3600*1000)/(86400*1000))*(86400*1000)-8*3600*1000;
@@ -88,7 +120,7 @@ public class WeekContentFragment extends Fragment {
 
         CardView card=(CardView)schedule_view.findViewById(R.id.lesson_card_day);
         card.setOnLongClickListener(new View.OnLongClickListener() {
-            final int event_id= schedule.getId();
+            final int event_id= task.getId();
             final String table_name="SCHEDULE";
 
             @Override
@@ -101,7 +133,9 @@ public class WeekContentFragment extends Fragment {
 
                     @Override
                     public void onDialogPositiveClick(DialogFragment dialog) {
-
+                        timeTable.deleteTask(event_id);
+                        clear_schedule();
+                        show_schedule();
                     }
 
                     @Override
@@ -113,15 +147,15 @@ public class WeekContentFragment extends Fragment {
             }
         });
         ConstraintLayout.LayoutParams card_params = (ConstraintLayout.LayoutParams) card.getLayoutParams();
-        ((TextView)card.findViewById(R.id.lesson_text_day)).setText(schedule.getContent());
-        //((TextView)card.findViewById(R.id.lesson_teacher)).setText(schedule.getDescription());
-        //((TextView)card.findViewById(R.id.lesson_place)).setText(schedule.getPlace());
+        ((TextView)card.findViewById(R.id.lesson_text_day)).setText(task.getContent());
+        //((TextView)card.findViewById(R.id.lesson_teacher)).setText(task.getDescription());
+        //((TextView)card.findViewById(R.id.lesson_place)).setText(task.getPlace());
         //String starting_time_str=format_time.format(starting_time);
         //String ending_time_str=format_time.format(ending_time);
         ((TextView)schedule_view.findViewById(R.id.start_time_text)).setText(format_time.format(starting_time));
         ((TextView)schedule_view.findViewById(R.id.end_time_text)).setText(format_time.format(ending_time));
 
-        switch(schedule.getImportance())
+        switch(task.getImportance())
         {
             case 1:
             case 2:
@@ -143,10 +177,9 @@ public class WeekContentFragment extends Fragment {
         card_params.topMargin=(int)(magnify_ratio*pos);
 
         card.setLayoutParams(card_params);
-        //schedule_view.layout(0,100,schedule_view.getRight()-schedule_view.getLeft(),170);
+        schedule_view.setTag(R.id.Tag_id,-1);
         layout.addView(schedule_view);
-        //schedule_view.setLayoutParams(card_params);
-        //return view;
+
     }
 //
 //

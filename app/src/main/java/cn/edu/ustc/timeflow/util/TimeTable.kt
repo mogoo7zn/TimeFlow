@@ -14,8 +14,8 @@ import java.time.LocalDateTime
 
 class TimeTable {
     var context: Context? = null
-    var start: LocalDateTime
-    var end: LocalDateTime
+    lateinit var start: LocalDateTime
+    lateinit var end: LocalDateTime
     var tasks: MutableList<Task> = mutableListOf()
 
     constructor(context: Context?, date: LocalDate) {
@@ -39,6 +39,34 @@ class TimeTable {
         }
 
         checkOverlap()
+    }
+
+    constructor(context: Context?,Type:Int, date: LocalDate) {
+        if(Type==1){//get timetable of this week
+            this.context = context
+            this.start = date.atStartOfDay()
+            this.end = date.atTime(23, 59, 59)
+            val taskDao = TaskDB.getDatabase(context!!).taskDao()
+            tasks = taskDao.getByTime(start, end).toMutableList()
+            checkOverlap()
+        }
+        else if(Type==2){//get timetable of this month
+            this.context = context
+            this.start = date.atStartOfDay()
+            this.end = date.atTime(23, 59, 59)
+            val taskDao = TaskDB.getDatabase(context!!).taskDao()
+            tasks = taskDao.getByTime(start, end).toMutableList()
+            checkOverlap()
+        }
+        else if(Type==3){//get timetable of this year
+            this.context = context
+            this.start = date.atStartOfDay()
+            this.end = date.atTime(23, 59, 59)
+            val taskDao = TaskDB.getDatabase(context!!).taskDao()
+            tasks = taskDao.getByTime(start, end).toMutableList()
+            checkOverlap()
+
+        }
     }
 
     fun addTask(task: Task) {
