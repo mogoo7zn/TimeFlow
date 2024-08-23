@@ -35,8 +35,6 @@ public class Task {
     @Ignore
     Integer overlap;
 
-    @Ignore
-    Integer overlapIndex;
 
     @Ignore
     public Task(Action action, LocalDateTime start, LocalDateTime end){
@@ -134,11 +132,5 @@ public class Task {
         this.overlap = overlap;
     }
 
-    public Integer getOverlapIndex() {
-        return overlapIndex;
-    }
 
-    public void setOverlapIndex(Integer overlapIndex) {
-        this.overlapIndex = overlapIndex;
-    }
 }

@@ -1,5 +1,7 @@
 package cn.edu.ustc.ustcschedule.fragment;
 
+
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -9,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import cn.edu.ustc.ustcschedule.util.Alpha;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -118,7 +120,7 @@ public class WeekContentFragment extends Fragment {
         long day_start_temp=((starting_time+8*3600*1000)/(86400*1000))*(86400*1000)-8*3600*1000;
         double pos=1.01*(Math.min(starting_time,ending_time)-day_start_temp)/72000+6.5;//6是line到layout顶部的高度
 
-        CardView card=(CardView)schedule_view.findViewById(R.id.lesson_card_day);
+        CardView card= schedule_view.findViewById(R.id.lesson_card_day);
         card.setOnLongClickListener(new View.OnLongClickListener() {
             final int event_id= task.getId();
             final String table_name="SCHEDULE";
@@ -155,20 +157,41 @@ public class WeekContentFragment extends Fragment {
         ((TextView)schedule_view.findViewById(R.id.start_time_text)).setText(format_time.format(starting_time));
         ((TextView)schedule_view.findViewById(R.id.end_time_text)).setText(format_time.format(ending_time));
 
+        switch (task.getOverlap()) {
+            case 0:
+                card.setAlpha(Alpha.ALPHA_FULL);
+                break;
+            case 1:
+                card.setAlpha(Alpha.ALPHA_HIGH);
+                break;
+            case 2:
+                card.setAlpha(Alpha.ALPHA_MEDIUM);
+                break;
+            case 3:
+                card.setAlpha(Alpha.ALPHA_LOW);
+                break;
+            case 4:
+                card.setAlpha(Alpha.ALPHA_VERY_LOW);
+                break;
+            default:
+                card.setAlpha(Alpha.ALPHA_MINIMUM);
+                break;
+        }
+
         switch(task.getImportance())
         {
             case 1:
             case 2:
-                ((ImageView)schedule_view.findViewById(R.id.lesson_label_day)).setBackgroundResource(R.drawable.green_label);
+                schedule_view.findViewById(R.id.lesson_label_day).setBackgroundResource(R.drawable.green_label);
                 ((TextView)schedule_view.findViewById(R.id.lesson_text_day)).setTextColor(getResources().getColor(R.color.green_label_text));
-                ((TextView)schedule_view.findViewById(R.id.lesson_place)).setBackgroundResource(R.drawable.green_label_small);
+                schedule_view.findViewById(R.id.lesson_place).setBackgroundResource(R.drawable.green_label_small);
 
                 break;
 
             case 3:
-                ((ImageView)schedule_view.findViewById(R.id.lesson_label_day)).setBackgroundResource(R.drawable.yellow_label);
+                schedule_view.findViewById(R.id.lesson_label_day).setBackgroundResource(R.drawable.yellow_label);
                 ((TextView)schedule_view.findViewById(R.id.lesson_text_day)).setTextColor(getResources().getColor(R.color.yellow_label_text));
-                ((TextView)schedule_view.findViewById(R.id.lesson_place)).setBackgroundResource(R.drawable.yellow_label_small);
+                schedule_view.findViewById(R.id.lesson_place).setBackgroundResource(R.drawable.yellow_label_small);
                 break;
         }
 

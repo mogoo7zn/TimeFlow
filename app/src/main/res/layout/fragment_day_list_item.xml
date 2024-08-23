@@ -12,7 +12,6 @@
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:alpha="0.75"
         app:cardCornerRadius="10dp" >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,29 +32,29 @@
                     android:id="@+id/lesson_text_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintVertical_bias="0.08"
+                    android:layout_marginStart="26dp"
+
                     android:text="数学分析(B2)"
                     android:textColor="@color/blue_label_text"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="@id/lesson_label_day"
-                    app:layout_constraintTop_toTopOf="@id/lesson_label_day"
                     app:layout_constraintBottom_toBottomOf="@id/lesson_label_day"
-                    />
+
+                    app:layout_constraintStart_toStartOf="@id/lesson_label_day"
+
+                    app:layout_constraintTop_toTopOf="@id/lesson_label_day"
+                    app:layout_constraintVertical_bias="0.3819660" />
 
                 <TextView
                     android:id="@+id/lesson_teacher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    app:layout_constraintVertical_bias="0.07"
+
                     android:text="王建伟"
                     android:textColor="@color/normal"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@id/lesson_text_day"
                     app:layout_constraintTop_toBottomOf="@id/lesson_text_day"
-                    app:layout_constraintBottom_toBottomOf="@id/lesson_label_day"/>
+                    />
 
                 <TextView
                     android:id="@+id/lesson_place"
@@ -63,7 +62,7 @@
                     android:textAlignment="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginEnd="26dp"
                     android:background="@drawable/blue_label_small"
                     android:text="3C303"
                     android:textColor="@color/normal"

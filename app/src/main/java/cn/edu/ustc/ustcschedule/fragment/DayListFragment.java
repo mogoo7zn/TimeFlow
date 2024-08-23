@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import cn.edu.ustc.timeflow.dao.TaskDao;
 import cn.edu.ustc.timeflow.util.DBHelper;
 import cn.edu.ustc.timeflow.util.TimeTable;
 import cn.edu.ustc.ustcschedule.dialog.DeleteDialog;
+import cn.edu.ustc.ustcschedule.util.Alpha;
 
 public class DayListFragment extends Fragment {
 
@@ -115,7 +117,7 @@ public class DayListFragment extends Fragment {
         // 6.5 is an offset to account for the layout's top margin
         double pos = 1.01 * (Math.min(starting_time, ending_time) - day_start_temp) / 72000 + 6.5;
 
-        CardView card=(CardView)schedule_view.findViewById(R.id.lesson_card_day);
+        CardView card= schedule_view.findViewById(R.id.lesson_card_day);
 
         // Set the long click listener for the card
         card.setOnLongClickListener(new View.OnLongClickListener()
@@ -153,12 +155,62 @@ public class DayListFragment extends Fragment {
         card_params.height=(int)(magnify_ratio*height);//放大倍数乘值
         card_params.topMargin=(int)(magnify_ratio*pos);
 
-//        ConstraintLayout.LayoutParams schedule_params = (ConstraintLayout.LayoutParams) schedule_view.getLayoutParams();
-//
-//        if(task.getOverlap()>1){
-//            schedule_params.width= schedule_params.width/task.getOverlap();
-//
-//        }
+        TextView text = card.findViewById(R.id.lesson_text_day);
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) text.getLayoutParams();
+
+        switch (task.getOverlap()) {
+            case 0:
+                card.setAlpha(Alpha.ALPHA_FULL);
+                params.setMarginStart((int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        26,
+                        getResources().getDisplayMetrics()
+                ));
+
+                break;
+            case 1:
+                card.setAlpha(Alpha.ALPHA_HIGH);
+                params.setMarginStart((int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        40,
+                        getResources().getDisplayMetrics()
+                ));
+
+                break;
+            case 2:
+                card.setAlpha(Alpha.ALPHA_MEDIUM);
+                params.setMarginStart((int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        50,
+                        getResources().getDisplayMetrics()
+                ));
+                break;
+            case 3:
+                card.setAlpha(Alpha.ALPHA_LOW);
+                params.setMarginStart((int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        60,
+                        getResources().getDisplayMetrics()
+                ));
+                break;
+            case 4:
+                card.setAlpha(Alpha.ALPHA_VERY_LOW);
+                params.setMarginStart((int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        70,
+                        getResources().getDisplayMetrics()
+                ));
+                break;
+            default:
+                card.setAlpha(Alpha.ALPHA_MINIMUM);
+                params.setMarginStart((int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        80,
+                        getResources().getDisplayMetrics()
+                ));
+                break;
+        }
+        text.setLayoutParams(params);
 
 
 

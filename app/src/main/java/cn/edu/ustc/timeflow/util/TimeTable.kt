@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 class TimeTable {
     var context: Context? = null
@@ -122,29 +123,19 @@ class TimeTable {
     }
 
     fun checkOverlap(){
+        //按照任务时长排序，时长越长的任务越靠前（在底层）
+        tasks.sortBy {- it.end.toEpochSecond(ZoneOffset.UTC) + it.start.toEpochSecond(ZoneOffset.UTC) }
         //检查是否有重叠的任务，如果有则将task.overlap设为重叠了几次（即同时有几个任务），并更新重叠序号task.overlapIndex (表示同时有几个任务中的第几个)
-        for (i in 0 until tasks.size) {
-            var overlap = 1
-            for (j in 0 until tasks.size) {
-                if (i != j && tasks[i].start < tasks[j].end && tasks[i].end > tasks[j].start) {
-                    overlap++
+        for (i in tasks.indices) {
+            tasks[i].overlap = 0
+
+            for(j in 0..i-1){
+                if(tasks[j].start < tasks[i].end && tasks[j].end > tasks[i].start){
+                    tasks[i].overlap++
                 }
             }
-            tasks[i].overlap = overlap
-            tasks[i].overlapIndex = 0
-            for (j in 0 until tasks.size) {
-                if (i != j && tasks[i].start < tasks[j].end && tasks[i].end > tasks[j].start) {
-                    if (tasks[j].start < tasks[i].start) {
-                        tasks[i].overlapIndex++
-                    } else if (tasks[j].start == tasks[i].start) {
-                        if (tasks[j].end < tasks[i].end) {
-                            tasks[i].overlapIndex++
-                        }
-                    }
-                }
-            }
+            Log.d("overlap", i.toString()+" "+tasks[i].overlap.toString())
         }
-
-
     }
+
 }
