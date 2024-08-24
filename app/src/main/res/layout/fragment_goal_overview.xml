@@ -27,6 +27,7 @@
         app:layout_constraintStart_toEndOf="@id/current_goal"
         app:layout_constraintTop_toTopOf="@id/current_goal"
         android:layout_marginTop="4dp"
+        android:layout_marginStart="2dp"
         style="@style/TabButton"
         android:drawableTop="@drawable/ic_goal_picker_selector"/>.
 
