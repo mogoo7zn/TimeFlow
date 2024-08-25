@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.timeflow.R;
@@ -21,9 +22,11 @@ public class ScheduleWidget extends AppWidgetProvider {
         Intent intent = new Intent(context, TaskWidgetService.class);
         views.setRemoteAdapter(R.id.month_ListView, intent);
 
-//        // Create an Intent to launch MainActivity
-//        Intent launchIntent = new Intent(context, MainActivity.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, launchIntent, PendingIntent.FLAG_IMMUTABLE);
+        // Create an Intent to update the widget
+//        Intent updateIntent = new Intent(context, ScheduleWidget.class);
+//        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+//        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{appWidgetId});
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, updateIntent, PendingIntent.FLAG_IMMUTABLE);
 //        views.setOnClickPendingIntent(R.id.month_ListView, pendingIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -38,9 +41,11 @@ public class ScheduleWidget extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
+        context.startService(new Intent(context, TaskWidgetService.class));
     }
 
     @Override
     public void onDisabled(Context context) {
+        context.stopService(new Intent(context, TaskWidgetService.class));
     }
 }
