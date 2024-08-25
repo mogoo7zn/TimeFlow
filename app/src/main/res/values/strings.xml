@@ -17,6 +17,11 @@
     <string name="current_goal">当前目标</string>
     <string name="goal_connecting_string">个目标  |  当前目标：</string>
     <string name="goal_tag">运动</string>
+    <string name="current_action">当前行动</string>
+    <string name="current_task">当前任务</string>
+    <string name="task_description">任务描述</string>
+    <string name="task_time">2024.09.01 09:00 - 11:00</string>
+    <string name="task_place">地点</string>
 
     <string name="menu_setting">设置</string>
     <string name="menu_profile">个人资料</string>
