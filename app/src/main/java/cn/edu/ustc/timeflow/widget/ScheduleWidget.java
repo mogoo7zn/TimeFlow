@@ -48,4 +48,6 @@ public class ScheduleWidget extends AppWidgetProvider {
     public void onDisabled(Context context) {
         context.stopService(new Intent(context, TaskWidgetService.class));
     }
+
+
 }

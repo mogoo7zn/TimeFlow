@@ -1,5 +1,8 @@
 package cn.edu.ustc
 
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +12,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import cn.edu.ustc.timeflow.widget.ScheduleWidget
+import cn.edu.ustc.timeflow.widget.TaskWidgetService
 import cn.edu.ustc.ui.WebActivity
 import com.example.timeflow.R
 import com.example.timeflow.databinding.ActivityMainBinding
@@ -86,5 +91,20 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Create an Intent to start the TaskWidgetService
+        val intent = Intent(this, TaskWidgetService::class.java)
+
+        // Create a PendingIntent with the FLAG_IMMUTABLE flag
+        val pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        // Start the service using the PendingIntent
+        pendingIntent.send()
+
+
+
     }
 }
