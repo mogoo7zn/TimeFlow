@@ -1,6 +1,8 @@
 package cn.edu.ustc.ustcschedule.fragment
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,10 +55,9 @@ class GoalOverviewFragment : Fragment() {
                 adapter.actionList = emptyList()
                 adapter.notifyDataSetChanged()
             }
-            binding.currentGoalPicker.isChecked = false
-
 
         }
+
     }
 
     private fun showGoalPickerMenu() {
@@ -72,7 +73,16 @@ class GoalOverviewFragment : Fragment() {
             val selectedGoal = goalList[position]
             fetchAndDisplayActionsForGoal(selectedGoal)
             dialog.dismiss()
+
         }
+
+        dialog.setOnDismissListener(
+            object : DialogInterface.OnDismissListener {
+                override fun onDismiss(dialog: DialogInterface) {
+                    binding.currentGoalPicker.isChecked = false
+                }
+            }
+        )
 
         dialog.setContentView(view)
         dialog.show()

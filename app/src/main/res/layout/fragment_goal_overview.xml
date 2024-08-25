@@ -29,7 +29,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginStart="2dp"
         style="@style/TabButton"
-        android:drawableTop="@drawable/ic_goal_picker_selector"/>.
+        android:drawableTop="@drawable/ic_goal_picker_selector"/>
 
     <TextView
         android:id="@+id/goal_count"
