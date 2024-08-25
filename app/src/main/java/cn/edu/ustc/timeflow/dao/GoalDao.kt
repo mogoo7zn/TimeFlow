@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
+import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.bean.Goal
 import cn.edu.ustc.timeflow.util.DateTimeConverter
 import java.time.LocalDateTime
@@ -44,4 +45,10 @@ interface GoalDao {
     fun deleteById(id: Int)
     @Query("DELETE FROM goal WHERE goal_name = :name")
     fun deleteByName(name: String)
+
+    @Query("SELECT COUNT(*) FROM goal")
+    fun getCount(): Int
+
+    @Query("SELECT goal_name FROM goal WHERE id = :id")
+    fun getNameById(id: Int): String
 }

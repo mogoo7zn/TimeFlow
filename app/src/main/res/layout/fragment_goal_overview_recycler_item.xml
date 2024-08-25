@@ -27,8 +27,7 @@
                 android:background="@color/blue_200"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/plan" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/action_name"
@@ -41,23 +40,60 @@
                 android:textColor="@color/blue_700"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ExpandableListView
-                android:id="@+id/goal_overview_task_list"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/action_description"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:scrollbarStyle="insideOverlay"
-                app:layout_constraintTop_toBottomOf="@id/action_name"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="18dp"
+                android:text="@string/action_description"
+                android:textColor="@color/dark_grey"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>.
+                app:layout_constraintTop_toBottomOf="@id/action_name"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/action_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/action_start_time"
+                android:textColor="@color/dark_grey"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/action_description" />
+
+            <TextView
+                android:id="@+id/action_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/action_end_time"
+                android:textColor="@color/dark_grey"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/action_start_time"
+                app:layout_constraintTop_toBottomOf="@id/action_description" />
+
+            <TextView
+                android:id="@+id/action_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/action_place"
+                android:textColor="@color/dark_grey"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/action_end_time"
+                app:layout_constraintTop_toBottomOf="@id/action_description" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
