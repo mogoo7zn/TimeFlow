@@ -14,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeFlow"
         tools:targetApi="31">
+
+        <service android:name="cn.edu.ustc.timeflow.widget.TaskWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <receiver
             android:name="cn.edu.ustc.timeflow.widget.ScheduleWidget"
             android:exported="false">
@@ -36,7 +40,6 @@
             android:theme="@style/Theme.TimeFlow.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
