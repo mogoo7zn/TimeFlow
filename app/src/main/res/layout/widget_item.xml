@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/lesson_label"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_label"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"/>
+
+            <TextView
+                android:id="@+id/lesson_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="14dp"
+                android:text="数学分析(B2)"
+                android:textColor="@color/blue_label_text"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:id="@+id/lesson_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="王建伟"
+                android:textColor="@color/normal"
+                android:textSize="14sp"
+                android:layout_below="@id/lesson_text"
+                android:layout_alignStart="@id/lesson_text" />
+
+            <TextView
+                android:id="@+id/lesson_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_label_small"
+                android:layout_marginEnd="14dp"
+                android:text="3C303"
+                android:textColor="@color/normal"
+                android:textSize="14sp"
+                android:textAlignment="center"
+                android:layout_alignTop="@id/lesson_text"
+                android:layout_alignBottom="@id/lesson_text"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:id="@+id/lesson_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:text="09:45-11:20"
+                android:textColor="@color/text_light"
+                android:textSize="12sp"
+                android:layout_alignBottom="@id/lesson_label"
+                android:layout_alignEnd="@id/lesson_room" />
+
+        </RelativeLayout>
+
+
+
+</RelativeLayout>
