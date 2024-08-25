@@ -37,4 +37,7 @@ interface ActionDao {
 
     @Query("DELETE FROM 'action' WHERE action_name = :name")
     fun deleteByName(name: String)
+
+    @Query("SELECT * FROM 'action' WHERE goal_id = :goalId")
+    fun getActionsForGoal(goalId: Int): List<Action>
 }

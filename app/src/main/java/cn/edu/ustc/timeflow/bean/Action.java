@@ -33,7 +33,7 @@ public class Action {
     @ColumnInfo(name = "action_location")
     String location;
     @ColumnInfo(name = "action_note")
-    String note;
+    String note;    // 行动备注
     @ColumnInfo(name = "action_remind")
     boolean remind;
     @ColumnInfo(name = "action_type")
