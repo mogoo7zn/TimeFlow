@@ -165,11 +165,11 @@ public class DayListFragment extends Fragment {
                 break;
             case 1:
                 card.setAlpha(Alpha.ALPHA_HIGH);
-                margin = 60;
+                margin = 50;
                 break;
             case 2:
                 card.setAlpha(Alpha.ALPHA_MEDIUM);
-                margin = 120;
+                margin = 100;
                 break;
             case 3:
                 card.setAlpha(Alpha.ALPHA_LOW);
@@ -177,11 +177,11 @@ public class DayListFragment extends Fragment {
                 break;
             case 4:
                 card.setAlpha(Alpha.ALPHA_VERY_LOW);
-                margin = 90;
+                margin = 80;
                 break;
             default:
                 card.setAlpha(Alpha.ALPHA_MINIMUM);
-                margin = 100;
+                margin = 110;
                 break;
         }
 
@@ -195,7 +195,7 @@ public class DayListFragment extends Fragment {
 
         card_params.setMarginEnd((int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                (int)(margin * 0.7),
+                (int)(margin * 0.3),
                 getResources().getDisplayMetrics()
         ));
 

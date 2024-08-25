@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="TabButton">
         <item name="android:padding">6dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
-<!--        <item name="android:background">@drawable/tag_bg_selector</item>-->
-<!--        <item name="android:textColor">@drawable/tag_text_selector</item>-->
-<!--        <item name="android:textSize">15sp</item>-->
+        <!--        <item name="android:background">@drawable/tag_bg_selector</item>-->
+        <!--        <item name="android:textColor">@drawable/tag_text_selector</item>-->
+        <!--        <item name="android:textSize">15sp</item>-->
         <item name="android:button">@null</item>
 
         <item name="windowActionBar">false</item>
@@ -19,11 +20,14 @@
     </style>
 
     <style name="Widget.CalendarView.Custom" parent="Theme.AppCompat.DayNight">
-<!--        parent theme不使用DayNight不知为什么星期栏不显示-->
+        <!--        parent theme不使用DayNight不知为什么星期栏不显示-->
         <!--周字体颜色-->
-        <item name="android:weekDayTextAppearance">@style/Widget.Material3.MaterialCalendar.Day</item>
+        <item name="android:weekDayTextAppearance">@style/Widget.Material3.MaterialCalendar.Day
+        </item>
         <!--日字体颜色-->
-        <item name="android:dateTextAppearance">@style/MaterialAlertDialog.MaterialComponents.Title.Text</item>
+        <item name="android:dateTextAppearance">
+            @style/MaterialAlertDialog.MaterialComponents.Title.Text
+        </item>
         <!--选中后背景-->
         <item name="colorAccent">@color/blue_700</item>
         <item name="colorPrimary">@color/blue_200</item>
@@ -31,5 +35,15 @@
         <item name="android:textColorPrimaryInverse">@color/white</item>
         <!--标题颜色-->
         <item name="android:textColorPrimary">@color/blue_500</item>
+    </style>
+
+    <style name="Widget.TimeFlow.AppWidget.Container" parent="android:Widget">
+        <item name="android:id">@android:id/background</item>
+        <item name="android:background">?android:attr/colorBackground</item>
+    </style>
+
+    <style name="Widget.TimeFlow.AppWidget.InnerView" parent="android:Widget">
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 </resources>
