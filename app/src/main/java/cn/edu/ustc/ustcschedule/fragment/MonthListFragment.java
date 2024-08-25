@@ -56,42 +56,6 @@ public class MonthListFragment extends Fragment {
         return view;
     }
 
-//    public boolean is_today_fun(BasicSchedule schedule)
-//    {
-//        boolean is_today=false;
-//        long starting_time=schedule.getStartingTime();
-//        Calendar temp_ca=Calendar.getInstance(Locale.CHINA);
-//        temp_ca.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-//        temp_ca.setTimeInMillis(starting_time);
-//        if(schedule.getPeriod()==1)
-//            is_today=true;
-//        if(schedule.getPeriod()==7&&(ca.get(Calendar.DAY_OF_WEEK) ==temp_ca.get(Calendar.DAY_OF_WEEK)))
-//            is_today=true;
-//        if(schedule.getPeriod()==30)
-//        {
-//            if(ca.get(Calendar.DAY_OF_MONTH) ==temp_ca.get(Calendar.DAY_OF_MONTH))
-//                is_today = true;
-//            if(ca.getActualMaximum(Calendar.DAY_OF_MONTH) <temp_ca.get(Calendar.DAY_OF_MONTH))//超过一个月最大天数
-//            {
-//                if(ca.getActualMaximum(Calendar.DAY_OF_MONTH)==ca.get(Calendar.DAY_OF_MONTH))
-//                    is_today=true;
-//            }
-//        }
-//        if(schedule.getPeriod()==365)
-//        {
-//            if((ca.get(Calendar.DAY_OF_MONTH) ==temp_ca.get(Calendar.DAY_OF_MONTH))&&
-//                    (ca.get(Calendar.MONTH)==temp_ca.get(Calendar.MONTH)))
-//            {
-//                is_today=true;
-//            }
-//            if(ca.getActualMaximum(Calendar.DAY_OF_MONTH) <temp_ca.get(Calendar.DAY_OF_MONTH)&&
-//                    (ca.get(Calendar.MONTH)==temp_ca.get(Calendar.MONTH)))//2月29日
-//            {
-//                is_today=true;
-//            }
-//        }
-//        return is_today;
-//    }
 
     public void updateList() {
         long dateInMillis = calendarView.getDate();

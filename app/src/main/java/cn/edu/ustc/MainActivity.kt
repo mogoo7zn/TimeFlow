@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import cn.edu.ustc.ui.WebActivity
 import com.example.timeflow.R
 import com.example.timeflow.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
         //This is the floating action button that is displayed on the bottom right of the screen.
         binding.appBarMain.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -71,6 +73,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+        val update = menu.findItem(R.id.update_online)
+        update.setOnMenuItemClickListener {
+            //打开WebActivity
+            val intent = android.content.Intent(this, WebActivity::class.java)
+            startActivity(intent)
+            true
+        }
         return true
     }
 
