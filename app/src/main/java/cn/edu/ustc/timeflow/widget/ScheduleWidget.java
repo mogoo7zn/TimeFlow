@@ -14,29 +14,25 @@ import cn.edu.ustc.MainActivity;
 
 public class ScheduleWidget extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.schedule_widget);
-
-        Intent intent = new Intent(context, TaskWidgetService.class);
-        views.setRemoteAdapter(R.id.month_ListView, intent);
-
-        // Create an Intent to update the widget
-//        Intent updateIntent = new Intent(context, ScheduleWidget.class);
-//        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{appWidgetId});
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, updateIntent, PendingIntent.FLAG_IMMUTABLE);
-//        views.setOnClickPendingIntent(R.id.month_ListView, pendingIntent);
-
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.month_ListView);
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.schedule_widget);
+            Intent intent = new Intent(context, TaskWidgetService.class);
+            views.setRemoteAdapter(R.id.month_ListView, intent);
+
+            //TODO: 添加点击事件，跳转到主界面
+            Intent mainIntent = new Intent(context, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE);
+            views.setPendingIntentTemplate(R.id.widget_items, pendingIntent);
+
+
+            Log.d("ScheduleWidget", "onUpdate");
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+
         }
+
     }
 
     @Override
@@ -45,9 +41,18 @@ public class ScheduleWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onDisabled(Context context) {
-        context.stopService(new Intent(context, TaskWidgetService.class));
-    }
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+        if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+            if (appWidgetIds != null) {
+                onUpdate(context, appWidgetManager, appWidgetIds);
 
+            }
+
+        }
+
+    }
 
 }

@@ -2,8 +2,10 @@ package cn.edu.ustc
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -95,15 +97,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        // Create an Intent to start the TaskWidgetService
-        val intent = Intent(this, TaskWidgetService::class.java)
-
-        // Create a PendingIntent with the FLAG_IMMUTABLE flag
-        val pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-
-        // Start the service using the PendingIntent
-        pendingIntent.send()
-
+        //更新widget
+        val intent = Intent(this, ScheduleWidget::class.java)
+        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+        val ids = AppWidgetManager.getInstance(application).getAppWidgetIds(
+            ComponentName(application, ScheduleWidget::class.java)
+        )
+        Log.d("MainActivity", "onPause: ${ids.size}")
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        sendBroadcast(intent)
 
 
     }
