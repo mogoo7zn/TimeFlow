@@ -62,6 +62,20 @@
         app:layout_constraintStart_toEndOf="@id/goal_text"
         android:layout_marginTop="6dp"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_action_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        style="@style/TabButton"
+        android:backgroundTint="@color/white"
+        app:backgroundTint="@color/white"
+        android:tint="@color/white"
+        android:src="@drawable/ic_add"
+        app:fabSize="mini"/>.
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

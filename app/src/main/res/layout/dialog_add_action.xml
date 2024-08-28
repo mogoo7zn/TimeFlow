@@ -1,0 +1,191 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="12dp">
+
+    <EditText
+        android:id="@+id/action_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/action_name"
+        android:layout_alignParentTop="true" />
+
+    <EditText
+        android:id="@+id/action_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/action_duration"
+        android:layout_below="@id/action_name"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/action_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/action_location"
+        android:layout_below="@id/action_duration"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/action_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/action_note"
+        android:layout_below="@id/action_location"
+        android:layout_marginTop="8dp" />
+
+    <CheckBox
+        android:id="@+id/action_remind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_remind"
+        android:layout_below="@id/action_note"
+        android:layout_marginTop="8dp" />
+
+    <RadioGroup
+        android:id="@+id/action_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/action_remind"
+        android:layout_marginTop="8dp">
+
+        <RadioButton
+            android:id="@+id/action_type_daily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="daily" />
+
+        <RadioButton
+            android:id="@+id/action_type_weekly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="weekly" />
+
+        <RadioButton
+            android:id="@+id/action_type_once"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="once" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/weekly_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/action_type"
+        android:layout_marginTop="8dp"
+        android:visibility="gone">
+
+        <CheckBox
+            android:id="@+id/monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="monday" />
+
+        <CheckBox
+            android:id="@+id/tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tuesday" />
+
+        <CheckBox
+            android:id="@+id/wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wednesday" />
+
+        <CheckBox
+            android:id="@+id/thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="thursday" />
+
+        <CheckBox
+            android:id="@+id/friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="friday" />
+
+        <CheckBox
+            android:id="@+id/saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="saturday" />
+
+        <CheckBox
+            android:id="@+id/sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sunday" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/daily_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/action_type"
+        android:layout_marginTop="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="from" />
+
+        <TimePicker
+            android:id="@+id/start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="to" />
+
+        <TimePicker
+            android:id="@+id/end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/once_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/action_type"
+        android:layout_marginTop="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="at" />
+
+        <TimePicker
+            android:id="@+id/once_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/save_action_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:textSize="16sp"
+        android:layout_below="@id/once_options"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"/>
+</RelativeLayout>
