@@ -37,6 +37,7 @@ import cn.edu.ustc.timeflow.dao.TaskDao;
 import cn.edu.ustc.timeflow.util.DBHelper;
 import cn.edu.ustc.timeflow.util.TimeTable;
 import cn.edu.ustc.ustcschedule.dialog.DeleteDialog;
+import cn.edu.ustc.ustcschedule.dialog.LessonDetailDialogFragment;
 import cn.edu.ustc.ustcschedule.util.Alpha;
 
 public class DayListFragment extends Fragment {
@@ -121,6 +122,23 @@ public class DayListFragment extends Fragment {
         CardView card= schedule_view.findViewById(R.id.lesson_card_day);
 
         // Set the long click listener for the card
+        card.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Show the lesson detail dialog
+                        LessonDetailDialogFragment dialog = LessonDetailDialogFragment.newInstance(
+                                task.getContent(),
+                                "","",
+
+                                format_time.format(starting_time) + " - " + format_time.format(ending_time),
+                                "",
+                                ""
+                        );
+                        dialog.show(getActivity().getSupportFragmentManager(), "lesson_detail");
+                    }
+                }
+        );
         card.setOnLongClickListener(new View.OnLongClickListener()
             {
                 final int event_id= task.getId();

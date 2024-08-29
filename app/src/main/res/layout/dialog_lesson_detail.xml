@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:background="#00000000"
+    card_view:cardCornerRadius="30dp"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue_label_bg_deep"
+    card_view:cardCornerRadius="30dp"
+    >
+
+    <TextView
+        android:id="@+id/lesson_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="课程详情"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/lesson_detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="课程名称: 数学分析(B2)"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/lesson_detail_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/lesson_detail_teacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="教师: 王建伟"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/lesson_detail_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/lesson_detail_room"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="教室: 3C303"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/lesson_detail_teacher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/lesson_detail_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="时间: 09:45-11:20"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/lesson_detail_room"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/lesson_detail_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="描述: 这是一门关于数学分析的课程，涵盖了基本的微积分概念。"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/lesson_detail_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/lesson_detail_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="备注: 请带上课本和笔记本。"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/lesson_detail_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
