@@ -1,4 +1,5 @@
 package cn.edu.ustc.timeflow.util
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
@@ -41,7 +42,7 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
             .setCancelable(true)
             .setPositiveButton("返回主页") { dialog, _ ->
                 //结束WebActivity
-                getActivity(context)?.finish()
+                context.getActivity()?.finish()
             }
             .create()
 
@@ -94,4 +95,12 @@ fun convertCourseToAction(course: Course): Action {
 
 fun convertCoursesToActions(courses: List<Course>): List<Action> {
     return courses.map { convertCourseToAction(it) }
+}
+
+fun Context.getActivity(): Activity? {
+    return when (this) {
+        is Activity -> this
+        is android.content.ContextWrapper -> baseContext.getActivity()
+        else -> null
+    }
 }
