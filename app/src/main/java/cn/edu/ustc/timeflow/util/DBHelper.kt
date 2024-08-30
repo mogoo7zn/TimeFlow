@@ -112,7 +112,7 @@ class DBHelper (val context :Context){
         actionDao.deleteAll()
         taskDao.deleteAll()
         // Add Goal: live a healthy life
-        var health_goal:Goal = Goal()
+        val health_goal:Goal = Goal()
         health_goal.content = "live a healthy life"
         health_goal.priority = 1
         health_goal.start = null
@@ -124,13 +124,13 @@ class DBHelper (val context :Context){
         goalDao.insert(health_goal)
 
         // Add Milestone: lose 10kg in 3 months; sleep on time for 1 month
-        var milestone1: Milestone = Milestone()
+        val milestone1: Milestone = Milestone()
         milestone1.goal_id = health_goal.id
         milestone1.content = "lose 10kg in 3 months"
         milestone1.time = LocalDateTime.now().plusMonths(3)
         milestone1.isFinished = false
 
-        var milestone2: Milestone = Milestone()
+        val milestone2: Milestone = Milestone()
         milestone2.goal_id = health_goal.id
         milestone2.content = "sleep on time for 1 month"
         milestone2.time = LocalDateTime.now().plusMonths(1)
@@ -140,26 +140,28 @@ class DBHelper (val context :Context){
         milestoneDao.insert(milestone2)
 
         // Add Action: go to gym 3 times a week; sleep from 11:00pm to 7:00am
-        var action1: Action = Action()
+        val action1: Action = Action()
         action1.goal_id = health_goal.id
         action1.name = "go to gym"
         action1.type = "Repeating"
         action1.duration = Duration.ofHours(1)
         action1.location = "gym"
         action1.note = "remember to bring water, and wear sportswear"
+        action1.overlapping = false
 
-        var restriction1: Restriction = RepeatRestriction(-1,-1,7,3)
+        val restriction1: Restriction = RepeatRestriction(-1,-1,7,3)
         action1.addRestriction(restriction1)
 
-        var action2: Action = Action()
+        val action2: Action = Action()
         action2.goal_id = health_goal.id
         action2.name = "sleep on time"
         action2.type = "Fixed"
         action2.duration = Duration.ofHours(8)
         action2.location = "bedroom"
         action2.note = "put the phone away!!!"
+        action2.overlapping = false
 
-        var restriction2: Restriction = FixedTimeRestriction(LocalTime.of(23,0),LocalTime.of(7,0),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
+        val restriction2: Restriction = FixedTimeRestriction(LocalTime.of(23,0),LocalTime.of(7,0),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
         action2.addRestriction(restriction2)
 
         actionDao.insert(action1)
