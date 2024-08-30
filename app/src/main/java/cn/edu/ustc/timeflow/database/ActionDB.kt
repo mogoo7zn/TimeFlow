@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.dao.ActionDao
 
-@Database(entities = [Action::class], version = 1)
+@Database(entities = [Action::class], version = 2)
 abstract class ActionDB : RoomDatabase() {
     abstract fun actionDao(): ActionDao
     companion object {

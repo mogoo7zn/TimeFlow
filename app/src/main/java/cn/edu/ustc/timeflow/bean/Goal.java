@@ -21,7 +21,6 @@ public class Goal {
     /**
      * 任务名称
      */
-
     @ColumnInfo(name = "goal_name")
     String content;
     /**
