@@ -3,6 +3,8 @@ package cn.edu.ustc.timeflow.util
 import android.content.Context
 import android.util.Log
 import cn.edu.ustc.timeflow.bean.Action
+import cn.edu.ustc.timeflow.bean.Goal
+import cn.edu.ustc.timeflow.bean.Milestone
 import cn.edu.ustc.timeflow.bean.Task
 import cn.edu.ustc.timeflow.dao.ActionDao
 import cn.edu.ustc.timeflow.dao.GoalDao
@@ -12,9 +14,13 @@ import cn.edu.ustc.timeflow.database.ActionDB
 import cn.edu.ustc.timeflow.database.GoalDB
 import cn.edu.ustc.timeflow.database.MilestoneDB
 import cn.edu.ustc.timeflow.database.TaskDB
+import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
+import cn.edu.ustc.timeflow.restriction.RepeatRestriction
+import cn.edu.ustc.timeflow.restriction.Restriction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -58,23 +64,7 @@ class DBHelper (val context :Context){
 
 
         val tasks = generateRandomTasks()
-//            listOf(
-//            Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 9, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 10, 0), "Task 1", 1, "Good", false, 3),
-//            Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 11, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 13, 0), "Task 2", 1, "Average", false, 2),
-//            Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 9, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 13, 0), "Task 3", 2, "Excellent", true, 5),
-//            Task(
-//                LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 16, 0),
-//                LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 21, 0),
-//                "Task 4",
-//                2,
-//                "Poor",
-//                true,
-//                1
-//            )
-//
-//        )
 
-        // Insert tasks into the database
         tasks.forEach { taskDao.insert(it) }
 
 
@@ -109,26 +99,71 @@ class DBHelper (val context :Context){
 
         return taskList
     }
-    fun generateTestTaskData(isdb: Boolean) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val taskDao = getTaskDao()
-
-            taskDao.deleteAll()
-
-            val currentDate = LocalDate.now()
 
 
-            val tasks = listOf(
-                Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 9, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 10, 0), "Task 1", 1, "Good", false, 3),
-                Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 11, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 12, 0), "Task 2", 1, "Average", false, 2),
-                Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 9, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 10, 0), "Task 3", 2, "Excellent", true, 5),
-                Task(LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 11, 0), LocalDateTime.of(currentDate.year, currentDate.month, currentDate.dayOfMonth, 12, 0), "Task 4", 2, "Poor", true, 1)
-            )
+    fun generateSample(){
+        val goalDao = getGoalDao()
+        val milestoneDao = getMilestoneDao()
+        val actionDao = getActionDao()
+        val taskDao = getTaskDao()
+        // clear all data
+        goalDao.deleteAll()
+        milestoneDao.deleteAll()
+        actionDao.deleteAll()
+        taskDao.deleteAll()
+        // Add Goal: live a healthy life
+        var health_goal:Goal = Goal()
+        health_goal.content = "live a healthy life"
+        health_goal.priority = 1
+        health_goal.start = null
+        health_goal.end = null
+        health_goal.isActive = true
+        health_goal.isFinished = false
+        health_goal.reason = "I want to live longer and happier, and I want to be more energetic and more productive, so that I can achieve more in my life."
 
-            // Insert tasks into the database
-            tasks.forEach { taskDao.insert(it) }
-            taskDao.getAll().forEach { Log.d("Task", it.toString()) }
-        }
+        goalDao.insert(health_goal)
+
+        // Add Milestone: lose 10kg in 3 months; sleep on time for 1 month
+        var milestone1: Milestone = Milestone()
+        milestone1.goal_id = health_goal.id
+        milestone1.content = "lose 10kg in 3 months"
+        milestone1.time = LocalDateTime.now().plusMonths(3)
+        milestone1.isFinished = false
+
+        var milestone2: Milestone = Milestone()
+        milestone2.goal_id = health_goal.id
+        milestone2.content = "sleep on time for 1 month"
+        milestone2.time = LocalDateTime.now().plusMonths(1)
+        milestone2.isFinished = false
+
+        milestoneDao.insert(milestone1)
+        milestoneDao.insert(milestone2)
+
+        // Add Action: go to gym 3 times a week; sleep from 11:00pm to 7:00am
+        var action1: Action = Action()
+        action1.goal_id = health_goal.id
+        action1.name = "go to gym"
+        action1.type = "Repeating"
+        action1.duration = Duration.ofHours(1)
+        action1.location = "gym"
+        action1.note = "remember to bring water, and wear sportswear"
+
+        var restriction1: Restriction = RepeatRestriction(-1,-1,7,3)
+        action1.addRestriction(restriction1)
+
+        var action2: Action = Action()
+        action2.goal_id = health_goal.id
+        action2.name = "sleep on time"
+        action2.type = "Fixed"
+        action2.duration = Duration.ofHours(8)
+        action2.location = "bedroom"
+        action2.note = "put the phone away!!!"
+
+        var restriction2: Restriction = FixedTimeRestriction(LocalTime.of(23,0),LocalTime.of(7,0),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
+        action2.addRestriction(restriction2)
+
+        actionDao.insert(action1)
+        actionDao.insert(action2)
+
     }
-
 }

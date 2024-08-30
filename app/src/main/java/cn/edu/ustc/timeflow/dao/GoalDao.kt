@@ -51,4 +51,7 @@ interface GoalDao {
 
     @Query("SELECT goal_name FROM goal WHERE id = :id")
     fun getNameById(id: Int): String
+
+    @Query("DELETE FROM goal")
+    fun deleteAll()
 }

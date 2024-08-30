@@ -6,6 +6,7 @@ import android.widget.Toast
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.bean.Course
 import cn.edu.ustc.timeflow.database.ActionDB
+import com.google.android.material.internal.ContextUtils.getActivity
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -15,11 +16,8 @@ import java.time.Duration
 val TAG = "UstcJWConverter"
 class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(html,context) {
     override fun parse() {
-        Log.d(TAG, "parse: $html")
         val courses = parseCourses(html)
-        Log.d(TAG, "course: "+courses.size)
-
-
+        
         //TODO: Save actions to database
         //val actionDB = ActionDB.getDatabase(context)
 
@@ -41,7 +39,12 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
         val dialog = AlertDialog.Builder(context)
             .setMessage("已获取数据: \n$str1")
             .setCancelable(true)
+            .setPositiveButton("返回主页") { dialog, _ ->
+                //结束WebActivity
+                getActivity(context)?.finish()
+            }
             .create()
+
         dialog.show()
 
     }

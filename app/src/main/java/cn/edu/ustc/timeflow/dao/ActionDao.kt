@@ -32,6 +32,9 @@ interface ActionDao {
     @Delete
     fun delete(action: Action)
 
+    @Query("DELETE FROM 'action'")
+    fun deleteAll()
+
     @Query("DELETE FROM 'action' WHERE id = :id")
     fun deleteById(id: Int)
 

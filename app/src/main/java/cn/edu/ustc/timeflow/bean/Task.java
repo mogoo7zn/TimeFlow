@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import cn.edu.ustc.timeflow.util.DateTimeConverter;
 
 @Entity(tableName = "task")
-public class Task {
+public class  Task {
     @PrimaryKey(autoGenerate = true)
     int id;
     @ColumnInfo(name = "task_start")

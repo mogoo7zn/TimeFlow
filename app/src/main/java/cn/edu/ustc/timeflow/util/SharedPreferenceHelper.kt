@@ -32,7 +32,7 @@ class SharedPreferenceHelper {
             editor.apply()
         }
 
-        fun getBoolean(context: Context, key: String): Boolean {
+        fun getBoolean(context: Context, key: String, b: Boolean): Boolean {
             val sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
             return sharedPreferences.getBoolean(key, false)
         }

@@ -1,6 +1,5 @@
 package cn.edu.ustc
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
@@ -14,13 +13,17 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import cn.edu.ustc.timeflow.model.SimpleScheduler
+import cn.edu.ustc.timeflow.model.StandardValuer
+import cn.edu.ustc.timeflow.util.DBHelper
+import cn.edu.ustc.timeflow.util.SharedPreferenceHelper
 import cn.edu.ustc.timeflow.widget.ScheduleWidget
-import cn.edu.ustc.timeflow.widget.TaskWidgetService
 import cn.edu.ustc.ui.WebActivity
 import com.example.timeflow.R
 import com.example.timeflow.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,6 +71,16 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //初次使用
+        if(!SharedPreferenceHelper.getBoolean(this, "notFirst", false)){
+//            Snackbar.make(binding.root, "欢迎使用TimeFlow", Snackbar.LENGTH_LONG).show()
+            SharedPreferenceHelper.saveBoolean(this, "notFirst", true)
+            DBHelper(this).generateSample()
+            var SimpleScheduler = SimpleScheduler(StandardValuer(this))
+//            SimpleScheduler.getTimeTable(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

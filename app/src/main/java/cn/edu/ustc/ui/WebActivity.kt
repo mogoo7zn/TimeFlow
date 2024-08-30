@@ -125,12 +125,12 @@ class WebActivity : AppCompatActivity() {
         fun showSource(html: String) {
             //                view?.loadUrl("javascript:window.java_obj.showSource("
             //                        + "document.getElementsByTagName('html')[0].innerHTML);");
-            Log.d("HTML_SOURCE", "showSource: $html")
+//            Log.d("HTML_SOURCE", "showSource: $html")
         }
 
         @JavascriptInterface
         fun showDescription(str: String) {
-            Log.d("HTML_SOURCE", "showDescription: $str")
+//            Log.d("HTML_SOURCE", "showDescription: $str")
             val converter : CourseTableWebConverter = UstcJWConverter(str, activity)
             converter.parse()
         }

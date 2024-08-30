@@ -4,11 +4,11 @@ import androidx.annotation.NonNull;
 
 public class RepeatRestriction extends Restriction{
     /**
-     * 重复任务的总量
+     * 重复任务的总量, -1表示无限制
      */
     int total_amount;
     /**
-     * 已完成的任务量
+     * 已完成的任务量, -1表示无限制
      */
     int finished_amount;
     /**

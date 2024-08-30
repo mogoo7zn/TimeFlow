@@ -21,6 +21,7 @@ public class Goal {
     /**
      * 任务名称
      */
+
     @ColumnInfo(name = "goal_name")
     String content;
     /**
@@ -40,10 +41,26 @@ public class Goal {
      */
     @ColumnInfo(name = "goal_reason")
     String reason;
+    /**
+     * 任务完成度
+     */
     @ColumnInfo(name = "goal_measure")
     String measure;
+    /**
+     * 任务优先级
+     */
     @ColumnInfo(name = "goal_priority")
     int priority;
+    /**
+     * 任务是否完成
+     */
+    @ColumnInfo(name = "goal_finished")
+    boolean finished;
+    /**
+     * 任务是否激活
+     */
+    @ColumnInfo(name = "goal_active")
+    boolean active;
 
     @Ignore
     List<Milestone> milestones;
@@ -101,6 +118,34 @@ public class Goal {
     }
 
     public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Goal() {
+
+    }
+    @Ignore
+    public Goal(String content, LocalDateTime start, LocalDateTime end, String reason, int priority) {
+        this.content = content;
+        this.start = start;
+        this.end = end;
+        this.reason = reason;
         this.priority = priority;
     }
 }

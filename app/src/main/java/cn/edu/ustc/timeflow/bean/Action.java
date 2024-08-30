@@ -25,7 +25,6 @@ public class Action {
     int goal_id;
     @ColumnInfo(name = "action_name")
     String name;
-
     // 不能为null！！！
     @ColumnInfo(name = "action_duration")
     @TypeConverters(DurationConverter.class)
@@ -36,14 +35,21 @@ public class Action {
     String note;    // 行动备注
     @ColumnInfo(name = "action_remind")
     boolean remind;
+    /**
+     * Task type: 1. Repeating, 2. Fixed
+     */
     @ColumnInfo(name = "action_type")
-    String type; // Task type: 1. Repeating, 2. Fixed
+    String type;
+
     @ColumnInfo(name = "action_finished")
     boolean finished;
-
     @ColumnInfo(name = "action_restrictions")
     @TypeConverters(RestrictionConverter.class)
     List<Restriction> restrictions;
+    @ColumnInfo(name = "action_overlapping")
+    Boolean overlapping=false;
+
+
 
     public Action() {
         // Default constructor required for calls to DataSnapshot.getValue(Action.class)
@@ -88,6 +94,17 @@ public class Action {
     public void setFinished(boolean finished) { this.finished = finished; }
     public List<Restriction> getRestrictions() { return restrictions; }
     public void setRestrictions(List<Restriction> restrictions) { this.restrictions = restrictions; }
+    public void addRestriction(Restriction restriction) {
+        if (restrictions == null) restrictions = new java.util.ArrayList<>();
+        restrictions.add(restriction);
+    }
+    public Boolean getOverlapping() {
+        return overlapping;
+    }
+    public void setOverlapping(Boolean overlapping) {
+        this.overlapping = overlapping;
+    }
+
 
     @Override
     public String toString() {

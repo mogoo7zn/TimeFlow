@@ -38,4 +38,7 @@ interface MilestoneDao {
     fun deleteById(id: Int)
     @Query("DELETE FROM milestone WHERE goal_id = :goalId")
     fun deleteByGoalId(goalId: Int)
+
+    @Query("DELETE FROM milestone")
+    fun deleteAll()
 }

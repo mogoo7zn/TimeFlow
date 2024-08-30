@@ -8,7 +8,13 @@ import java.util.List;
 public class FixedTimeRestriction extends Restriction{
     LocalTime start;
     LocalTime end;
-    int type;//0:daily,1:weekly,2:monthly,3:yearly
+    /**
+     * 0:daily,1:weekly,2:monthly,3:yearly
+     */
+    int type;
+    /**
+     * 0:Sunday,1:Monday,2:Tuesday,3:Wednesday,4:Thursday,5:Friday,6:Saturday
+     */
     List<Integer> days;
 
     public FixedTimeRestriction(String code){
@@ -21,10 +27,10 @@ public class FixedTimeRestriction extends Restriction{
             days.add(Integer.parseInt(codes[i]));
         }
     }
-    public FixedTimeRestriction(LocalTime start, LocalTime end, int type, List<Integer> days){
+    public FixedTimeRestriction(LocalTime start, LocalTime end, FixedTimeRestrictionType type, List<Integer> days){
         this.start=start;
         this.end=end;
-        this.type=type;
+        this.type=type.ordinal();
         this.days=days;
     }
     @NonNull
@@ -67,5 +73,12 @@ public class FixedTimeRestriction extends Restriction{
 
     public void setDays(List<Integer> days) {
         this.days = days;
+    }
+
+    public enum FixedTimeRestrictionType {
+        DAILY,
+        WEEKLY,
+        MONTHLY,
+        YEARLY
     }
 }
