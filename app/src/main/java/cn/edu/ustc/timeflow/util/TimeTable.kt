@@ -38,7 +38,6 @@ class TimeTable {
             val taskDao = TaskDB.getDatabase(context!!).taskDao()
             tasks = taskDao.getByTime(start, end).toMutableList()
         }
-
         checkOverlap()
     }
 

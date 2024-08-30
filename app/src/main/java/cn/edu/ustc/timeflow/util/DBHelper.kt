@@ -100,7 +100,9 @@ class DBHelper (val context :Context){
         return taskList
     }
 
-
+    /**
+     * Generate sample data for user to learn how to use the app
+     */
     fun generateSample(){
         val goalDao = getGoalDao()
         val milestoneDao = getMilestoneDao()
@@ -111,6 +113,7 @@ class DBHelper (val context :Context){
         milestoneDao.deleteAll()
         actionDao.deleteAll()
         taskDao.deleteAll()
+        
         // Add Goal: live a healthy life
         val health_goal:Goal = Goal()
         health_goal.content = "live a healthy life"

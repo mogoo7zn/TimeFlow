@@ -33,8 +33,9 @@ public class SimpleScheduler extends Scheduler {
      * @return 时间表
      */
     @Override
-    public TimeTable getTimeTable(LocalDateTime start, LocalDateTime end) {
+    public TimeTable Schedule(LocalDateTime start, LocalDateTime end) {
         TimeTable timeTable = new TimeTable(context, start, end);
+        timeTable.getTasks().clear();
 
         ActionDao actionDao = ActionDB.Companion.getDatabase(context).actionDao();
 
@@ -69,4 +70,16 @@ public class SimpleScheduler extends Scheduler {
         return timeTable;
     }
 
+    /**
+     * - 先安排固定时间任务（Fixed Model）
+     *     - 调出所有含Fixed（通过Type判断）的任务，检查时间范围是否符合其他限制，符合则加入。
+     * - 按照Value所得的优先级，依此向时间表填充任务
+     *     - 除去上述任务，按Value排序
+     *     - 取出当前空余时间
+     *     - 检查是否满足其他限制，并依此填充，优先填大于该任务duration的最短时段
+     */
+    @Override
+    public void Schedule() {
+
+    }
 }

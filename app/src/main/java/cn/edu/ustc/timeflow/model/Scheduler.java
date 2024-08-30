@@ -22,6 +22,16 @@ public abstract class Scheduler {
         this.context = context;
         this.valuer = valuer;
     }
-    public abstract TimeTable getTimeTable(LocalDateTime start, LocalDateTime end);
+    /**
+     * 获取时间表
+     * @param start 开始时间
+     * @param end 结束时间
+     * @return 时间表
+     */
+    public abstract TimeTable Schedule(LocalDateTime start, LocalDateTime end);
 
+    /**
+     * 生成时间表
+     */
+    public abstract void Schedule();
 }
