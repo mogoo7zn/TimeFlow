@@ -17,6 +17,7 @@ import cn.edu.ustc.timeflow.model.SimpleScheduler
 import cn.edu.ustc.timeflow.model.StandardValuer
 import cn.edu.ustc.timeflow.util.DBHelper
 import cn.edu.ustc.timeflow.util.SharedPreferenceHelper
+import cn.edu.ustc.timeflow.util.getActivity
 import cn.edu.ustc.timeflow.widget.ScheduleWidget
 import cn.edu.ustc.ui.WebActivity
 import com.example.timeflow.R
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
         //初次使用
         if(!SharedPreferenceHelper.getBoolean(this, "notFirst", false)){
-//            Snackbar.make(binding.root, "欢迎使用TimeFlow", Snackbar.LENGTH_LONG).show()
+
             SharedPreferenceHelper.saveBoolean(this, "notFirst", true)
             DBHelper(this).generateSample()
             var SimpleScheduler = SimpleScheduler(StandardValuer(this))
@@ -91,6 +92,14 @@ class MainActivity : AppCompatActivity() {
             //打开WebActivity
             val intent = android.content.Intent(this, WebActivity::class.java)
             startActivity(intent)
+            true
+        }
+
+        val AutoSchedule = menu.findItem(R.id.auto_schedule)
+        AutoSchedule.setOnMenuItemClickListener {
+            var SimpleScheduler = SimpleScheduler(this, StandardValuer(this))
+            SimpleScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
+            Snackbar.make(binding.root, "自动排课成功", Snackbar.LENGTH_SHORT).show()
             true
         }
         return true

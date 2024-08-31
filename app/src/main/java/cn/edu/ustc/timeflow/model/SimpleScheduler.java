@@ -1,13 +1,18 @@
 package cn.edu.ustc.timeflow.model;
 
+import android.content.Context;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import cn.edu.ustc.timeflow.bean.Action;
 import cn.edu.ustc.timeflow.bean.Task;
 import cn.edu.ustc.timeflow.dao.ActionDao;
 import cn.edu.ustc.timeflow.database.ActionDB;
+import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction;
+import cn.edu.ustc.timeflow.restriction.Restriction;
 import cn.edu.ustc.timeflow.util.TimeTable;
 
 /**
@@ -18,6 +23,9 @@ public class SimpleScheduler extends Scheduler {
 
     public SimpleScheduler(Valuer valuer) {
         super(valuer);
+    }
+    public SimpleScheduler(Context context, Valuer valuer) {
+        super(context, valuer);
     }
 
     /**
@@ -43,17 +51,50 @@ public class SimpleScheduler extends Scheduler {
 
         //遍历所有任务，将固定任务加入时间表
         for (Action action : actions) {
-            if(action.getType().equals("fixed")){
-                timeTable.addTask(new Task(action, start, end));
+            //如果是固定任务
+            if(action.getType().equals("Fixed")){
+                //如果有固定时间限制
+                if(action.getRestriction("FixedTimeRestriction") != null){
+                    //获取固定时间限制
+                    List<Restriction> restrictions = action.getRestrictions("FixedTimeRestriction");
+                    for (Restriction restriction : restrictions) {
+                        //遍历start 到 end 中每一天
+                        for (LocalDateTime date = start; date.isBefore(end); date = date.plusDays(1)) {
+
+                            FixedTimeRestriction fixedTimeRestriction = (FixedTimeRestriction) restriction;
+                            if(fixedTimeRestriction.getStart().isAfter(fixedTimeRestriction.getEnd())) {
+                                //跨天，分两次加入
+                                LocalDateTime start1 = LocalDateTime.of(date.toLocalDate(), fixedTimeRestriction.getStart());
+                                LocalDateTime end1 = LocalDateTime.of(date.toLocalDate(), LocalTime.of(23, 59, 0));
+                                Task task = new Task(action, start1, end1);
+                                timeTable.addTask(task);
+
+                                LocalDateTime start2 = LocalDateTime.of(date.toLocalDate().plusDays(1), LocalDateTime.MIN.toLocalTime());
+                                LocalDateTime end2 = LocalDateTime.of(date.toLocalDate().plusDays(1), fixedTimeRestriction.getEnd());
+                                Task task2 = new Task(action, start2, end2);
+                                timeTable.addTask(task2);
+
+                            }
+                            else {
+                                LocalDateTime start1 = LocalDateTime.of(date.toLocalDate(), fixedTimeRestriction.getStart());
+                                LocalDateTime end1 = LocalDateTime.of(date.toLocalDate(), fixedTimeRestriction.getEnd());
+                                Task task = new Task(action, start1, end1);
+                                timeTable.addTask(task);
+                            }
+                        }
+                    }
+                }
             }
         }
+
         //对非固定任务进行排序
         actions.sort((o1, o2) -> {
             return Double.compare(valuer.valuate(o2), valuer.valuate(o1));
         });
-        //遍历非固定任务，将其加入时间表
+        //遍历所有任务，将重复任务加入时间表
         for (Action action : actions) {
-            if(action.getType().equals("flexible")){
+
+            if(action.getType().equals("Repeating")){
                 List<kotlin.Pair<LocalDateTime, LocalDateTime>> AvailableTime = timeTable.getAvailableTime();
                 //遍历时间表，找到第一个合适的时间段，将任务加入时间表
                 for (kotlin.Pair<LocalDateTime, LocalDateTime> pair : AvailableTime) {
@@ -67,6 +108,8 @@ public class SimpleScheduler extends Scheduler {
                 }
             }
         }
+        //同步时间表至数据库
+        timeTable.sync();
         return timeTable;
     }
 

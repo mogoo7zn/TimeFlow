@@ -38,13 +38,13 @@ public class  Task {
 
     @Ignore
     public Task(Action action, LocalDateTime start, LocalDateTime end){
-//        this.start = start;
-//        this.end = end;
-//        this.content = action.getContent();
-//        this.importance = action.getImportance();
-//        this.action_id = action.getId();
-//        this.evaluation = action.getEvaluation();
-//        this.finished = false;
+        this.start = start;
+        this.end = end;
+        this.content = action.getName();
+        this.importance = 0;
+        this.action_id = action.getId();
+        this.evaluation = "";
+        this.finished = false;
     }
     @Ignore
     public Task(LocalDateTime start, LocalDateTime end, String content, int importance,String evaluation, Boolean finished, int action_id ) {
