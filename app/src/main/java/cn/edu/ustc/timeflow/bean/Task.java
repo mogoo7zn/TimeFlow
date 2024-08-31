@@ -12,25 +12,55 @@ import cn.edu.ustc.timeflow.util.DateTimeConverter;
 
 @Entity(tableName = "task")
 public class  Task {
+    /**
+     * Task id
+     */
     @PrimaryKey(autoGenerate = true)
     int id;
+    /**
+     * Task start time
+     */
     @ColumnInfo(name = "task_start")
     @TypeConverters(DateTimeConverter.class)
     LocalDateTime start;
+    /**
+     * Task end time
+     */
     @ColumnInfo(name = "task_end")
     @TypeConverters(DateTimeConverter.class)
     LocalDateTime end;
+    /**
+     * Task content
+     */
     @ColumnInfo(name = "task_content")
     String content;
-    //TODO: importance
+    /**
+     * Task importance
+     */
+    @ColumnInfo(name = "task_importance")
     int importance;
-
+    /**
+     * Task action id
+     */
     @ColumnInfo(name = "action_id")
     int action_id;
+    /**
+     * Task evaluation
+     */
     @ColumnInfo(name = "evaluation")
     String evaluation;
+    /**
+     * Task finished
+     */
     @ColumnInfo(name = "finished")
     Boolean finished;
+
+    @ColumnInfo(name = "location")
+    String location;
+
+    @ColumnInfo(name = "note")
+    String note;
+
 
     @Ignore
     Integer overlap;
@@ -45,6 +75,8 @@ public class  Task {
         this.action_id = action.getId();
         this.evaluation = "";
         this.finished = false;
+        this.location = action.getLocation();
+        this.note = action.getNote();
     }
     @Ignore
     public Task(LocalDateTime start, LocalDateTime end, String content, int importance,String evaluation, Boolean finished, int action_id ) {
@@ -133,5 +165,20 @@ public class  Task {
         this.overlap = overlap;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
 }
