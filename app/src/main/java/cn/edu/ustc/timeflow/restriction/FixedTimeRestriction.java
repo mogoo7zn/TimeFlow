@@ -1,5 +1,7 @@
 package cn.edu.ustc.timeflow.restriction;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.time.LocalTime;
@@ -35,7 +37,7 @@ public class FixedTimeRestriction extends Restriction{
     }
     @NonNull
     public String coding(){
-        StringBuilder res= new StringBuilder("FixedTimeRestriction:" + start.toString() + " " + end.toString() + " " + type);
+        StringBuilder res= new StringBuilder("FixedTimeRestriction=" + start.toString() + " " + end.toString() + " " + type);
         for(int i=0;i<days.size();i++){
             res.append(" ").append(days.get(i));
         }

@@ -3,11 +3,15 @@ package com.example.timeflow
 import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
+import cn.edu.ustc.timeflow.restriction.Restriction
+import cn.edu.ustc.timeflow.util.RestrictionFactory
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import java.time.LocalTime
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -56,4 +60,14 @@ class ExampleInstrumentedTest {
 //    fun testUpdate() {
 //        Log.d("Test", "testUpdate")
 //    }
+@Test
+fun RestrictionFactoryTest() {
+    val restriction2: Restriction = FixedTimeRestriction(
+        LocalTime.of(23,0),
+        LocalTime.of(7,0),
+        FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
+    Log.d("RestrictionFactoryTest",restriction2.coding())
+    val restriction = RestrictionFactory(restriction2.coding()).create()
+    Log.d("RestrictionFactoryTest",restriction.coding())
+}
 }

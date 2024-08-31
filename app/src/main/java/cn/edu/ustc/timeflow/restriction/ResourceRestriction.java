@@ -17,6 +17,6 @@ public class ResourceRestriction extends Restriction{
     }
     @Override
     public String coding() {
-        return "ResourceRestriction:"+resource_name+" "+amount+" "+consumed;
+        return "ResourceRestriction="+resource_name+" "+amount+" "+consumed;
     }
 }

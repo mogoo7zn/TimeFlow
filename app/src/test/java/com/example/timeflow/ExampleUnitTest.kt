@@ -1,10 +1,12 @@
 package com.example.timeflow
 
+import android.util.Log
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
 import cn.edu.ustc.timeflow.restriction.RepeatRestriction
 import cn.edu.ustc.timeflow.restriction.Restriction
 import cn.edu.ustc.timeflow.restriction.TimeRestriction
+import cn.edu.ustc.timeflow.util.RestrictionFactory
 import cn.edu.ustc.timeflow.util.ScheduleConverter
 import org.junit.Test
 
@@ -57,7 +59,7 @@ class FixedTimeRestrictionTest {
         val restriction = FixedTimeRestriction(
             start,
             end,
-            0,
+            FixedTimeRestriction.FixedTimeRestrictionType.DAILY,
             days
         )
         assertEquals(start, restriction.start)
@@ -237,5 +239,13 @@ class ScheduleParseTest {
         assertEquals("7(3,4)", item6.Time)
         assertEquals("叶盛", item6.Teacher)
         assertEquals(listOf(0), item6.EvenOrOddWeeks)
+    }
+
+    @Test
+    fun RestrictionFactoryTest() {
+        val restriction2: Restriction = FixedTimeRestriction(LocalTime.of(23,0),LocalTime.of(7,0),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
+        Log.d("RestrictionFactoryTest",restriction2.coding())
+        val restriction = RestrictionFactory(restriction2.coding()).create()
+        Log.d("RestrictionFactoryTest",restriction.coding())
     }
 }
