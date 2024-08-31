@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import java.time.LocalTime;
 import java.util.List;
 
+import cn.edu.ustc.timeflow.bean.Task;
+
 public class FixedTimeRestriction extends Restriction{
     LocalTime start;
     LocalTime end;
@@ -42,6 +44,11 @@ public class FixedTimeRestriction extends Restriction{
             res.append(" ").append(days.get(i));
         }
         return res.toString();
+    }
+
+    @Override
+    public boolean check(Task task) {
+        return true;
     }
 
 

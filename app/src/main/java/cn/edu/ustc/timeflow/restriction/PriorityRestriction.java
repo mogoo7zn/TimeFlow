@@ -1,5 +1,7 @@
 package cn.edu.ustc.timeflow.restriction;
 
+import cn.edu.ustc.timeflow.bean.Task;
+
 public class PriorityRestriction extends Restriction{
     int priority;
     public PriorityRestriction(String code){
@@ -11,5 +13,10 @@ public class PriorityRestriction extends Restriction{
     @Override
     public String coding() {
         return "PriorityRestriction="+priority;
+    }
+
+    @Override
+    public boolean check(Task task) {
+        return true;
     }
 }

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import java.time.LocalDateTime;
 
+import cn.edu.ustc.timeflow.bean.Task;
+
 public class TimeRestriction extends Restriction{
     LocalDateTime start;
     LocalDateTime end;
@@ -18,10 +20,14 @@ public class TimeRestriction extends Restriction{
         this.end=end;
     }
     @NonNull
+    @Override
     public String coding(){
         return "TimeRestriction="+start.toString()+" "+end.toString();
     }
-
+    @Override
+    public boolean check(Task task) {
+        return start.isBefore(task.getStart()) && end.isAfter(task.getEnd());
+    }
     public LocalDateTime getStart() {
         return start;
     }

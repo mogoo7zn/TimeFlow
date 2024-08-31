@@ -143,7 +143,7 @@ class DBHelper (val context :Context){
         milestoneDao.insert(milestone1)
         milestoneDao.insert(milestone2)
 
-        // Add Action: go to gym 3 times a week; sleep from 11:00pm to 7:00am
+        // Add Action: go to gym 3 times a week; sleep from 11:00pm to 7:00am; have breakfast at 8:00am every day; have lunch at 12:00pm every day; have dinner at 6:00pm every day; snap for 30 minutes after lunch every day
         val action1: Action = Action()
         action1.goal_id = health_goal.id
         action1.name = "go to gym"
@@ -170,8 +170,63 @@ class DBHelper (val context :Context){
         val restriction2: Restriction = FixedTimeRestriction(LocalTime.of(23,0),LocalTime.of(7,0),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
         action2.addRestriction(restriction2)
 
+        val action3: Action = Action()
+        action3.goal_id = health_goal.id
+        action3.name = "have breakfast"
+        action3.type = "Fixed"
+        action3.duration = Duration.ofMinutes(30)
+        action3.location = "kitchen"
+        action3.note = "eat more vegetables"
+        action3.overlapping = false
+
+        val restriction3: Restriction = FixedTimeRestriction(LocalTime.of(8,0),LocalTime.of(8,30),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
+
+        action3.addRestriction(restriction3)
+
+        val action4: Action = Action()
+        action4.goal_id = health_goal.id
+        action4.name = "have lunch"
+        action4.type = "Fixed"
+        action4.duration = Duration.ofMinutes(30)
+        action4.location = "kitchen"
+        action4.note = "eat more vegetables"
+        action4.overlapping = false
+
+        val restriction4: Restriction = FixedTimeRestriction(LocalTime.of(12,0),LocalTime.of(12,30),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
+
+        action4.addRestriction(restriction4)
+
+        val action5: Action = Action()
+        action5.goal_id = health_goal.id
+        action5.name = "have dinner"
+        action5.type = "Fixed"
+        action5.duration = Duration.ofMinutes(30)
+        action5.location = "kitchen"
+        action5.note = "eat more vegetables"
+        action5.overlapping = false
+
+        val restriction5: Restriction = FixedTimeRestriction(LocalTime.of(18,0),LocalTime.of(18,30),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
+
+        action5.addRestriction(restriction5)
+
+        val action6: Action = Action()
+        action6.goal_id = health_goal.id
+        action6.name = "snap"
+        action6.type = "Fixed"
+        action6.duration = Duration.ofMinutes(30)
+        action6.location = "living room"
+        action6.note = "take a break"
+        action6.overlapping = false
+
+        val restriction6: Restriction = FixedTimeRestriction(LocalTime.of(12,30),LocalTime.of(13,0),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
+
+        action6.addRestriction(restriction6)
+
         actionDao.insert(action1)
         actionDao.insert(action2)
-
+        actionDao.insert(action3)
+        actionDao.insert(action4)
+        actionDao.insert(action5)
+        actionDao.insert(action6)
     }
 }

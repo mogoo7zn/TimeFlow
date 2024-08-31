@@ -1,5 +1,7 @@
 package cn.edu.ustc.timeflow.restriction;
 
+import cn.edu.ustc.timeflow.bean.Task;
+
 public class ResourceRestriction extends Restriction{
     String resource_name;
     int amount;
@@ -14,6 +16,10 @@ public class ResourceRestriction extends Restriction{
         this.resource_name=resource_name;
         this.amount=amount;
         this.consumed=consumed;
+    }
+    @Override
+    public boolean check(Task task) {
+        return false;
     }
     @Override
     public String coding() {

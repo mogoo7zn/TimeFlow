@@ -35,6 +35,31 @@
 
 + `DeadlineValuer`: 按结束时间来安排
 
+
+  采用Pipeline模式，将Time Table作为加工对象。
+
+```mermaid
+graph LR
+
+获取Timetable --> 移除未来+未完成的Task --> 装填FixedAction--> 装填RepeatingAction --> 同步数据
+```
+
+- 如何装填?
+  1. 获取带标记的Action
+  2. 按标记规则装填, 并检验是否满足其他Restrictions
+  3. 若满足, 装填并更新数据( 如Valuer/Restrictions ).
+- 谁来检验?
+
+  Restrictions
+
+- Valuer有什么用?
+
+  当有大量任务时, 优先做更重要的.
+
+- 如何扩展?
+
+  添加新的装填器/限制.
+
 ## util
 
 + `TimeTable`: 提供与TaskDB最直接的交互, 包括: 

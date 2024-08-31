@@ -2,6 +2,8 @@ package cn.edu.ustc.timeflow.restriction;
 
 import androidx.annotation.NonNull;
 
+import cn.edu.ustc.timeflow.bean.Task;
+
 public class RepeatRestriction extends Restriction{
     /**
      * 重复任务的总量, -1表示无限制
@@ -38,6 +40,16 @@ public class RepeatRestriction extends Restriction{
     @Override
     public String coding() {
         return "RepeatRestriction="+total_amount+" "+finished_amount+" "+interval+" "+repeat_times;
+    }
+
+    @Override
+    public boolean check(Task task) {
+
+        return false;
+    }
+
+    public void add(){
+        finished_amount++;
     }
 
     public int getTotal_amount() {
