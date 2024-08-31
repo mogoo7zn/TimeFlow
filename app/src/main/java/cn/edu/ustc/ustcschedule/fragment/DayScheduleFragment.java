@@ -2,6 +2,8 @@ package cn.edu.ustc.ustcschedule.fragment;
 
 
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +18,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.timeflow.R;
 import com.example.timeflow.databinding.FragmentScheduleDayBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import cn.edu.ustc.ustcschedule.dialog.AddActionDialogFragment;
 
 import cn.edu.ustc.ustcschedule.util.ClassTextInit;
 
@@ -57,6 +63,12 @@ public class DayScheduleFragment extends Fragment {
         Button buttonWeek = view.findViewById(R.id.button_week);
         buttonWeek.setOnClickListener(view1 -> Navigation.findNavController(view1).navigate(R.id.weekScheduleFragment)
         );
+
+        FloatingActionButton addActionFab = view.findViewById(R.id.add_action_fab);
+        addActionFab.setOnClickListener(v -> {
+            AddActionDialogFragment addActionDialog = new AddActionDialogFragment();
+            addActionDialog.show(getParentFragmentManager(), "AddActionDialogFragment");
+        });
 
     }
 }

@@ -8,6 +8,81 @@
     tools:showIn="@layout/app_bar_main"
     android:layout_marginBottom="54dp">
 
+    <TextView
+        android:id="@+id/deadline_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/deadline_picker_title"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"/>.
+
+    <CheckBox
+        android:id="@+id/deadline_range_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/deadline_range"
+        app:layout_constraintTop_toTopOf="@id/deadline_range"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="2dp"
+        style="@style/TabButton"
+        android:drawableTop="@drawable/ic_goal_picker_selector"/>
+
+    <TextView
+        android:id="@+id/deadline_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="@string/deadline_intro"
+        app:layout_constraintTop_toBottomOf="@id/deadline_range"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="6dp"/>.
+
+    <TextView
+        android:id="@+id/deadline_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="@string/deadline_unit"
+        app:layout_constraintTop_toBottomOf="@id/deadline_range"
+        app:layout_constraintStart_toEndOf="@id/deadline_intro"
+        android:layout_marginTop="6dp"/>
+
+    <TextView
+        android:id="@+id/deadline_connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="@string/deadline_connecting_string"
+        app:layout_constraintTop_toBottomOf="@id/deadline_range"
+        app:layout_constraintStart_toEndOf="@id/deadline_unit"
+        android:layout_marginTop="6dp"/>
+
+    <TextView
+        android:id="@+id/deadline_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="0"
+        app:layout_constraintTop_toBottomOf="@id/deadline_range"
+        app:layout_constraintStart_toEndOf="@id/deadline_connection"
+        android:layout_marginTop="6dp"/>
+
+    <TextView
+        android:id="@+id/deadline_ending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="@string/deadline_ending"
+        app:layout_constraintTop_toBottomOf="@id/deadline_range"
+        app:layout_constraintStart_toEndOf="@id/deadline_count"
+        android:layout_marginTop="6dp"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/deadline_list"
         android:layout_width="match_parent"

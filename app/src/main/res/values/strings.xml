@@ -26,11 +26,17 @@
     <string name="action_place">地点</string>
     <string name="goal_picker_menu_title">选择目标</string>
 
+    <string name="deadline_picker_title">选择范围</string>
+    <string name="deadline_intro">本</string>
+    <string name="deadline_unit">周</string>
+    <string name="deadline_connecting_string">剩余</string>
+
     <string name="action_name">行动名称</string>
     <string name="action_duration">持续时间（分钟）</string>
     <string name="action_location">地点</string>
     <string name="action_note">备注</string>
     <string name="action_remind">提醒</string>
+    <string name="deadline_ending">个行动</string>
 
     <string name="menu_setting">设置</string>
     <string name="menu_profile">个人资料</string>
@@ -91,6 +97,12 @@
     <string name="reading">阅读</string>
     <string name="task">事件</string>
     <string name="plan">计划</string>
+
+    <string name="goal_name">目标名称</string>
+    <string name="goal_description">目标描述</string>
+    <string name="goal_deadline">目标截止日期</string>
+    <string name="goal_reason">目标原因</string>
+    <string name="goal_measure">目标衡量标准</string>
 
     <string name="add_event">加入事件</string>
     <string name="title">事件名称</string>
