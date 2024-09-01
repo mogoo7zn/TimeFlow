@@ -69,7 +69,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="12dp"
         style="@style/TabButton"
         android:backgroundTint="@color/white"
         app:backgroundTint="@color/white"

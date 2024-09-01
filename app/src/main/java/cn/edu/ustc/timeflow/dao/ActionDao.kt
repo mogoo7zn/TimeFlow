@@ -43,4 +43,11 @@ interface ActionDao {
 
     @Query("SELECT * FROM 'action' WHERE goal_id = :goalId")
     fun getActionsForGoal(goalId: Int): List<Action>
+
+    //wrong
+//    @Query("SELECT * FROM 'action' WHERE 'date' >= date('now', '-:days day')")
+//    fun getActionsForTimeRange(days: Int): List<Action>
+
+    @Query("SELECT * FROM 'action'")
+    fun getAllActions(): List<Action>
 }
