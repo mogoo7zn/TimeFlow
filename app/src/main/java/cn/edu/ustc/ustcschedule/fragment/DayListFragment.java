@@ -221,8 +221,8 @@ public class DayListFragment extends Fragment {
 
         // 写入内容
         ((TextView)card.findViewById(R.id.lesson_text_day)).setText(task.getContent());
-//        ((TextView)card.findViewById(R.id.lesson_teacher)).setText(task.getTeacher());
-//        ((TextView)card.findViewById(R.id.lesson_place)).setText(task.getPlace());
+        ((TextView)card.findViewById(R.id.lesson_teacher)).setText(task.getNote());
+        ((TextView)card.findViewById(R.id.lesson_place)).setText(task.getLocation());
 
         ((TextView)schedule_view.findViewById(R.id.start_time_text)).setText(format_time.format(starting_time));
         ((TextView)schedule_view.findViewById(R.id.end_time_text)).setText(format_time.format(ending_time));

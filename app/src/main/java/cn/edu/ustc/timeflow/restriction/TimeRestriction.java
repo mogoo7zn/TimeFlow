@@ -19,7 +19,7 @@ public class TimeRestriction extends Restriction{
     }
     @NonNull
     public String coding(){
-        return "TimeRestriction:"+start.toString()+" "+end.toString();
+        return "TimeRestriction="+start.toString()+" "+end.toString();
     }
 
     public LocalDateTime getStart() {

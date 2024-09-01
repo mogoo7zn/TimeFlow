@@ -125,6 +125,7 @@ class DBHelper (val context :Context){
         health_goal.reason = "I want to live longer and happier, and I want to be more energetic and more productive, so that I can achieve more in my life."
 
         goalDao.insert(health_goal)
+        health_goal.id = goalDao.getAll().last().id
 
         // Add Milestone: lose 10kg in 3 months; sleep on time for 1 month
         val milestone1: Milestone = Milestone()
@@ -154,6 +155,8 @@ class DBHelper (val context :Context){
 
         val restriction1: Restriction = RepeatRestriction(-1,-1,7,3)
         action1.addRestriction(restriction1)
+
+
 
         val action2: Action = Action()
         action2.goal_id = health_goal.id

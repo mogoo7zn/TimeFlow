@@ -37,7 +37,7 @@ public class RepeatRestriction extends Restriction{
     @NonNull
     @Override
     public String coding() {
-        return "RepeatRestriction:"+total_amount+" "+finished_amount+" "+interval+" "+repeat_times;
+        return "RepeatRestriction="+total_amount+" "+finished_amount+" "+interval+" "+repeat_times;
     }
 
     public int getTotal_amount() {

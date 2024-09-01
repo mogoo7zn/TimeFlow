@@ -25,7 +25,7 @@ class RestrictionConverter {
 class RestrictionFactory(private var code: String) {
     fun create(): Restriction {
 
-        val t = code.split(":")
+        val t = code.split("=")
         return when (t[0]) {
             "TimeRestriction" -> {
                 TimeRestriction(t[1])

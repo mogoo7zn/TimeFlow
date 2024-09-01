@@ -12,6 +12,7 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
+import java.util.Stack
 
 class TimeTable {
     var context: Context? = null
@@ -88,21 +89,40 @@ class TimeTable {
 
     fun getAvailableTime(): List<Pair<LocalDateTime, LocalDateTime>> {
         val availableTime: MutableList<Pair<LocalDateTime, LocalDateTime>> = mutableListOf()
+        var overlap = 0
+
         if (tasks.isEmpty()) {
             availableTime.add(Pair(start, end))
             return availableTime
         }
-        if (tasks[0].start > start) {
-            availableTime.add(Pair(start, tasks[0].start))
-        }
-        for (i in 0 until tasks.size - 1) {
-            if (tasks[i].end < tasks[i + 1].start) {
-                availableTime.add(Pair(tasks[i].end, tasks[i + 1].start))
+        var starts = tasks.map { it.start }.toMutableList()
+        var ends = tasks.map { it.end }.toMutableList()
+
+        starts.sort()
+        ends.sort()
+
+        var i = 0
+        var j = 0
+
+        while (i < starts.size && j < ends.size) {
+            if (starts[i] < ends[j]) {
+                if (overlap == 0) {
+                    availableTime.add(Pair(start, starts[i]))
+                }
+                i++
+                overlap++
+            } else {
+                j++
+                overlap--
+                if (overlap == 0) {
+                    availableTime.add(Pair(ends[j - 1], if (j < ends.size) ends[j] else end))
+                }
             }
         }
-        if (tasks[tasks.size - 1].end < end) {
-            availableTime.add(Pair(tasks[tasks.size - 1].end, end))
+        if (i < starts.size) {
+            availableTime.add(Pair(starts[i], end))
         }
+
         return availableTime
     }
 

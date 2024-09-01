@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import cn.edu.ustc.timeflow.bean.Task;
@@ -16,6 +17,7 @@ import com.example.timeflow.R;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private final List<Task> taskList;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public TaskAdapter(List<Task> taskList) {
         this.taskList = taskList;
@@ -32,9 +34,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = taskList.get(position);
         holder.title.setText(task.getContent());
-        holder.teacher.setText(task.getEvaluation());
-        holder.room.setText(String.valueOf(task.getImportance()));
-        holder.time.setText(task.getStart().toString() + " - " + task.getEnd().toString());
+        holder.teacher.setText(task.getNote());
+        holder.room.setText(String.valueOf(task.getLocation()));
+        holder.time.setText(task.getStart().format(formatter) + " - " + task.getEnd().format(formatter));
     }
 
     @Override

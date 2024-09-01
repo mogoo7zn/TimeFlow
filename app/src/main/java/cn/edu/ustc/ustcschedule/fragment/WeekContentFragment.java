@@ -153,8 +153,8 @@ public class WeekContentFragment extends Fragment {
         });
         ConstraintLayout.LayoutParams card_params = (ConstraintLayout.LayoutParams) card.getLayoutParams();
         ((TextView)card.findViewById(R.id.lesson_text_day)).setText(task.getContent());
-        //((TextView)card.findViewById(R.id.lesson_teacher)).setText(task.getDescription());
-        //((TextView)card.findViewById(R.id.lesson_place)).setText(task.getPlace());
+//        ((TextView)card.findViewById(R.id.lesson_teacher)).setText(task.getNote());
+        ((TextView)card.findViewById(R.id.lesson_place)).setText(task.getLocation());
         //String starting_time_str=format_time.format(starting_time);
         //String ending_time_str=format_time.format(ending_time);
         ((TextView)schedule_view.findViewById(R.id.start_time_text)).setText(format_time.format(starting_time));

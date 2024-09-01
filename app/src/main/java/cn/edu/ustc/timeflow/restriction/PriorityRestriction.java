@@ -10,6 +10,6 @@ public class PriorityRestriction extends Restriction{
     }
     @Override
     public String coding() {
-        return "PriorityRestriction:"+priority;
+        return "PriorityRestriction="+priority;
     }
 }

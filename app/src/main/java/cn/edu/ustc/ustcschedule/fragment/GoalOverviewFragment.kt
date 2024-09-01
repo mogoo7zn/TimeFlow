@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.edu.ustc.adapter.FragmentGoalOverviewRecyclerItemAdapter
@@ -55,15 +56,16 @@ class GoalOverviewFragment : Fragment() {
         val dbHelper = DBHelper(requireContext())
         goalList = dbHelper.getGoalDao().getAll()
 
+        if(!goalList.isEmpty()) {
+            fetchAndDisplayActionsForGoal(goalList[0])
+        }
+
         // Set up CheckBox listener
         binding.currentGoalPicker.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 showGoalPickerMenu { selectedGoal ->
                     fetchAndDisplayActionsForGoal(selectedGoal)
                 }
-            } else {
-                adapter.actionList = emptyList()
-                adapter.notifyDataSetChanged()
             }
         }
 
@@ -183,6 +185,9 @@ class GoalOverviewFragment : Fragment() {
         actionList = dbHelper.getActionDao().getActionsForGoal(goal.id)
         adapter.actionList = actionList
         adapter.notifyDataSetChanged()
+        view?.findViewById<TextView>(R.id.current_goal)?.text = goal.content
+        view?.findViewById<TextView>(R.id.goal_count)?.text = goalList.size.toString()
+
     }
 
     override fun onDestroyView() {
