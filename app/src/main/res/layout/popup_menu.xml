@@ -10,7 +10,7 @@
         android:id="@+id/menu_week"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/week"
+        android:text="@string/_week"
         android:padding="8dp"
         android:clickable="true"
         android:focusable="true" />

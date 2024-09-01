@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import cn.edu.ustc.adapter.MilestoneAdapter
 import com.example.timeflow.R
 import com.example.timeflow.databinding.FragmentDeadlineListBinding
 import cn.edu.ustc.timeflow.bean.Milestone
@@ -18,6 +19,8 @@ class DeadlineListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var dbHelper: DBHelper
     private lateinit var milestoneList: List<Milestone>
+    private var allMilestonesInRange = mutableListOf<Milestone>()
+    private lateinit var adapter: MilestoneAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +28,9 @@ class DeadlineListFragment : Fragment() {
     ): View {
         _binding = FragmentDeadlineListBinding.inflate(inflater, container, false)
         dbHelper = DBHelper(requireContext())
+        binding.deadlineRange.setText(R.string._week)
+        fetchMilestones("week")
+        binding.deadlineCount.setText(allMilestonesInRange.size.toString())
         return binding.root
     }
 
@@ -38,7 +44,8 @@ class DeadlineListFragment : Fragment() {
         }
 
         binding.deadlineList.layoutManager = LinearLayoutManager(context)
-        // Initialize RecyclerView adapter here
+        adapter = MilestoneAdapter(emptyList(), dbHelper)
+        binding.deadlineList.adapter = adapter
 
         val timeRange = arguments?.getString("timeRange") ?: "week"
         fetchMilestones(timeRange)
@@ -59,16 +66,19 @@ class DeadlineListFragment : Fragment() {
 
         popupView.findViewById<View>(R.id.menu_week).setOnClickListener {
             onMenuItemSelected("week")
+            binding.deadlineRange.setText(R.string._week)
             popupWindow.dismiss()
         }
 
         popupView.findViewById<View>(R.id.menu_month).setOnClickListener {
             onMenuItemSelected("month")
+            binding.deadlineRange.setText(R.string._month)
             popupWindow.dismiss()
         }
 
         popupView.findViewById<View>(R.id.menu_all_actions).setOnClickListener {
             onMenuItemSelected("all")
+            binding.deadlineRange.setText(R.string.all)
             popupWindow.dismiss()
         }
         popupWindow.setOnDismissListener {
@@ -90,9 +100,11 @@ class DeadlineListFragment : Fragment() {
             "all" -> dbHelper.getMilestoneDao().getAllMilestones()
             else -> emptyList()
         }
-        // Update the RecyclerView adapter with the fetched milestones
-        // adapter.milestoneList = milestoneList
-        // adapter.notifyDataSetChanged()
+        // Store all milestones in range in a List<Milestone>
+        allMilestonesInRange.addAll(milestoneList)
+
+        adapter = MilestoneAdapter(milestoneList, dbHelper)
+        binding.deadlineList.adapter = adapter
     }
 
     override fun onDestroyView() {
