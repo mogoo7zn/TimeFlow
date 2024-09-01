@@ -3,7 +3,6 @@ package com.example.timeflow
 import android.util.Log
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
-import cn.edu.ustc.timeflow.restriction.RepeatRestriction
 import cn.edu.ustc.timeflow.restriction.Restriction
 import cn.edu.ustc.timeflow.restriction.TimeRestriction
 import cn.edu.ustc.timeflow.util.RestrictionFactory
@@ -35,7 +34,7 @@ class ActionTest {
          var list :List<Restriction>  = mutableListOf(
              TimeRestriction("2020-12-12 12:12:12"),
              FixedTimeRestriction("2020-12-12 12:12:12"),
-             RepeatRestriction("2020-12-12 12:12:12")
+
          )
     }
 }

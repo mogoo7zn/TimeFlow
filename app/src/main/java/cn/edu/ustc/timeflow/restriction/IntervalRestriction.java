@@ -17,6 +17,10 @@ public class IntervalRestriction extends Restriction{
         interval=Integer.parseInt(codes[0]);
         repeat_times=Integer.parseInt(codes[1]);
     }
+    public IntervalRestriction(int interval,int repeat_times){
+        this.interval = interval;
+        this.repeat_times = repeat_times;
+    }
 
     @Override
     public String coding() {
@@ -26,5 +30,21 @@ public class IntervalRestriction extends Restriction{
     @Override
     public boolean check(Task task) {
         return false;
+    }
+
+    public int getInterval() {
+        return interval;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
+    }
+
+    public int getRepeat_times() {
+        return repeat_times;
+    }
+
+    public void setRepeat_times(int repeat_times) {
+        this.repeat_times = repeat_times;
     }
 }

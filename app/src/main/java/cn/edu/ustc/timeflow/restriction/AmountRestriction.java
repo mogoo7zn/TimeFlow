@@ -22,4 +22,28 @@ public class AmountRestriction extends Restriction{
     public boolean check(Task task) {
         return total>todo+finished;
     }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public int getTodo() {
+        return todo;
+    }
+
+    public void setTodo(int todo) {
+        this.todo = todo;
+    }
+
+    public int getFinished() {
+        return finished;
+    }
+
+    public void setFinished(int finished) {
+        this.finished = finished;
+    }
 }

@@ -11,7 +11,8 @@ import java.util.List;
 import cn.edu.ustc.timeflow.bean.Action;
 import cn.edu.ustc.timeflow.bean.Task;
 import cn.edu.ustc.timeflow.dao.TaskDao;
-import cn.edu.ustc.timeflow.restriction.RepeatRestriction;
+import cn.edu.ustc.timeflow.restriction.AmountRestriction;
+import cn.edu.ustc.timeflow.restriction.IntervalRestriction;
 import cn.edu.ustc.timeflow.restriction.TimeRestriction;
 import cn.edu.ustc.timeflow.util.DBHelper;
 /**
@@ -53,12 +54,12 @@ public class StandardValuer implements Valuer{
      * @return 工作量紧迫性
      */
     public double getWorkloadUrgency(Action action){
-        RepeatRestriction repeatRestriction=(RepeatRestriction) action.getRestriction("RepeatRestriction");
-        if(repeatRestriction==null){
+
+        AmountRestriction amountRestriction = (AmountRestriction) action.getRestriction("AmountRestriction");
+        if (amountRestriction==null){
             return 0;
         }
-        //workload=剩余任务量*任务时间
-        double workload=(repeatRestriction.getTotal_amount()-repeatRestriction.getFinished_amount())*action.getDuration().toMinutes();
+        double workload = (amountRestriction.getTotal()-amountRestriction.getFinished())*action.getDuration().toMinutes();
         return workload/getRemainingTime(action);
     }
 
@@ -106,20 +107,21 @@ public class StandardValuer implements Valuer{
      */
     public double getRepeatUrgency(Action action){
 
-        RepeatRestriction repeatRestriction=(RepeatRestriction) action.getRestriction("RepeatRestriction");
-        if(repeatRestriction==null){
+        IntervalRestriction intervalRestriction=(IntervalRestriction) action.getRestriction("IntervalRestriction");
+
+        if(intervalRestriction==null){
             return 0;
         }
         LocalDateTime now= LocalDateTime.now();
         LocalDateTime lastTime = getLastTime(action);
         if (lastTime == null) return 0; // or handle the case where there are no tasks
-        LocalDateTime intervalEndTime = lastTime.plusDays(repeatRestriction.getInterval());
+        LocalDateTime intervalEndTime = lastTime.plusDays(intervalRestriction.getInterval());
 
         TaskDao taskDao=new DBHelper(context).getTaskDao();
 
         int leftTimes = taskDao.countByActionIdWithTime(
             action.getId(),
-            now.minusDays(repeatRestriction.getInterval()),
+            now.minusDays(intervalRestriction.getInterval()),
             now
         );
 

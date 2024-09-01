@@ -1,7 +1,6 @@
 package cn.edu.ustc.timeflow.util
 
 import android.content.Context
-import android.util.Log
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.bean.Goal
 import cn.edu.ustc.timeflow.bean.Milestone
@@ -15,11 +14,8 @@ import cn.edu.ustc.timeflow.database.GoalDB
 import cn.edu.ustc.timeflow.database.MilestoneDB
 import cn.edu.ustc.timeflow.database.TaskDB
 import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
-import cn.edu.ustc.timeflow.restriction.RepeatRestriction
+import cn.edu.ustc.timeflow.restriction.IntervalRestriction
 import cn.edu.ustc.timeflow.restriction.Restriction
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -153,7 +149,7 @@ class DBHelper (val context :Context){
         action1.note = "remember to bring water, and wear sportswear"
         action1.overlapping = false
 
-        val restriction1: Restriction = RepeatRestriction(-1,-1,7,3)
+        val restriction1: Restriction = IntervalRestriction(7,3)
         action1.addRestriction(restriction1)
 
 

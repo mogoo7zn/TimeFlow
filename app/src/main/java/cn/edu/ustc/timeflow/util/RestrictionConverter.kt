@@ -1,8 +1,9 @@
 package cn.edu.ustc.timeflow.util
 
 import androidx.room.TypeConverter
+import cn.edu.ustc.timeflow.restriction.AmountRestriction
 import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
-import cn.edu.ustc.timeflow.restriction.RepeatRestriction
+import cn.edu.ustc.timeflow.restriction.IntervalRestriction
 import cn.edu.ustc.timeflow.restriction.Restriction
 import cn.edu.ustc.timeflow.restriction.TimeRestriction
 
@@ -34,9 +35,15 @@ class RestrictionFactory(private var code: String) {
             "FixedTimeRestriction" -> {
                 FixedTimeRestriction(t[1])
             }
-            "RepeatRestriction" -> {
-                RepeatRestriction(t[1])
+
+            "AmountRestriction" ->{
+                AmountRestriction(t[1])
             }
+
+            "IntervalRestriction"->{
+                IntervalRestriction(t[1])
+            }
+
 
             else -> {
                 throw IllegalArgumentException("Unknown type")
