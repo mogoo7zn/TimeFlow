@@ -71,6 +71,9 @@ class DeadlineListFragment : Fragment() {
             onMenuItemSelected("all")
             popupWindow.dismiss()
         }
+        popupWindow.setOnDismissListener {
+            binding.deadlineRangePicker.isChecked = false
+        }
     }
 
     private fun onMenuItemSelected(timeRange: String) {

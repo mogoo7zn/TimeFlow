@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/fragment_deadline_list"
-        android:name="cn.edu.ustc.ui.clock.DeadlineFragment"
+        android:name="cn.edu.ustc.ustcschedule.fragment.DeadlineListFragment"
         android:label="@string/clock"
         tools:layout="@layout/fragment_deadline_list" >
         <action

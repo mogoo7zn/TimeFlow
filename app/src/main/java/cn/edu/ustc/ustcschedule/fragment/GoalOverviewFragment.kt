@@ -33,7 +33,6 @@ class GoalOverviewFragment : Fragment() {
     private lateinit var adapter: FragmentGoalOverviewRecyclerItemAdapter
     private lateinit var actionList: List<Action>
     private lateinit var goalList: List<Goal>
-    lateinit var dbHelper: DBHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
