@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class MilestoneAdapter(
-    private val milestoneList: List<Milestone>,
+    private val milestoneList: MutableList<Milestone>,
     private val dbHelper: DBHelper
 ) : RecyclerView.Adapter<MilestoneAdapter.ViewHolder>() {
 
@@ -52,4 +52,10 @@ class MilestoneAdapter(
     }
 
     override fun getItemCount() = milestoneList.size
+
+    fun updateMilestones(newMilestones: List<Milestone>) {
+        milestoneList.clear()
+        milestoneList.addAll(newMilestones)
+        notifyDataSetChanged()
+    }
 }

@@ -28,6 +28,10 @@ class DeadlineListFragment : Fragment() {
     ): View {
         _binding = FragmentDeadlineListBinding.inflate(inflater, container, false)
         dbHelper = DBHelper(requireContext())
+
+        binding.deadlineList.layoutManager = LinearLayoutManager(context)
+        adapter = MilestoneAdapter(mutableListOf(), dbHelper)
+        binding.deadlineList.adapter = adapter
         binding.deadlineRange.setText(R.string._week)
         fetchMilestones("week")
         binding.deadlineCount.setText(allMilestonesInRange.size.toString())
@@ -43,9 +47,6 @@ class DeadlineListFragment : Fragment() {
             }
         }
 
-        binding.deadlineList.layoutManager = LinearLayoutManager(context)
-        adapter = MilestoneAdapter(emptyList(), dbHelper)
-        binding.deadlineList.adapter = adapter
 
         val timeRange = arguments?.getString("timeRange") ?: "week"
         fetchMilestones(timeRange)
@@ -101,10 +102,10 @@ class DeadlineListFragment : Fragment() {
             else -> emptyList()
         }
         // Store all milestones in range in a List<Milestone>
+        allMilestonesInRange.clear()
         allMilestonesInRange.addAll(milestoneList)
-
-        adapter = MilestoneAdapter(milestoneList, dbHelper)
-        binding.deadlineList.adapter = adapter
+        adapter.updateMilestones(milestoneList)
+        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {
