@@ -2,10 +2,13 @@ package cn.edu.ustc.timeflow.model;
 
 import android.content.Context;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import cn.edu.ustc.timeflow.bean.Action;
 import cn.edu.ustc.timeflow.bean.Task;
@@ -53,7 +56,7 @@ public class StandardScheduler extends Scheduler{
         for (LocalDate date = start.toLocalDate(); date.isBefore(end.toLocalDate()); date = date.plusDays(1)){
             TimeTable timeTable = new TimeTable(context, date);
             RemoveUnfinishedFutureTask(timeTable, date);
-
+            FixedTaskHandler(timeTable, date);
             timeTable.sync();
         }
 
@@ -87,25 +90,59 @@ public class StandardScheduler extends Scheduler{
                         LocalDateTime start1 = LocalDateTime.of(date, fixedTimeRestriction.getStart());
                         LocalDateTime end1 = LocalDateTime.of(date, LocalTime.of(23, 59, 0));
                         Task task = new Task(action, start1, end1);
-                        timeTable.addTask(task);
+                        if(new RestrictionChecker(context, action, task).RestrictionCheck())
+                            timeTable.addTask(task);
+
 
                         LocalDateTime start2 = LocalDateTime.of(date, LocalTime.of(0, 0, 1));
                         LocalDateTime end2 = LocalDateTime.of(date, fixedTimeRestriction.getEnd());
                         Task task2 = new Task(action, start2, end2);
-                        timeTable.addTask(task2);
+                        if(new RestrictionChecker(context, action, task2).RestrictionCheck())
+                            timeTable.addTask(task2);
 
                     }
                     else {
                         LocalDateTime start1 = LocalDateTime.of(date, fixedTimeRestriction.getStart());
                         LocalDateTime end1 = LocalDateTime.of(date, fixedTimeRestriction.getEnd());
                         Task task = new Task(action, start1, end1);
-                        timeTable.addTask(task);
+                        if(new RestrictionChecker(context, action, task).RestrictionCheck())
+                            timeTable.addTask(task);
                     }
                 }
 
             }
         }
-
-
+        timeTable.sync();
     }
+
+    private void RepeatingTaskHandler(TimeTable timeTable, LocalDate date) {
+        // 获取所有重复任务
+        // 检查时间范围是否符合其他限制
+        // 符合则加入
+        PriorityQueue<Action> actions = new PriorityQueue<>((o1, o2) -> Double.compare(valuer.valuate(o2), valuer.valuate(o1)));
+
+        actions.addAll(actionDao.getByType("Repeating"));
+        while (!actions.isEmpty()) {
+            Action action = actions.poll();
+            List<kotlin.Pair<LocalDateTime, LocalDateTime>> AvailableTime = timeTable.getAvailableTime();//遍历时间表，找到第一个合适的时间段，将任务加入时间表
+            for (kotlin.Pair<LocalDateTime, LocalDateTime> pair : AvailableTime) {
+                LocalDateTime start = pair.getFirst();
+                LocalDateTime end = pair.getSecond();
+                Duration duration = Duration.between(start, end);
+                if (duration.toMinutes() >= action.getDuration().toMinutes()) {
+                    Task task = new Task(action, start, start.plus(action.getDuration()));
+                    if(new RestrictionChecker(context, action, task).RestrictionCheck())
+                        timeTable.addTask(task);
+                    break;
+                }
+            }
+            timeTable.sync();
+
+
+
+        }
+        timeTable.sync();
+    }
+
+
 }
