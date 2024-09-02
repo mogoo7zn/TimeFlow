@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.edu.ustc.adapter.MilestoneAdapter
+import cn.edu.ustc.ui.adapter.MilestoneAdapter
 import com.example.timeflow.R
 import com.example.timeflow.databinding.FragmentDeadlineListBinding
 import cn.edu.ustc.timeflow.bean.Milestone

@@ -1,4 +1,4 @@
-package cn.edu.ustc.adapter
+package cn.edu.ustc.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

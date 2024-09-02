@@ -2,8 +2,6 @@ package cn.edu.ustc.ustcschedule.fragment
 
 import android.os.Bundle
 import android.app.Dialog
-import android.content.DialogInterface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +15,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.edu.ustc.adapter.FragmentGoalOverviewRecyclerItemAdapter
+import cn.edu.ustc.ui.adapter.FragmentGoalOverviewRecyclerItemAdapter
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.bean.Goal
 import cn.edu.ustc.timeflow.util.DBHelper
@@ -25,7 +23,6 @@ import com.example.timeflow.R
 import com.example.timeflow.databinding.FragmentGoalOverviewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlin.time.Duration
 
 class GoalOverviewFragment : Fragment() {
     private var _binding: FragmentGoalOverviewBinding? = null
