@@ -6,7 +6,9 @@ import android.util.Log
 import android.widget.Toast
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.bean.Course
+import cn.edu.ustc.timeflow.bean.Goal
 import cn.edu.ustc.timeflow.database.ActionDB
+import cn.edu.ustc.timeflow.restriction.Restriction
 import com.google.android.material.internal.ContextUtils.getActivity
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -15,38 +17,55 @@ import org.jsoup.select.Elements
 import java.time.Duration
 
 val TAG = "UstcJWConverter"
+
+/**
+ * A converter for USTC JW course table web page.
+ */
 class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(html,context) {
     override fun parse() {
         val courses = parseCourses(html)
-        
-        //TODO: Save actions to database
-        //val actionDB = ActionDB.getDatabase(context)
+        //Log.d(TAG, "parse: ${html}")
 
-        var str: String = ""
-        for (course in courses) {
-            str += course.toString() + "\n"
+        //建立Goal
+        val goalDao = DBHelper(context).getGoalDao()
+
+        var courseGoal = goalDao.getByContent("课程表")
+        if (courseGoal.isEmpty()) {
+            val goal = Goal("课程表",null,null,"",0)
+            goalDao.insert(goal)
         }
-        Log.d(TAG, "parse: $str")
 
-        val actions = convertCoursesToActions(courses)
+        courseGoal = goalDao.getByContent("课程表")
+        val goal = courseGoal.get(0).id
 
+
+
+        //转换并储存Action
+        var actions = convertCoursesToActions(courses, goal)
+        val actionDao = ActionDB.getDatabase(context).actionDao()
+
+        actionDao.deleteByGoalId(goal)
+        actionDao.insertAll(actions)
+
+
+        actions = actionDao.getByGoalId(goal)
         var str1 = ""
         for (action in actions) {
-            str1 += action.name + "\n"
+            str1 += action.toString() + "\n"
         }
+
         Log.d(TAG, "parse: $str1")
 
-        //TODO: 测试用对话, 之后删除
-        val dialog = AlertDialog.Builder(context)
-            .setMessage("已获取数据: \n$str1")
-            .setCancelable(true)
-            .setPositiveButton("返回主页") { dialog, _ ->
-                //结束WebActivity
-                context.getActivity()?.finish()
-            }
-            .create()
-
-        dialog.show()
+//        val dialog = AlertDialog.Builder(context)
+//            .setMessage("已获取数据: \n$str1")
+//            .setCancelable(true)
+//            .setPositiveButton("返回主页") { dialog, _ ->
+//                //结束WebActivity
+//                context.getActivity()?.finish()
+//            }
+//            .create()
+//
+//        dialog.show()
 
     }
 
@@ -76,25 +95,40 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
         return courses
     }
 }
-fun convertCourseToAction(course: Course): Action {
+fun convertCourseToAction(course: Course,goal: Int): Action {
 
     val note : String = "${course.teachers}  ${course.courseType}  ${course.department}"
 
+    val scheduleConverter = ScheduleConverter(course.schedule)
+
+    Log.d(TAG, "convertCourseToAction: ${course.schedule}")
+    val items = scheduleConverter.parse()
+    items.map { Log.d(TAG, "convertCourseToAction: ${it.toString()}") }
+
+    var location = ""
+
+    if(items.isNotEmpty()){
+        location = items[0].Room
+        Log.d(TAG, "convertCourseToAction: $location")
+    }
+
+
     return Action(
-        0, -1,// Set appropriate goal_id
+        0, goal,// Set appropriate goal_id
         course.courseName,
         Duration.ofHours(course.scheduledHours.toLong()),
-        "", // Extract location from schedule if needed
+        location,
         note,
         false,
         "Fixed",
         false,
-        emptyList() // Set appropriate restrictions if needed
+        emptyList() // TODO: Set appropriate restrictions if needed
     )
 }
 
-fun convertCoursesToActions(courses: List<Course>): List<Action> {
-    return courses.map { convertCourseToAction(it) }
+
+fun convertCoursesToActions(courses: List<Course>, goal: Int): List<Action> {
+    return courses.map { convertCourseToAction(it,goal) }
 }
 
 fun Context.getActivity(): Activity? {

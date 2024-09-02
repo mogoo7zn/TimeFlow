@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
-    android:layout_marginBottom="54dp">
+    >
 
     <TextView
         android:id="@+id/current_goal"
@@ -75,13 +74,14 @@
         app:backgroundTint="@color/white"
         android:tint="@color/white"
         android:src="@drawable/ic_add"
-        app:fabSize="mini"/>.
+        app:fabSize="mini"
+        tools:ignore="ContentDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/goal_overview_recycler_view"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="90dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/current_goal"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -79,13 +79,26 @@ class TimeTable {
     }
 
     fun sync() {
-        //TODO: sync with database
-        CoroutineScope(Dispatchers.IO).launch {
+        sync(false)
+    }
+
+    fun sync(usingCoroutine:Boolean){
+        if (!usingCoroutine){
             val taskDao = TaskDB.getDatabase(context!!).taskDao()
             taskDao.deleteByTime(start, end)
             taskDao.insert(tasks)
         }
+        else{
+            CoroutineScope(Dispatchers.IO).launch {
+                val taskDao = TaskDB.getDatabase(context!!).taskDao()
+                taskDao.deleteByTime(start, end)
+                taskDao.insert(tasks)
+            }
+        }
+
+
     }
+
 
     fun getAvailableTime(): List<Pair<LocalDateTime, LocalDateTime>> {
         val availableTime: MutableList<Pair<LocalDateTime, LocalDateTime>> = mutableListOf()

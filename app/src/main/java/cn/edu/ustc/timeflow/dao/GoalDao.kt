@@ -41,6 +41,9 @@ interface GoalDao {
     @TypeConverters(DateTimeConverter::class)
     fun getByEndDate(endDate: LocalDateTime): List<Goal>
 
+    @Query("SELECT * FROM goal WHERE goal_name = :content")
+    fun getByContent(content: String): List<Goal>
+
     @Query("DELETE FROM goal WHERE id = :id")
     fun deleteById(id: Int)
     @Query("DELETE FROM goal WHERE goal_name = :name")

@@ -10,7 +10,11 @@ import cn.edu.ustc.timeflow.restriction.TimeRestriction
 class RestrictionConverter {
     @TypeConverter
     fun fromString(value: String): List<Restriction> {
+
         val list = mutableListOf<Restriction>()
+        if (value.isEmpty()) {
+            return list
+        }
         val t = value.split(",")
         for (s in t) {
             list.add(RestrictionFactory(s).create())

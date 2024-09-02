@@ -26,6 +26,10 @@ interface ActionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(action: Action)
 
+    fun insertAll(actions: List<Action>) {
+        actions.forEach { insert(it) }
+    }
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(action: Action)
 
@@ -40,6 +44,9 @@ interface ActionDao {
 
     @Query("DELETE FROM 'action' WHERE action_name = :name")
     fun deleteByName(name: String)
+
+    @Query("DELETE FROM 'action' WHERE goal_id = :goalId")
+    fun deleteByGoalId(goalId: Int)
 
     @Query("SELECT * FROM 'action' WHERE goal_id = :goalId")
     fun getActionsForGoal(goalId: Int): List<Action>

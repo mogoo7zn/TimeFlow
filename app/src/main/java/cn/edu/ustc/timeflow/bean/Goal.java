@@ -137,7 +137,6 @@ public class Goal {
     }
 
     public Goal() {
-
     }
     @Ignore
     public Goal(String content, LocalDateTime start, LocalDateTime end, String reason, int priority) {

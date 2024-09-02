@@ -1,10 +1,16 @@
 package cn.edu.ustc.timeflow.util;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 用于将教务处获得的Schedule化为Action可用信息
+ */
 public class ScheduleConverter {
     String code;
+
     public ScheduleConverter(String code) {
         this.code = code;
     }
@@ -17,6 +23,8 @@ public class ScheduleConverter {
         String[] courses = code.split(" (?=\\d+~\\d+周|\\d+周|\\d+~\\d+\\(双\\)|\\d+~\\d+\\(单\\)|\\d+~\\d+,|\\d+,)");
 
         for (String course : courses) {
+            if(course.isEmpty())
+                continue;
             item i = new item();
             String[] parts = course.split(" ");
             String[] weeks = parts[0].split(",");
@@ -53,5 +61,17 @@ public class ScheduleConverter {
         public String Room;
         public String Time;
         public String Teacher;
+
+        @NonNull
+        @Override
+        public String toString() {
+            StringBuilder s= new StringBuilder();
+            for (int i = 0; i < StartWeeks.size(); i++) {
+                s.append("item{" + "StartWeek=").append(StartWeeks.get(i)).append(", EndWeek=").append(EndWeeks.get(i)).append(", EvenOrOddWeek=").append(EvenOrOddWeeks.get(i)).append(", Room='").append(Room).append('\'').append(", Time='").append(Time).append('\'').append(", Teacher='").append(Teacher).append('\'').append('}');
+            }
+            return s.toString();
+        }
     }
 }
+
+
