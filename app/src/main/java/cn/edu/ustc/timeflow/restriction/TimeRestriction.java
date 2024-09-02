@@ -5,7 +5,10 @@ import androidx.annotation.NonNull;
 import java.time.LocalDateTime;
 
 import cn.edu.ustc.timeflow.bean.Task;
-
+/**
+ * 时间约束，包括开始时间和结束时间
+ * 要求任务的开始时间在开始时间和结束时间之间
+ */
 public class TimeRestriction extends Restriction{
     LocalDateTime start;
     LocalDateTime end;

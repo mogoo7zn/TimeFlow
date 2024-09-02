@@ -2,6 +2,10 @@ package cn.edu.ustc.timeflow.restriction;
 
 import cn.edu.ustc.timeflow.bean.Task;
 
+/**
+ * 重复任务的间隔约束, 包括interval和repeat_times
+ * 要求在interval天内重复repeat_times次
+ */
 public class IntervalRestriction extends Restriction{
 
     /**

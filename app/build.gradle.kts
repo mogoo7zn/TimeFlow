@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.ortools.java)
     implementation(libs.jsoup)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

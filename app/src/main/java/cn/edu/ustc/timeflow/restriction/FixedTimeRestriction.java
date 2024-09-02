@@ -9,6 +9,10 @@ import java.util.List;
 
 import cn.edu.ustc.timeflow.bean.Task;
 
+/**
+ * 固定时间约束，包括开始时间和结束时间、类型和日期
+ * 要求任务按照重复类型和日期，在开始时间和结束时间之间进行
+ */
 public class FixedTimeRestriction extends Restriction{
     LocalTime start;
     LocalTime end;

@@ -7,15 +7,24 @@
 ## restriction
 + Restriction.java: 限制类，用于存储用户的限制信息
 
-#### 必选
-+ FixedTimeRestriction.java: 固定时间限制类，用于存储用户的固定时间限制信息(包含每天起止时间，重复周期)
-+ RepeatRestriction.java: 重复限制类，用于存储用户的重复限制信息（包含完成次数，总共次数，间隔时间，间隔时间内次数）
-+ TimeRestriction.java: 时间限制类，用于存储用户的时间限制信息（起止时间）
+### Restriction, 限制类
++ AmountRestriction.java:
+  - 任务数量约束，包括总数，未完成数，已完成数 
+  - 要求总数大于等于未完成数和已完成数之和
++ TimeRestriction.java:
+  - 时间约束，包括开始时间，结束时间
+  - 要求任务安排在开始时间到结束时间
++ IntervalRestriction.java:
+  - 重复任务的间隔约束, 包括interval和repeat_times 
+  - 要求在interval天内重复repeat_times次
++ FixedTimeRestriction.java:
+  - 固定时间约束，包括开始时间和结束时间、类型和日期 
+  - 要求任务按照重复类型和日期，在开始时间和结束时间之间进行
++ PriorityRestriction.java:
+    - 优先级
++ ResourceRestriction.java:
+    - 资源约束，包括资源名称、消耗量和数量
 
-#### 可选，用于安排任务时参考
-+ PriorityRestriction.java: 优先级限制类，用于存储用户的优先级限制信息
-+ ResourceRestriction.java: 资源限制类，用于存储用户的资源限制信息
-+ LocationRestriction.java: 地点限制类，用于存储用户的地点限制信息
 
 > 限制类用于存储用户的限制信息，限制信息包括固定时间限制、优先级限制、重复限制、资源限制、时间限制、地点限制等，限制类的属性包括限制类型、限制内容、限制描述等。
 > 示例；

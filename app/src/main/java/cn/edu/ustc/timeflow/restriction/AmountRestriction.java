@@ -3,7 +3,10 @@ package cn.edu.ustc.timeflow.restriction;
 import androidx.annotation.Nullable;
 
 import cn.edu.ustc.timeflow.bean.Task;
-
+/**
+ * 任务数量约束，包括总数，未完成数，已完成数
+ * 要求总数大于等于未完成数和已完成数之和
+ */
 public class AmountRestriction extends Restriction{
     int total;
     int todo;
