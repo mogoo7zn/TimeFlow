@@ -134,7 +134,7 @@ fun convertCourseToAction(context: Context, course: Course,goal: Int): Action {
     }
 
     //restrictions去重
-    val set = restrictions.map { it.toString() }.toSet()
+    val set = restrictions.map { it.coding() }.toSet()
     val list = set.toList()
     val newRestrictions = list.map { RestrictionFactory(it).create() }
 
@@ -224,7 +224,7 @@ class TimeConverter {
         val periods = dayAndPeriods[1].removeSuffix(")").split(",").map { it.toInt() }
 
         val start = classTime[periods[0] - 1]
-        val end = classTime[periods[periods.size - 1]].plusMinutes(45)
+        val end = classTime[periods[periods.size - 1]-1].plusMinutes(45)
 
         return FixedTimeRestriction(start, end,FixedTimeRestriction.FixedTimeRestrictionType.WEEKLY, listOf(day))
     }
