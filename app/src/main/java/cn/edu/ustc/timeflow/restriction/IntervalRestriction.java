@@ -47,4 +47,13 @@ public class IntervalRestriction extends Restriction{
     public void setRepeat_times(int repeat_times) {
         this.repeat_times = repeat_times;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof IntervalRestriction){
+            IntervalRestriction r=(IntervalRestriction)obj;
+            return r.interval==interval && r.repeat_times==repeat_times;
+        }
+        return false;
+    }
 }

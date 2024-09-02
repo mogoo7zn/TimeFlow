@@ -8,13 +8,20 @@ import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.bean.Course
 import cn.edu.ustc.timeflow.bean.Goal
 import cn.edu.ustc.timeflow.database.ActionDB
+import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
 import cn.edu.ustc.timeflow.restriction.Restriction
+import cn.edu.ustc.timeflow.restriction.TimeRestriction
+import cn.edu.ustc.timeflow.util.SharedPreferenceHelper.Companion.getString
+import cn.edu.ustc.timeflow.util.SharedPreferenceHelper.Companion.saveString
 import com.google.android.material.internal.ContextUtils.getActivity
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 val TAG = "UstcJWConverter"
 
@@ -41,7 +48,7 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
 
 
         //转换并储存Action
-        var actions = convertCoursesToActions(courses, goal)
+        var actions = courses.map { convertCourseToAction(context,it,goal) }
         val actionDao = ActionDB.getDatabase(context).actionDao()
 
         actionDao.deleteByGoalId(goal)
@@ -95,7 +102,8 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
         return courses
     }
 }
-fun convertCourseToAction(course: Course,goal: Int): Action {
+
+fun convertCourseToAction(context: Context, course: Course,goal: Int): Action {
 
     val note : String = "${course.teachers}  ${course.courseType}  ${course.department}"
 
@@ -112,6 +120,24 @@ fun convertCourseToAction(course: Course,goal: Int): Action {
         Log.d(TAG, "convertCourseToAction: $location")
     }
 
+    val restrictions = mutableListOf<Restriction>()
+
+    val its =  ScheduleConverter(course.schedule).parse()
+
+    for (it in its) {
+        restrictions.add(TimeConverter().convert(it.Time))
+        Log.d(TAG, "convertCourseToAction: ${restrictions[restrictions.size - 1].coding()}")
+        for (i in 0..<it.StartWeeks.size) {
+            restrictions.addAll(WeekToDateConverter(context).convert(it.StartWeeks[i], it.EndWeeks[i], it.EvenOrOddWeeks[i]))
+            Log.d(TAG, "convertCourseToAction: ${restrictions[restrictions.size - 1].coding()}")
+        }
+    }
+
+    //restrictions去重
+    val set = restrictions.map { it.toString() }.toSet()
+    val list = set.toList()
+    val newRestrictions = list.map { RestrictionFactory(it).create() }
+
 
     return Action(
         0, goal,// Set appropriate goal_id
@@ -122,14 +148,89 @@ fun convertCourseToAction(course: Course,goal: Int): Action {
         false,
         "Fixed",
         false,
-        emptyList() // TODO: Set appropriate restrictions if needed
+        newRestrictions
     )
 }
 
 
-fun convertCoursesToActions(courses: List<Course>, goal: Int): List<Action> {
-    return courses.map { convertCourseToAction(it,goal) }
+
+/**
+ * Convert week to date
+ */
+class WeekToDateConverter(var context: Context) {
+    var startDate: LocalDate? = null
+
+    init {
+        if (getString(context, "startdate") == null) {
+            startDate = LocalDate.of(2024, 9, 1)
+            saveString(context, "startdate", startDate.toString())
+        } else {
+            startDate = LocalDate.parse(getString(context, "startdate"))
+        }
+    }
+
+    fun retrieveStartDate(): LocalDate? {
+        return startDate
+    }
+
+    fun updateStartDate(startDate: LocalDate) {
+        this.startDate = startDate
+        saveString(context, "startdate", startDate.toString())
+    }
+
+    fun convert(week: Int): TimeRestriction {
+        val start = startDate!!.plusWeeks(week.toLong())
+        val end = start.plusDays(6)
+        return TimeRestriction(LocalDateTime.of(start, LocalTime.of(0, 0, 1)), LocalDateTime.of(end, LocalTime.of(23, 59, 59)))
+    }
+
+    fun convert(startWeek: Int, endWeek: Int, evenOrOddWeek: Int): MutableList<TimeRestriction> {
+        val restrictions = mutableListOf<TimeRestriction>()
+        for (i in startWeek..endWeek) {
+            if (evenOrOddWeek == 0) {
+                restrictions.add(convert(i))
+            } else if (evenOrOddWeek == 1 && i % 2 == 1) {
+                restrictions.add(convert(i))
+            } else if (evenOrOddWeek == 2 && i % 2 == 0) {
+                restrictions.add(convert(i))
+            }
+        }
+        return restrictions
+    }
+
 }
+
+//处理类似 1(6,7) 的字符串，表示周一第6,7节课.示例：'2(3,4)', '4(3,4,5)', '5(1,2,3,4)'
+class TimeConverter {
+    val classTime = arrayOf(
+        LocalTime.of(7,50),
+        LocalTime.of(8,40),
+        LocalTime.of(9,45),
+        LocalTime.of(10,35),
+        LocalTime.of(11,25),
+        LocalTime.of(14,0),
+        LocalTime.of(14,50),
+        LocalTime.of(15,55),
+        LocalTime.of(16,45),
+        LocalTime.of(17,35),
+        LocalTime.of(19,30),
+        LocalTime.of(20,20),
+        LocalTime.of(21,10)
+    )
+
+    fun convert(time: String): FixedTimeRestriction {
+        val dayAndPeriods = time.split("(")
+        val day = dayAndPeriods[0].toInt() - 1 // Convert to 0-based index
+        val periods = dayAndPeriods[1].removeSuffix(")").split(",").map { it.toInt() }
+
+        val start = classTime[periods[0] - 1]
+        val end = classTime[periods[periods.size - 1]].plusMinutes(45)
+
+        return FixedTimeRestriction(start, end,FixedTimeRestriction.FixedTimeRestrictionType.WEEKLY, listOf(day))
+    }
+}
+
+
 
 fun Context.getActivity(): Activity? {
     return when (this) {

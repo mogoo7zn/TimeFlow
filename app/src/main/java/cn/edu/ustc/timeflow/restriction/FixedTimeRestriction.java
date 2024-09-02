@@ -17,7 +17,7 @@ public class FixedTimeRestriction extends Restriction{
      */
     int type;
     /**
-     * 0:Sunday,1:Monday,2:Tuesday,3:Wednesday,4:Thursday,5:Friday,6:Saturday
+     * 1:Monday,2:Tuesday,3:Wednesday,4:Thursday,5:Friday,6:Saturday,7:Sunday
      */
     List<Integer> days;
 
@@ -89,5 +89,13 @@ public class FixedTimeRestriction extends Restriction{
         WEEKLY,
         MONTHLY,
         YEARLY
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof FixedTimeRestriction){
+            FixedTimeRestriction r=(FixedTimeRestriction)obj;
+            return r.start.equals(start) && r.end.equals(end) && r.type==type && r.days.equals(days);
+        }
+        return false;
     }
 }

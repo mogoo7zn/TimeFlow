@@ -1,5 +1,7 @@
 package cn.edu.ustc.timeflow.restriction;
 
+import androidx.annotation.Nullable;
+
 import cn.edu.ustc.timeflow.bean.Task;
 
 public class AmountRestriction extends Restriction{
@@ -45,5 +47,14 @@ public class AmountRestriction extends Restriction{
 
     public void setFinished(int finished) {
         this.finished = finished;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof AmountRestriction){
+            AmountRestriction r=(AmountRestriction)obj;
+            return r.total==total && r.todo==todo && r.finished==finished;
+        }
+        return false;
     }
 }

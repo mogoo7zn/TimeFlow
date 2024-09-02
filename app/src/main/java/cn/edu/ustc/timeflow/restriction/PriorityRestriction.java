@@ -19,4 +19,21 @@ public class PriorityRestriction extends Restriction{
     public boolean check(Task task) {
         return true;
     }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof PriorityRestriction){
+            PriorityRestriction r=(PriorityRestriction)obj;
+            return r.priority==priority;
+        }
+        return false;
+    }
 }

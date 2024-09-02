@@ -57,6 +57,12 @@ public class ScheduleConverter {
     public static class item {
         public List<Integer> StartWeeks = new ArrayList<>();
         public List<Integer> EndWeeks = new ArrayList<>();
+
+        /**
+         * 0: 每周
+         * 1: 单周
+         * 2: 双周
+         */
         public List<Integer> EvenOrOddWeeks = new ArrayList<>();
         public String Room;
         public String Time;

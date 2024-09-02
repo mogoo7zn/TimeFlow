@@ -25,4 +25,37 @@ public class ResourceRestriction extends Restriction{
     public String coding() {
         return "ResourceRestriction="+resource_name+" "+amount+" "+consumed;
     }
+
+    public String getResource_name() {
+        return resource_name;
+    }
+
+    public void setResource_name(String resource_name) {
+        this.resource_name = resource_name;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public int getConsumed() {
+        return consumed;
+    }
+
+    public void setConsumed(int consumed) {
+        this.consumed = consumed;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ResourceRestriction){
+            ResourceRestriction r=(ResourceRestriction)obj;
+            return r.resource_name.equals(resource_name) && r.amount==amount && r.consumed==consumed;
+        }
+        return false;
+    }
 }

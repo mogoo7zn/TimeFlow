@@ -44,4 +44,12 @@ public class TimeRestriction extends Restriction{
         this.end = end;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof TimeRestriction){
+            TimeRestriction r=(TimeRestriction)obj;
+            return r.start.equals(start) && r.end.equals(end);
+        }
+        return false;
+    }
 }
