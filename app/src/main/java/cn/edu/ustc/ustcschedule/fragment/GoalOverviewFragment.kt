@@ -81,26 +81,17 @@ class GoalOverviewFragment : Fragment() {
         val actionLocation: EditText = dialog.findViewById(R.id.action_location)
         val actionNote: EditText = dialog.findViewById(R.id.action_note)
         val actionRemind: CheckBox = dialog.findViewById(R.id.action_remind)
-        val actionType: RadioGroup = dialog.findViewById(R.id.action_type)
-        val weeklyOptions: LinearLayout = dialog.findViewById(R.id.weekly_options)
-        val dailyOptions: LinearLayout = dialog.findViewById(R.id.daily_options)
+        val actionStartTime: Button = dialog.findViewById(R.id.action_start_time)
+        val actionEndTime: Button = dialog.findViewById(R.id.action_end_time)
+        val actionTimePicker: com.loper7.date_time_picker.DateTimePicker = dialog.findViewById(R.id.action_time_picker)
         val saveButton: Button = dialog.findViewById(R.id.save_action_button)
 
-        actionType.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.action_type_daily -> {
-                    dailyOptions.visibility = View.VISIBLE
-                    weeklyOptions.visibility = View.GONE
-                }
-                R.id.action_type_weekly -> {
-                    dailyOptions.visibility = View.GONE
-                    weeklyOptions.visibility = View.VISIBLE
-                }
-                R.id.action_type_once -> {
-                    dailyOptions.visibility = View.GONE
-                    weeklyOptions.visibility = View.GONE
-                }
-            }
+        actionStartTime.setOnClickListener {
+            // Handle start time selection
+        }
+
+        actionEndTime.setOnClickListener {
+            // Handle end time selection
         }
 
         saveButton.setOnClickListener {
@@ -109,12 +100,6 @@ class GoalOverviewFragment : Fragment() {
             val location = actionLocation.text.toString()
             val note = actionNote.text.toString()
             val remind = actionRemind.isChecked
-            val type = when (actionType.checkedRadioButtonId) {
-                R.id.action_type_daily -> "daily"
-                R.id.action_type_weekly -> "weekly"
-                R.id.action_type_once -> "once"
-                else -> ""
-            }
 
             // Create new Action object
 //            val newAction = Action(
@@ -124,7 +109,7 @@ class GoalOverviewFragment : Fragment() {
 //                location = location,
 //                note = note,
 //                remind = remind,
-//                type = type,
+//                type = "once", // Set the appropriate type
 //                finished = false,
 //                restrictions = emptyList() // Set the appropriate restrictions
 //            )

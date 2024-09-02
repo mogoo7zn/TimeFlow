@@ -109,4 +109,6 @@ dependencies {
     // Fragment testing
     debugImplementation("androidx.fragment:fragment-testing:1.5.7")
 
+    implementation("com.google.android.material:material:1.1.0")
+
 }
