@@ -19,6 +19,12 @@ class TimeTable {
     lateinit var start: LocalDateTime
     lateinit var end: LocalDateTime
     var tasks: MutableList<Task> = mutableListOf()
+        get() {
+            // 按开始时间排序
+            field.sortBy { it.start }
+            return field
+        }
+
 
     constructor(context: Context?, date: LocalDate) {
         this.context = context

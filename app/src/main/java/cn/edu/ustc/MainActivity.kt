@@ -48,20 +48,32 @@ class MainActivity : AppCompatActivity() {
 
         //This is the bottom navigation bar that is displayed on the bottom of the screen.
         val radioGroup = binding.appBarMain.navBar
+
+
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.home -> {
                     //Toast.makeText(this, "home", Toast.LENGTH_SHORT).show()
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.dayScheduleFragment)
+                    findNavController(R.id.nav_host_fragment_content_main)
+                        .popBackStack(R.id.dayScheduleFragment, true)
+                    findNavController(R.id.nav_host_fragment_content_main)
+                        .navigate(R.id.dayScheduleFragment)
+
                 }
 
                 R.id.plan_overview -> {
                     //Toast.makeText(this, "plan_overview", Toast.LENGTH_SHORT).show()
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.fragment_plan_overview)
+                    findNavController(R.id.nav_host_fragment_content_main)
+                        .popBackStack(R.id.fragment_plan_overview, true)
+                    findNavController(R.id.nav_host_fragment_content_main)
+                        .navigate(R.id.fragment_plan_overview)
                 }
 
                 R.id.deadline_list -> {
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.fragment_deadline_list)
+                    findNavController(R.id.nav_host_fragment_content_main)
+                        .popBackStack(R.id.fragment_deadline_list, true)
+                    findNavController(R.id.nav_host_fragment_content_main)
+                        .navigate(R.id.fragment_deadline_list)
                 }
             }
         }

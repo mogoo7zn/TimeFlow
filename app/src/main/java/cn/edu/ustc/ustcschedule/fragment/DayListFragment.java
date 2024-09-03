@@ -70,10 +70,6 @@ public class DayListFragment extends Fragment {
         layout= view.findViewById(R.id.day_list_layout);
         magnify_ratio=(float)(layout.getLayoutParams()).height/1226.0;
 
-//        //TODO: For Testing, remove later
-//        // Get the tasks for the current day
-//        DBHelper dbHelper = new DBHelper(getContext());
-//        dbHelper.generateTestTaskData();
 
         timeTable = new TimeTable(getContext(), LocalDate.now());
         show_schedule();
