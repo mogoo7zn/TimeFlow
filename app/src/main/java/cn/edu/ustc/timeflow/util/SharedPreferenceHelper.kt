@@ -15,6 +15,11 @@ class SharedPreferenceHelper {
             return sharedPreferences.getString(key, null)
         }
 
+        fun getString(context: Context, key: String, default: String): String {
+            val sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
+            return sharedPreferences.getString(key, default) ?: default
+        }
+
         fun saveInt(context: Context, key: String, value: Int) {
             val editor = context.getSharedPreferences("data", Context.MODE_PRIVATE).edit()
             editor.putInt(key, value)

@@ -235,4 +235,7 @@
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
     <string name="auto_schedule">自动规划</string>
+    <string name="user_info_setting">用户信息</string>
+    <string name="shift_language">切换语言</string>
+    <string name="setting_start_week">设置开学周</string>
 </resources>

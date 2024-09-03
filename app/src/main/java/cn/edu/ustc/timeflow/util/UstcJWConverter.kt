@@ -63,16 +63,16 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
 
         Log.d(TAG, "parse: $str1")
 
-//        val dialog = AlertDialog.Builder(context)
-//            .setMessage("已获取数据: \n$str1")
-//            .setCancelable(true)
-//            .setPositiveButton("返回主页") { dialog, _ ->
-//                //结束WebActivity
-//                context.getActivity()?.finish()
-//            }
-//            .create()
-//
-//        dialog.show()
+        val dialog = AlertDialog.Builder(context)
+            .setMessage("已获取数据: \n$str1")
+            .setCancelable(true)
+            .setPositiveButton("返回主页") { dialog, _ ->
+                //结束WebActivity
+                context.getActivity()?.finish()
+            }
+            .create()
+
+        dialog.show()
 
     }
 

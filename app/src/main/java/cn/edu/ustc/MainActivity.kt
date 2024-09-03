@@ -1,11 +1,15 @@
 package cn.edu.ustc
 
+import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -25,7 +29,9 @@ import com.example.timeflow.R
 import com.example.timeflow.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
@@ -60,10 +66,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -73,6 +79,36 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_info_settings -> {
+                    showUpdateCredentialsDialog()
+                    true
+                }
+                R.id.nav_about -> {
+                    // Handle about click
+                    true
+                }
+                R.id.nav_help -> {
+                    // Handle help click
+                    true
+                }
+                R.id.shift_language -> {
+                    // Handle shift language click
+                    true
+                }
+                R.id.change_startweek -> {
+                    showChangeStartWeekDialog()
+                    true
+                }
+                else -> false
+            }
+            drawerLayout.closeDrawers()
+            true
+        }
+
+
 
         //初次使用
         if(!SharedPreferenceHelper.getBoolean(this, "notFirst", false)){
@@ -110,10 +146,6 @@ class MainActivity : AppCompatActivity() {
 
             Snackbar.make(binding.root, "自动安排成功", Snackbar.LENGTH_SHORT).show()
 
-
-
-
-
             // 更新页面显示
             val navController = findNavController(R.id.nav_host_fragment_content_main)
             navController.navigate(navController.currentDestination!!.id)
@@ -142,4 +174,64 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    private fun showUpdateCredentialsDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.dialog_login, null)
+        val usernameEditText = dialogLayout.findViewById<EditText>(R.id.username)
+        val passwordEditText = dialogLayout.findViewById<EditText>(R.id.password)
+
+        // Pre-fill the EditTexts with the current username and password
+        usernameEditText.setText(SharedPreferenceHelper.getString(this, "username", ""))
+        passwordEditText.setText(SharedPreferenceHelper.getString(this, "password", ""))
+
+        builder.setView(dialogLayout)
+        builder.setTitle("Update Credentials")
+        builder.setPositiveButton("OK") { dialog, which ->
+            val username = usernameEditText.text.toString()
+            val password = passwordEditText.text.toString()
+            SharedPreferenceHelper.saveString(this, "username", username)
+            SharedPreferenceHelper.saveString(this, "password", password)
+
+            // Optionally, reload the WebView or perform other actions with the new credentials
+            // Todo: reload and check if the credentials are correct
+        }
+        builder.setNegativeButton("Cancel") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+    private fun showChangeStartWeekDialog() {
+    val builder = AlertDialog.Builder(this)
+    val inflater = layoutInflater
+    val dialogLayout = inflater.inflate(R.layout.dialog_change_start_week, null)
+    val startWeekTextView = dialogLayout.findViewById<TextView>(R.id.startweek_textview)
+
+    // Display the current start week
+    val currentStartWeek = SharedPreferenceHelper.getString(this, "startdate", "Not set")
+    startWeekTextView.text = currentStartWeek
+
+    builder.setView(dialogLayout)
+    builder.setTitle("Change Start Week")
+    builder.setPositiveButton("修改") { dialog, which ->
+        // Open DatePicker to select new start week
+        val datePickerDialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
+            // 转换为当周的周日
+            val date = LocalDate.of(year, month + 1, dayOfMonth)
+            date.minusDays(date.dayOfWeek.value.toLong())
+
+            SharedPreferenceHelper.saveString(this,"startdate", date.toString())
+        }, LocalDate.now().year, LocalDate.now().monthValue - 1, LocalDate.now().dayOfMonth)
+        // 设为周日开始
+        datePickerDialog.datePicker.firstDayOfWeek =Calendar.SUNDAY
+        datePickerDialog.show()
+    }
+    builder.setNegativeButton("取消") { dialog, which ->
+        dialog.dismiss()
+    }
+    builder.show()
 }
+}
+

@@ -43,11 +43,10 @@ public class MonthScheduleFragment extends Fragment {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         setTextMonth(view);
 
-//        view.findViewById(R.id.month_mode).setOnClickListener(view1 -> Navigation.findNavController(
-//                requireView()).navigate(R.id.action_schedule_month_to_day));
-//        view.findViewById(R.id.side_bar).setOnClickListener(view2 -> MainActivity.result.openDrawer());
-//        view.findViewById(R.id.add_events).setOnClickListener(view3 -> popUpMenu.onAddEvent(view3, fragmentManager));
-//        view.findViewById(R.id.filter).setOnClickListener(popUpMenu::onFilter);
+        CalendarView calendarView = view.findViewById(R.id.calendar);
+        calendarView.setFirstDayOfWeek(Calendar.SUNDAY);
+
+
     }
 
     private void setTextMonth(@NonNull View view) {
@@ -59,8 +58,10 @@ public class MonthScheduleFragment extends Fragment {
         TextView textDay = view.findViewById(R.id.text_current_day_month);
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatYear = new SimpleDateFormat("yyyy", Locale.CHINA);
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatMonth = new SimpleDateFormat("MM", Locale.CHINA);
+        @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatDay = new SimpleDateFormat("dd", Locale.CHINA);
 
         textMonth2.setText(formatMonth.format(c.getTimeInMillis()));
+        textDay.setText(formatDay.format(c.getTimeInMillis()));
 
 
         calendarView.setOnDateChangeListener((calendarView1, year, month, day) -> {
@@ -83,11 +84,9 @@ public class MonthScheduleFragment extends Fragment {
             calendar.set(year, month, day);
             calendarView1.setDate(calendar.getTimeInMillis());
 
-
             //get the fragment in R.id.month_list_container
             MonthListFragment fragment =(MonthListFragment) getChildFragmentManager().findFragmentById(R.id.month_list_container);
             fragment.updateList();
-
         });
     }
 }
