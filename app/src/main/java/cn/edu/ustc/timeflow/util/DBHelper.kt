@@ -175,7 +175,7 @@ class DBHelper (val context :Context){
         action3.note = "eat more vegetables"
         action3.overlapping = false
 
-        val restriction3: Restriction = FixedTimeRestriction(LocalTime.of(8,0),LocalTime.of(8,30),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
+        val restriction3: Restriction = FixedTimeRestriction(LocalTime.of(7,0),LocalTime.of(7,30),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
 
         action3.addRestriction(restriction3)
 
@@ -201,7 +201,7 @@ class DBHelper (val context :Context){
         action5.note = "eat more vegetables"
         action5.overlapping = false
 
-        val restriction5: Restriction = FixedTimeRestriction(LocalTime.of(18,0),LocalTime.of(18,30),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
+        val restriction5: Restriction = FixedTimeRestriction(LocalTime.of(18,30),LocalTime.of(19,0),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
 
         action5.addRestriction(restriction5)
 

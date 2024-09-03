@@ -58,9 +58,8 @@ public class WeekContentFragment extends Fragment {
         this.container=container;
         timeTables = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
-            timeTables.add(new TimeTable(getContext(), 1, LocalDate.now().plusDays(i - LocalDate.now().getDayOfWeek().getValue() + 1)));
+            timeTables.add(new TimeTable(getContext(), 1, LocalDate.now().plusDays(i - LocalDate.now().getDayOfWeek().getValue() )));
         }
-
         show_schedule();
         return view;
     }

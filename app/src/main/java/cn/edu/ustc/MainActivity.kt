@@ -14,6 +14,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import cn.edu.ustc.timeflow.model.SimpleScheduler
+import cn.edu.ustc.timeflow.model.StandardScheduler
 import cn.edu.ustc.timeflow.model.StandardValuer
 import cn.edu.ustc.timeflow.util.DBHelper
 import cn.edu.ustc.timeflow.util.SharedPreferenceHelper
@@ -78,8 +79,11 @@ class MainActivity : AppCompatActivity() {
 
             SharedPreferenceHelper.saveBoolean(this, "notFirst", true)
             DBHelper(this).generateSample()
-            var SimpleScheduler = SimpleScheduler(StandardValuer(this))
+
+//            val SimpleScheduler = SimpleScheduler(this, StandardValuer(this))
 //            SimpleScheduler.getTimeTable(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
+            var StandardScheduler = StandardScheduler(this, StandardValuer(this))
+            StandardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
         }
 
     }
@@ -97,9 +101,23 @@ class MainActivity : AppCompatActivity() {
 
         val AutoSchedule = menu.findItem(R.id.auto_schedule)
         AutoSchedule.setOnMenuItemClickListener {
-            var SimpleScheduler = SimpleScheduler(this, StandardValuer(this))
-            SimpleScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
-            Snackbar.make(binding.root, "自动排课成功", Snackbar.LENGTH_SHORT).show()
+
+            //TODO: 调用自动排课算法
+//            var SimpleScheduler = SimpleScheduler(this, StandardValuer(this))
+//            SimpleScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
+            var StandardScheduler = StandardScheduler(this, StandardValuer(this))
+            StandardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
+
+            Snackbar.make(binding.root, "自动安排成功", Snackbar.LENGTH_SHORT).show()
+
+
+
+
+
+            // 更新页面显示
+            val navController = findNavController(R.id.nav_host_fragment_content_main)
+            navController.navigate(navController.currentDestination!!.id)
+
             true
         }
         return true

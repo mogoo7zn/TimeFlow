@@ -220,7 +220,7 @@ class TimeConverter {
 
     fun convert(time: String): FixedTimeRestriction {
         val dayAndPeriods = time.split("(")
-        val day = dayAndPeriods[0].toInt() - 1 // Convert to 0-based index
+        val day = dayAndPeriods[0].toInt()// Convert to 0-based index
         val periods = dayAndPeriods[1].removeSuffix(")").split(",").map { it.toInt() }
 
         val start = classTime[periods[0] - 1]

@@ -1,6 +1,7 @@
 package cn.edu.ustc.timeflow.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -52,43 +53,73 @@ public class StandardScheduler extends Scheduler{
         // 获取所有固定任务
         // 检查时间范围是否符合其他限制
         // 符合则加入
+
         List<Action> actions = actionDao.getByType("Fixed");
         for (Action action : actions) {
-            if(action.getRestriction("FixedTimeRestriction") != null){
+            if (action.getRestriction("FixedTimeRestriction") != null) {
                 //获取固定时间限制
                 List<Restriction> restrictions = action.getRestrictions("FixedTimeRestriction");
                 for (Restriction restriction : restrictions) {
 
                     FixedTimeRestriction fixedTimeRestriction = (FixedTimeRestriction) restriction;
-                    if(fixedTimeRestriction.getStart().isAfter(fixedTimeRestriction.getEnd())) {
-                        //跨天，分两次加入
-                        LocalDateTime start1 = LocalDateTime.of(date, fixedTimeRestriction.getStart());
-                        LocalDateTime end1 = LocalDateTime.of(date, LocalTime.of(23, 59, 0));
-                        Task task = new Task(action, start1, end1);
-                        if(new RestrictionChecker(context, action, task).RestrictionCheck())
-                            timeTable.addTask(task);
+                    StringBuilder s= new StringBuilder("Restriction: ");
 
-
-                        LocalDateTime start2 = LocalDateTime.of(date, LocalTime.of(0, 0, 1));
-                        LocalDateTime end2 = LocalDateTime.of(date, fixedTimeRestriction.getEnd());
-                        Task task2 = new Task(action, start2, end2);
-                        if(new RestrictionChecker(context, action, task2).RestrictionCheck())
-                            timeTable.addTask(task2);
-
+                    switch (fixedTimeRestriction.getType()) {//0:daily,1:weekly,2:monthly,3:yearly
+                        case 0:
+                            AddTask(timeTable, date, action, fixedTimeRestriction);
+                            break;
+                        case 1:
+                            if (fixedTimeRestriction.getDays().contains(date.getDayOfWeek().getValue())) {
+                                for (int i : fixedTimeRestriction.getDays()) {
+                                    s.append(i).append(" ");
+                                }
+                                s.append("On Day of ").append(date.getDayOfWeek().getValue()).append("  And ").append(date);
+                                Log.d("SS", s.toString());
+                                AddTask(timeTable, date, action, fixedTimeRestriction);
+                            }
+                            break;
+                        case 2:
+                            if (fixedTimeRestriction.getDays().contains(date.getDayOfMonth()))
+                                AddTask(timeTable, date, action, fixedTimeRestriction);
+                            break;
+                        case 3:
+                            if (fixedTimeRestriction.getDays().contains(date.getDayOfYear()))
+                                AddTask(timeTable, date, action, fixedTimeRestriction);
+                            break;
                     }
-                    else {
-                        LocalDateTime start1 = LocalDateTime.of(date, fixedTimeRestriction.getStart());
-                        LocalDateTime end1 = LocalDateTime.of(date, fixedTimeRestriction.getEnd());
-                        Task task = new Task(action, start1, end1);
-                        if(new RestrictionChecker(context, action, task).RestrictionCheck())
-                            timeTable.addTask(task);
-                    }
+
                 }
-
             }
+            timeTable.sync();
         }
-        timeTable.sync();
     }
+    private void AddTask(TimeTable timeTable, LocalDate date, Action action, FixedTimeRestriction fixedTimeRestriction) {
+        if(fixedTimeRestriction.getStart().isAfter(fixedTimeRestriction.getEnd())) {
+            //跨天，分两次加入
+            LocalDateTime start1 = LocalDateTime.of(date, fixedTimeRestriction.getStart());
+            LocalDateTime end1 = LocalDateTime.of(date, LocalTime.of(23, 59, 0));
+            Task task = new Task(action, start1, end1);
+            if(new RestrictionChecker(context, action, task).RestrictionCheck())
+                timeTable.addTask(task);
+
+
+            LocalDateTime start2 = LocalDateTime.of(date, LocalTime.of(0, 0, 1));
+            LocalDateTime end2 = LocalDateTime.of(date, fixedTimeRestriction.getEnd());
+            Task task2 = new Task(action, start2, end2);
+            if(new RestrictionChecker(context, action, task2).RestrictionCheck())
+                timeTable.addTask(task2);
+
+        }
+        else {
+            LocalDateTime start1 = LocalDateTime.of(date, fixedTimeRestriction.getStart());
+            LocalDateTime end1 = LocalDateTime.of(date, fixedTimeRestriction.getEnd());
+            Task task = new Task(action, start1, end1);
+            if(new RestrictionChecker(context, action, task).RestrictionCheck())
+                timeTable.addTask(task);
+        }
+    }
+
+
 
     private void RepeatingTaskHandler(TimeTable timeTable, LocalDate date) {
         // 获取所有重复任务
@@ -120,4 +151,5 @@ public class StandardScheduler extends Scheduler{
         }
         timeTable.sync();
     }
+
 }

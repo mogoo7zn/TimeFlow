@@ -10,7 +10,11 @@ plugins {
 android {
     namespace = "com.example.timeflow"
     compileSdk = 34
+    packagingOptions {
+        resources.excludes.add("META-INF/AL2.0")
+        resources.excludes.add("META-INF/LGPL2.1")
 
+    }
     defaultConfig {
         applicationId = "com.example.timeflow"
         minSdk = 26
@@ -48,7 +52,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.ortools.java)
+
     implementation(libs.jsoup)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
