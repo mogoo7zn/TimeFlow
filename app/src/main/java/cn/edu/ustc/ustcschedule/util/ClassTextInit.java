@@ -11,14 +11,22 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class ClassTextInit {
+    Calendar c;
+
+    public ClassTextInit(){
+        c = Calendar.getInstance(Locale.CHINA);
+    }
+
+    public ClassTextInit(Calendar c){
+        this.c = c;
+    }
+
     public void initText(View view) {
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatYear = new SimpleDateFormat("yyyy", Locale.CHINA);
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatMonth = new SimpleDateFormat("MM", Locale.CHINA);
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatDay = new SimpleDateFormat("dd", Locale.CHINA);
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatWeek = new SimpleDateFormat("EEEE", Locale.CHINA);
 
-
-        Calendar c = Calendar.getInstance(Locale.CHINA);
         TextView textYear = view.findViewById(R.id.text_current_year);
         textYear.setText(formatYear.format(c.getTimeInMillis()));
         TextView textMonth = view.findViewById(R.id.text_current_month);

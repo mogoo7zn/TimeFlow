@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -23,6 +24,11 @@ import androidx.fragment.app.DialogFragment;
 import com.example.timeflow.R;
 import com.example.timeflow.databinding.FragmentScheduleDayBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.loper7.date_time_picker.DateTimeConfig;
+import com.loper7.date_time_picker.dialog.CardDatePickerDialog;
+
+import java.time.LocalDate;
+import java.util.Calendar;
 
 import cn.edu.ustc.ustcschedule.dialog.AddActionDialogFragment;
 
@@ -44,17 +50,13 @@ public class DayScheduleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         ClassTextInit textInit = new ClassTextInit();
-//        ClassPopUpMenu popUpMenu = new ClassPopUpMenu();
         ScrollView scrollView = view.findViewById(R.id.scroll);
-//        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
         textInit.initText(view);
         scrollView.post(() -> scrollView.scrollTo(0, scrollView.getHeight() / 2));
-//        view.findViewById(R.id.day_mode).setOnClickListener(view1 -> Navigation.findNavController(
-//                requireView()).navigate(R.id.action_schedule_day_to_week));
-//        view.findViewById(R.id.side_bar).setOnClickListener(view2 -> MainActivity.result.openDrawer());
-//        view.findViewById(R.id.add_events).setOnClickListener(view3 -> popUpMenu.onAddEvent(view3, fragmentManager));
-//        view.findViewById(R.id.filter).setOnClickListener(popUpMenu::onFilter);
 
         Button buttonMonth = view.findViewById(R.id.button_month);
         buttonMonth.setOnClickListener(view1 -> Navigation.findNavController(view1).navigate(R.id.monthScheduleFragment)
@@ -69,6 +71,33 @@ public class DayScheduleFragment extends Fragment {
             AddActionDialogFragment addActionDialog = new AddActionDialogFragment();
             addActionDialog.show(getParentFragmentManager(), "AddActionDialogFragment");
         });
+
+//
+
+        ImageView imageView = view.findViewById(R.id.filter);
+        imageView.setOnClickListener(v -> {
+            new CardDatePickerDialog.Builder(getContext())
+                    .setTitle("选择日期")
+                    .setDisplayType(DateTimeConfig.YEAR,DateTimeConfig.MONTH, DateTimeConfig.DAY)
+                    .setOnChoose("确定", time_millisecond -> {
+                        Calendar c = Calendar.getInstance();
+                        c.setTimeInMillis(time_millisecond);
+                        ClassTextInit textInit1 = new ClassTextInit(c);
+                        textInit1.initText(view);
+                        FragmentManager fragmentManager = getChildFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.day_list_container,
+                                new DayListFragment(LocalDate.of(c.get(Calendar.YEAR),
+                                        c.get(Calendar.MONTH) + 1,
+                                        c.get(Calendar.DAY_OF_MONTH)
+                                    )
+                                )
+                        );
+                        fragmentTransaction.commit();
+                        return null;
+                    }).build().show();
+        });
+
 
     }
 }

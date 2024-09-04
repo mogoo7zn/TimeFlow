@@ -2,14 +2,11 @@ package cn.edu.ustc.ustcschedule.fragment;
 
 
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import cn.edu.ustc.ustcschedule.util.Alpha;
 import androidx.annotation.NonNull;
@@ -29,23 +26,29 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import cn.edu.ustc.timeflow.bean.Task;
-import cn.edu.ustc.timeflow.util.DBHelper;
 import cn.edu.ustc.timeflow.util.TimeTable;
 import cn.edu.ustc.ustcschedule.dialog.DeleteDialog;
 
 public class WeekContentFragment extends Fragment {
 
     double magnify_ratio;
-    final SimpleDateFormat format_day = new SimpleDateFormat("yyyy/MM/dd",Locale.CHINA);
     final SimpleDateFormat format_time = new SimpleDateFormat("HH:mm",Locale.CHINA);
     View view;
     LayoutInflater inflater;
     ViewGroup container;
     ConstraintLayout layout;
     List<TimeTable> timeTables;
+    LocalDate date;
+
+    public WeekContentFragment(){
+        date = LocalDate.now();
+    }
+
+    public WeekContentFragment(LocalDate date){
+        this.date = date;
+    }
 
     @Nullable
     @Override
@@ -57,8 +60,11 @@ public class WeekContentFragment extends Fragment {
         this.inflater=inflater;
         this.container=container;
         timeTables = new ArrayList<>();
+
+
         for (int i = 0; i < 7; i++) {
-            timeTables.add(new TimeTable(getContext(), 1, LocalDate.now().plusDays(i - LocalDate.now().getDayOfWeek().getValue() )));
+            // 从周日开始
+            timeTables.add(new TimeTable(getContext(), 1, date.plusDays(i - date.getDayOfWeek().getValue() )));
         }
         show_schedule();
         return view;

@@ -68,8 +68,8 @@ public class LessonDetailDialogFragment extends DialogFragment {
         TextView notesTextView = view.findViewById(R.id.lesson_detail_notes);
 
         lessonNameTextView.setText("课程名称: " + lessonName);
-        teacherNameTextView.setText("教师: " + teacherName);
-        roomTextView.setText("教室: " + room);
+        teacherNameTextView.setText("说明: " + teacherName);
+        roomTextView.setText("位置: " + room);
         timeTextView.setText("时间: " + time);
         descriptionTextView.setText("描述: " + description);
         notesTextView.setText("备注: " + notes);

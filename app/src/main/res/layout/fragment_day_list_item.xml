@@ -44,6 +44,19 @@
                     app:layout_constraintTop_toTopOf="@id/lesson_label_day"
                     app:layout_constraintVertical_bias="0.3819660" />
 
+                <ImageView
+                    android:id="@+id/is_finished"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_flag_task_importance_low"
+                    app:layout_constraintEnd_toEndOf="@id/lesson_label_day"
+                    app:layout_constraintTop_toTopOf="@id/lesson_label_day"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="@id/lesson_label_day"
+                    app:layout_constraintVertical_bias="0.1"
+
+                    />
+
                 <TextView
                     android:id="@+id/lesson_teacher"
                     android:layout_width="wrap_content"

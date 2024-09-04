@@ -1,16 +1,11 @@
 package cn.edu.ustc.ustcschedule.fragment;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,14 +22,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import cn.edu.ustc.timeflow.bean.Task;
-import cn.edu.ustc.timeflow.dao.TaskDao;
-import cn.edu.ustc.timeflow.util.DBHelper;
 import cn.edu.ustc.timeflow.util.TimeTable;
 import cn.edu.ustc.ustcschedule.dialog.DeleteDialog;
 import cn.edu.ustc.ustcschedule.dialog.LessonDetailDialogFragment;
@@ -42,20 +34,20 @@ import cn.edu.ustc.ustcschedule.util.Alpha;
 
 public class DayListFragment extends Fragment {
 
-    final SimpleDateFormat format_day = new SimpleDateFormat("yyyy/MM/dd",Locale.CHINA);
     final SimpleDateFormat format_time = new SimpleDateFormat("HH:mm",Locale.CHINA);
-    Date date=new Date();
-
-    Calendar ca=Calendar.getInstance(Locale.CHINA);
-    long day_start=((date.getTime()+8*3600*1000)/(86400*1000))*(86400*1000)-8*3600*1000;//清除小时和分钟
-    long day_end=day_start+86400*1000;
     double magnify_ratio=2.63;//default
-
-
     LayoutInflater inflater;
     ViewGroup container;
     ConstraintLayout layout;
     TimeTable timeTable;
+    LocalDate date;
+
+    public DayListFragment(){
+        date = LocalDate.now();
+    }
+    public DayListFragment(LocalDate date){
+        this.date = date;
+    }
 
     @Nullable
     @Override
@@ -64,15 +56,14 @@ public class DayListFragment extends Fragment {
         this.inflater=inflater;
         this.container=container;
 
-        ca.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-
         View view= inflater.inflate(R.layout.fragment_day_list, container, false);
         layout= view.findViewById(R.id.day_list_layout);
         magnify_ratio=(float)(layout.getLayoutParams()).height/1226.0;
 
-
-        timeTable = new TimeTable(getContext(), LocalDate.now());
+        timeTable = new TimeTable(getContext(), date);
+        clean_schedule();
         show_schedule();
+
         return view;
     }
 
@@ -126,8 +117,7 @@ public class DayListFragment extends Fragment {
                         // Show the lesson detail dialog
                         LessonDetailDialogFragment dialog = LessonDetailDialogFragment.newInstance(
                                 task.getContent(),
-                                "","",
-
+                                task.getNote(),task.getLocation(),
                                 format_time.format(starting_time) + " - " + format_time.format(ending_time),
                                 "",
                                 ""
@@ -220,6 +210,9 @@ public class DayListFragment extends Fragment {
         ((TextView)card.findViewById(R.id.lesson_teacher)).setText(task.getNote());
         ((TextView)card.findViewById(R.id.lesson_place)).setText(task.getLocation());
 
+        //TODO: 用这个标记吗？
+        card.findViewById(R.id.is_finished).setBackgroundResource(task.getFinished() ? R.drawable.ic_flag_task_importance_low : R.drawable.ic_flag_task_importance_high);
+
         ((TextView)schedule_view.findViewById(R.id.start_time_text)).setText(format_time.format(starting_time));
         ((TextView)schedule_view.findViewById(R.id.end_time_text)).setText(format_time.format(ending_time));
 
@@ -241,84 +234,8 @@ public class DayListFragment extends Fragment {
         }
 
         card.setLayoutParams(card_params);
-
-
         schedule_view.setTag(R.id.Tag_id,-1);
-
-
         layout.addView(schedule_view);
-
     }
 
-
-//    public void add_DDL(ConstraintLayout layout,MyDeadLine ddl,LayoutInflater inflater, ViewGroup container) {
-//        View ddl_view=inflater.inflate(R.layout.fragment_day_list_item_ddl, container, false);
-//
-//        long starting_time=ddl.getStartingTime();
-//        long day_start_temp=((starting_time+8*3600*1000)/(86400*1000))*(86400*1000)-8*3600*1000;
-//        double pos=1.01*(starting_time-day_start_temp)/72000+6.5;//6是line到layout顶部的高度
-//
-//
-//        ConstraintLayout.LayoutParams ddl_params = (ConstraintLayout.LayoutParams) ddl_view.findViewById(R.id.day_deadline).getLayoutParams();
-//        //FrameLayout.LayoutParams ddl_params = (FrameLayout.LayoutParams) ddl_view.getLayoutParams();
-//        TextView ddl_text=((TextView)ddl_view.findViewById(R.id.day_deadline_label));
-//        ddl_text.setText(format_time.format(starting_time));
-//        ddl_text.setOnLongClickListener(new View.OnLongClickListener()
-//        {
-//            final int event_id= ddl.getId();
-//            final String table_name="DDL";
-//
-//            @Override
-//            public boolean onLongClick(View v) {
-//                DeleteDialog deleteDialog = new DeleteDialog();
-//                deleteDialog.setEvent_id(event_id);
-//                deleteDialog.setTable_name(table_name);
-//                deleteDialog.show(getActivity().getSupportFragmentManager(), "delete");
-//
-//
-//                return false;
-//            }
-//        });
-//
-//        ddl_params.topMargin=(int)(magnify_ratio*pos);
-//        ddl_view.findViewById(R.id.day_deadline).setLayoutParams(ddl_params);
-//        //ddl_view.layout(ddl_view.getLeft(),100,ddl_view.getRight(),170);
-//        layout.addView(ddl_view);
-//    }
-//    public boolean is_today_fun(BasicSchedule schedule)
-//    {
-//        boolean is_today=false;
-//        long starting_time=schedule.getStartingTime();
-//        Calendar temp_ca=Calendar.getInstance(Locale.CHINA);
-//        temp_ca.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-//        temp_ca.setTimeInMillis(starting_time);
-//        if(schedule.getPeriod()==1)
-//            is_today=true;
-//        if(schedule.getPeriod()==7&&(ca.get(Calendar.DAY_OF_WEEK) ==temp_ca.get(Calendar.DAY_OF_WEEK)))
-//            is_today=true;
-//        if(schedule.getPeriod()==30)
-//        {
-//            if(ca.get(Calendar.DAY_OF_MONTH) ==temp_ca.get(Calendar.DAY_OF_MONTH))
-//                is_today = true;
-//            if(ca.getActualMaximum(Calendar.DAY_OF_MONTH) <temp_ca.get(Calendar.DAY_OF_MONTH))//超过一个月最大天数
-//            {
-//                if(ca.getActualMaximum(Calendar.DAY_OF_MONTH)==ca.get(Calendar.DAY_OF_MONTH))
-//                    is_today=true;
-//            }
-//        }
-//        if(schedule.getPeriod()==365)
-//        {
-//            if((ca.get(Calendar.DAY_OF_MONTH) ==temp_ca.get(Calendar.DAY_OF_MONTH))&&
-//                    (ca.get(Calendar.MONTH)==temp_ca.get(Calendar.MONTH)))
-//            {
-//                is_today=true;
-//            }
-//            if(ca.getActualMaximum(Calendar.DAY_OF_MONTH) <temp_ca.get(Calendar.DAY_OF_MONTH)&&
-//                    (ca.get(Calendar.MONTH)==temp_ca.get(Calendar.MONTH)))//2月29日
-//            {
-//                is_today=true;
-//            }
-//        }
-//        return is_today;
-//    }
 }
