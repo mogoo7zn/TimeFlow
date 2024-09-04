@@ -22,6 +22,8 @@ import androidx.fragment.app.DialogFragment;
 import com.example.timeflow.R;
 import com.loper7.date_time_picker.DateTimePicker;
 
+import java.io.Serializable;
+import java.time.Duration;
 import java.util.ArrayList;
 
 import cn.edu.ustc.timeflow.bean.Action;
@@ -33,7 +35,17 @@ public class AddActionDialogFragment extends DialogFragment {
 
     private long startTime = 0;
     private long endTime = 0;
-    DBHelper dbHelper = new DBHelper(requireContext());
+    private DBHelper dbHelper;
+    private Duration duration = Duration.ZERO;
+    private Action action;
+
+    public static AddActionDialogFragment newInstance(Action action) {
+        AddActionDialogFragment fragment = new AddActionDialogFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("action", (Serializable) action);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onStart() {
@@ -49,8 +61,9 @@ public class AddActionDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_add_action, container, false);
 
+        dbHelper = new DBHelper(requireContext());
+
         EditText actionName = view.findViewById(R.id.action_name);
-        EditText actionDuration = view.findViewById(R.id.action_duration);
         EditText actionLocation = view.findViewById(R.id.action_location);
         EditText actionNote = view.findViewById(R.id.action_note);
         CheckBox actionRemind = view.findViewById(R.id.action_remind);
@@ -85,32 +98,28 @@ public class AddActionDialogFragment extends DialogFragment {
 
         saveActionButton.setOnClickListener(v -> {
             String name = actionName.getText().toString();
-            long duration = Long.parseLong(actionDuration.getText().toString());
+            duration = Duration.ofMillis(endTime - startTime);
             String location = actionLocation.getText().toString();
             String note = actionNote.getText().toString();
             boolean remind = actionRemind.isChecked();
 
-            // Create new Action object
-            ActionDao actionDao = dbHelper.getActionDao();
+            Action newAction = new Action(
+                    0,
+                    0, // Set the appropriate goal_id
+                    name,
+                    duration,
+                    location,
+                    note,
+                    remind,
+                    "once", // Set the appropriate type
+                    false,
+                    new ArrayList<>() // Set the appropriate restrictions
+            );
 
-//            Action newAction = new Action(
-//                    0, // Set the appropriate goal_id
-//                    name,
-//                    duration,
-//                    location,
-//                    note,
-//                    remind,
-//                    "once", // Set the appropriate type
-//                    false,
-//                    new ArrayList<>(), // Set the appropriate restrictions
-//                    startTime,
-//                    endTime
-//            );
-//
-//            saveActionToDatabase(newAction);
+            saveActionToDatabase(newAction);
 
             if (remind) {
-                setAlarm(startTime, name);
+                setAlarm(endTime, name);
             }
 
             dismiss();
@@ -120,7 +129,6 @@ public class AddActionDialogFragment extends DialogFragment {
     }
 
     private void saveActionToDatabase(Action action) {
-        DBHelper dbHelper = new DBHelper(requireContext());
         dbHelper.getActionDao().insert(action);
         // Optionally, refresh data in the parent fragment
     }
