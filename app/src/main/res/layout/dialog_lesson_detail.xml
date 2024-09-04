@@ -20,7 +20,7 @@
         android:id="@+id/lesson_detail_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="课程详情"
+        android:text="任务详情"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,7 +31,7 @@
         android:id="@+id/lesson_detail_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="课程名称: 数学分析(B2)"
+        android:text="任务名称: 数学分析(B2)"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/lesson_detail_title"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,27 +71,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
-    <TextView
-        android:id="@+id/lesson_detail_description"
+
+
+    <CheckBox
+        android:id="@+id/lesson_detail_finished"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="描述: 这是一门关于数学分析的课程，涵盖了基本的微积分概念。"
-        android:textSize="16sp"
+        android:text="已完成"
+        app:layout_constraintTop_toBottomOf="@id/lesson_detail_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/lesson_detail_change_time"
+        android:layout_marginLeft="20dp"
+        />
+
+    <Button
+        android:id="@+id/lesson_detail_change_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="调整时间"
         app:layout_constraintTop_toBottomOf="@id/lesson_detail_time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/lesson_detail_notes"
+        />
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="备注: 请带上课本和笔记本。"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/lesson_detail_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        android:id="@+id/lesson_detail_delete"
+        android:text="删除"
+        app:layout_constraintTop_toBottomOf="@id/lesson_detail_time"
+        app:layout_constraintStart_toEndOf="@id/lesson_detail_change_time"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

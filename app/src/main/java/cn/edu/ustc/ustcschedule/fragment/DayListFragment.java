@@ -20,6 +20,7 @@ import com.example.timeflow.R;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.List;
@@ -48,6 +49,8 @@ public class DayListFragment extends Fragment {
     public DayListFragment(LocalDate date){
         this.date = date;
     }
+
+
 
     @Nullable
     @Override
@@ -115,12 +118,13 @@ public class DayListFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         // Show the lesson detail dialog
-                        LessonDetailDialogFragment dialog = LessonDetailDialogFragment.newInstance(
+                        LessonDetailDialogFragment dialog =new  LessonDetailDialogFragment(
                                 task.getContent(),
                                 task.getNote(),task.getLocation(),
                                 format_time.format(starting_time) + " - " + format_time.format(ending_time),
-                                "",
-                                ""
+                                task.getFinished(),
+                                task.getId(),
+                                DayListFragment.this
                         );
                         dialog.show(getActivity().getSupportFragmentManager(), "lesson_detail");
                     }
@@ -140,10 +144,7 @@ public class DayListFragment extends Fragment {
                     deleteDialog.setListener(new DeleteDialog.DeleteDialogListener() {
                         @Override
                         public void onDialogPositiveClick(DialogFragment dialog) {
-                            // Delete the task item from the database
-                            timeTable.deleteTask(event_id);
-                            clean_schedule();
-                            show_schedule();
+                            deleteTask(event_id);
                         }
 
                         @Override
@@ -211,7 +212,8 @@ public class DayListFragment extends Fragment {
         ((TextView)card.findViewById(R.id.lesson_place)).setText(task.getLocation());
 
         //TODO: 用这个标记吗？
-        card.findViewById(R.id.is_finished).setBackgroundResource(task.getFinished() ? R.drawable.ic_flag_task_importance_low : R.drawable.ic_flag_task_importance_high);
+
+        card.findViewById(R.id.is_finished).setBackgroundResource(task.getFinished()==null || task.getFinished() ? R.drawable.ic_flag_task_importance_low : R.drawable.ic_flag_task_importance_high);
 
         ((TextView)schedule_view.findViewById(R.id.start_time_text)).setText(format_time.format(starting_time));
         ((TextView)schedule_view.findViewById(R.id.end_time_text)).setText(format_time.format(ending_time));
@@ -238,4 +240,25 @@ public class DayListFragment extends Fragment {
         layout.addView(schedule_view);
     }
 
+    public void deleteTask(Integer taskId) {
+        // Delete the task item from the database
+        timeTable.deleteTask(taskId);
+        clean_schedule();
+        show_schedule();
+    }
+
+
+    public void changeTaskTime(Integer taskId, LocalTime localTime) {
+        // Change the task item's time in the database
+        timeTable.changeTaskTime(taskId, localTime);
+        clean_schedule();
+        show_schedule();
+    }
+
+    public void changeTaskFinished(Integer taskId, boolean checked) {
+        // Change the task item's finished status in the database
+        timeTable.changeTaskFinished(taskId, checked);
+        clean_schedule();
+        show_schedule();
+    }
 }

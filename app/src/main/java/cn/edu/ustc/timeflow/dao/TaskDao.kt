@@ -70,4 +70,11 @@ interface TaskDao {
     @TypeConverters(DateTimeConverter::class)
     fun deleteByTime(start: LocalDateTime, end: LocalDateTime)
 
+    fun updateFinished(taskId: Int, isFinished: Boolean) {
+        val task = getById(taskId)
+        task.finished = isFinished
+        update(task)
+
+    }
+
 }

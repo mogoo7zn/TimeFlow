@@ -1,7 +1,6 @@
 package cn.edu.ustc.timeflow.util
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import cn.edu.ustc.timeflow.bean.Task
 import cn.edu.ustc.timeflow.database.TaskDB
@@ -9,8 +8,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.ZoneOffset
 import java.util.Stack
 
@@ -148,7 +149,6 @@ class TimeTable {
     fun deleteTask(task_id: Int) {
         tasks.removeIf { it.id == task_id }
         sync()
-
     }
 
     fun checkOverlap(task: Task): Boolean {
@@ -172,7 +172,26 @@ class TimeTable {
                     tasks[i].overlap++
                 }
             }
-            Log.d("overlap", i.toString()+" "+tasks[i].overlap.toString())
+        }
+    }
+
+    fun changeTaskTime(taskId: Int, localTime: LocalTime) {
+        val task = tasks.find { it.id == taskId }
+        if (task != null) {
+            val duration = Duration.between(task.start, task.end)
+            val start = task.start.toLocalDate().atTime(localTime)
+            val end = start.plus(duration)
+            task.start = start
+            task.end = end
+            sync()
+        }
+    }
+
+    fun changeTaskFinished(taskId: Int, checked: Boolean) {
+        val task = tasks.find { it.id == taskId }
+        if (task != null) {
+            task.finished = checked
+            sync()
         }
     }
 
