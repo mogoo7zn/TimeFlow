@@ -91,12 +91,12 @@ class GoalOverviewFragment : Fragment() {
 
     private fun showDeleteConfirmationDialog(action: Action) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Delete Action")
-            .setMessage("Are you sure you want to delete this action?")
-            .setPositiveButton("Yes") { _, _ ->
+            .setTitle("取消行动")
+            .setMessage("确认删除？")
+            .setPositiveButton("是") { _, _ ->
                 deleteAction(action)
             }
-            .setNegativeButton("No", null)
+            .setNegativeButton("再想想", null)
             .show()
     }
 
@@ -203,7 +203,6 @@ class GoalOverviewFragment : Fragment() {
         adapter.notifyDataSetChanged()
         view?.findViewById<TextView>(R.id.current_goal)?.text = goal.content
         view?.findViewById<TextView>(R.id.goal_count)?.text = goalList.size.toString()
-
     }
 
     override fun onDestroyView() {

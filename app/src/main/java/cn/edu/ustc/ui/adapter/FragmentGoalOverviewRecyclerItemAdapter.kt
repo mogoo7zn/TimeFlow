@@ -27,7 +27,7 @@ class FragmentGoalOverviewRecyclerItemAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context)
-            .inflate(R.layout.fragment_goal_overview, parent, false)
+            .inflate(R.layout.fragment_goal_overview_recycler_item, parent, false)
         return ViewHolder(view)
     }
 
