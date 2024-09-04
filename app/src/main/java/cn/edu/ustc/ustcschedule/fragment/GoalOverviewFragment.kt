@@ -1,5 +1,6 @@
 package cn.edu.ustc.ustcschedule.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.app.Dialog
 import android.view.LayoutInflater
@@ -9,16 +10,15 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.ListView
-import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.edu.ustc.ui.adapter.FragmentGoalOverviewRecyclerItemAdapter
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.bean.Goal
 import cn.edu.ustc.timeflow.util.DBHelper
+import cn.edu.ustc.ui.adapter.FragmentGoalOverviewRecyclerItemAdapter
+import cn.edu.ustc.ustcschedule.dialog.AddActionDialogFragment
 import com.example.timeflow.R
 import com.example.timeflow.databinding.FragmentGoalOverviewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -52,7 +52,7 @@ class GoalOverviewFragment : Fragment() {
         val dbHelper = DBHelper(requireContext())
         goalList = dbHelper.getGoalDao().getAll()
 
-        if(!goalList.isEmpty()) {
+        if(goalList.isNotEmpty()) {
             fetchAndDisplayActionsForGoal(goalList[0])
         }
 
@@ -70,6 +70,40 @@ class GoalOverviewFragment : Fragment() {
         fab.setOnClickListener {
             showAddActionDialog()
         }
+
+        // Set up item click listeners
+        adapter.setOnItemClickListener(object : FragmentGoalOverviewRecyclerItemAdapter.
+        OnItemClickListener {
+            override fun onItemClick(action: Action) {
+                showEditActionDialog(action)
+            }
+
+            override fun onItemLongClick(action: Action) {
+                showDeleteConfirmationDialog(action)
+            }
+        })
+    }
+
+    private fun showEditActionDialog(action: Action) {
+        val dialog = AddActionDialogFragment.newInstance(action)
+        dialog.show(parentFragmentManager, "AddActionDialogFragment")
+    }
+
+    private fun showDeleteConfirmationDialog(action: Action) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("取消行动")
+            .setMessage("确认删除？")
+            .setPositiveButton("是") { _, _ ->
+                deleteAction(action)
+            }
+            .setNegativeButton("再想想", null)
+            .show()
+    }
+
+    private fun deleteAction(action: Action) {
+        val dbHelper = DBHelper(requireContext())
+        dbHelper.getActionDao().delete(action)
+        refreshData()
     }
 
     private fun showAddActionDialog() {
@@ -103,6 +137,7 @@ class GoalOverviewFragment : Fragment() {
 
             // Create new Action object
 //            val newAction = Action(
+//                id = 0,
 //                goal_id = 0, // Set the appropriate goal_id
 //                name = name,
 //                duration = duration,
@@ -113,7 +148,7 @@ class GoalOverviewFragment : Fragment() {
 //                finished = false,
 //                restrictions = emptyList() // Set the appropriate restrictions
 //            )
-
+//
 //            saveActionToDatabase(newAction)
             dialog.dismiss()
         }
@@ -168,7 +203,6 @@ class GoalOverviewFragment : Fragment() {
         adapter.notifyDataSetChanged()
         view?.findViewById<TextView>(R.id.current_goal)?.text = goal.content
         view?.findViewById<TextView>(R.id.goal_count)?.text = goalList.size.toString()
-
     }
 
     override fun onDestroyView() {
