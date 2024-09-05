@@ -9,7 +9,7 @@
         android:id="@+id/startweek_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Current Start Week"
+        android:text="初始周"
         android:textSize="16sp" />
 
 </LinearLayout>

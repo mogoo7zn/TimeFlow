@@ -85,7 +85,11 @@ class GoalOverviewFragment : Fragment() {
     }
 
     private fun showEditActionDialog(action: Action) {
-        val dialog = AddActionDialogFragment.newInstance(action)
+        val dialog = AddActionDialogFragment.newInstance(action, object : AddActionDialogFragment.OnActionSavedListener {
+            override fun onActionSaved() {
+                refreshData()
+            }
+        })
         dialog.show(parentFragmentManager, "AddActionDialogFragment")
     }
 

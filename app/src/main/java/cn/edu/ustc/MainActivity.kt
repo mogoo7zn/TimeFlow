@@ -204,34 +204,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showChangeStartWeekDialog() {
-    val builder = AlertDialog.Builder(this)
-    val inflater = layoutInflater
-    val dialogLayout = inflater.inflate(R.layout.dialog_change_start_week, null)
-    val startWeekTextView = dialogLayout.findViewById<TextView>(R.id.startweek_textview)
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.dialog_change_start_week, null)
+        val startWeekTextView = dialogLayout.findViewById<TextView>(R.id.startweek_textview)
 
-    // Display the current start week
-    val currentStartWeek = SharedPreferenceHelper.getString(this, "startdate", "Not set")
-    startWeekTextView.text = currentStartWeek
+        // Display the current start week
+        val currentStartWeek = SharedPreferenceHelper.getString(this, "startdate", "未设置")
+        startWeekTextView.text = currentStartWeek
 
-    builder.setView(dialogLayout)
-    builder.setTitle("Change Start Week")
-    builder.setPositiveButton("修改") { dialog, which ->
-        // Open DatePicker to select new start week
-        val datePickerDialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
-            // 转换为当周的周日
-            val date = LocalDate.of(year, month + 1, dayOfMonth)
-            date.minusDays(date.dayOfWeek.value.toLong())
+        builder.setView(dialogLayout)
+        builder.setTitle("修改起始周")
+        builder.setPositiveButton("修改") { _, _ ->
+            // Open DatePicker to select new start week
+            val datePickerDialog = DatePickerDialog(this, { _,year, month, dayOfMonth ->
+                // 转换为当周的周日
+                val date = LocalDate.of(year, month + 1, dayOfMonth)
+                date.minusDays(date.dayOfWeek.value.toLong())
 
-            SharedPreferenceHelper.saveString(this,"startdate", date.toString())
-        }, LocalDate.now().year, LocalDate.now().monthValue - 1, LocalDate.now().dayOfMonth)
-        // 设为周日开始
-        datePickerDialog.datePicker.firstDayOfWeek =Calendar.SUNDAY
-        datePickerDialog.show()
+                SharedPreferenceHelper.saveString(this,"startdate", date.toString())
+            }, LocalDate.now().year, LocalDate.now().monthValue - 1, LocalDate.now().dayOfMonth)
+            // 设为周日开始
+            datePickerDialog.datePicker.firstDayOfWeek =Calendar.SUNDAY
+            datePickerDialog.show()
+        }
+        builder.setNegativeButton("取消") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
-    builder.setNegativeButton("取消") { dialog, which ->
-        dialog.dismiss()
-    }
-    builder.show()
-}
 }
 

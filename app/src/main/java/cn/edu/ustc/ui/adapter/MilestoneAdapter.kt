@@ -42,7 +42,7 @@ class MilestoneAdapter(
         val hoursLeft = duration.toHours() % 24
         val minutesLeft = duration.toMinutes() % 60
 
-        holder.timeLeft.text = "Time left: ${daysLeft}d ${hoursLeft}h ${minutesLeft}m"
+        holder.timeLeft.text = "剩余时间： ${daysLeft}d ${hoursLeft}h ${minutesLeft}m"
         holder.milestoneFinished.isChecked = milestone.isFinished
 
         holder.milestoneFinished.setOnCheckedChangeListener { _, isChecked ->
