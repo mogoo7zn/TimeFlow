@@ -1,6 +1,7 @@
 package cn.edu.ustc.ustcschedule.dialog;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,12 +37,12 @@ import cn.edu.ustc.timeflow.util.AlarmReceiver;
 import cn.edu.ustc.timeflow.util.DBHelper;
 
 public class AddActionDialogFragment extends BottomSheetDialogFragment {
-
     private long startTime = 0;
     private long endTime = 0;
     private DBHelper dbHelper;
     private Duration duration = Duration.ZERO;
     private Action action;
+    private String actionType = "once"; // Default action type
 
     public static AddActionDialogFragment newInstance(Action action) {
         AddActionDialogFragment fragment = new AddActionDialogFragment();
@@ -60,11 +63,11 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_add_action, container, false);
 
         dbHelper = new DBHelper(requireContext());
-
         EditText actionName = view.findViewById(R.id.action_name);
         EditText actionLocation = view.findViewById(R.id.action_location);
         EditText actionNote = view.findViewById(R.id.action_note);
@@ -73,6 +76,8 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
         CheckBox actionEndTime = view.findViewById(R.id.action_end_time);
         DateTimePicker actionTimePicker = view.findViewById(R.id.action_time_picker);
         Button saveActionButton = view.findViewById(R.id.save_action_button);
+        Button actionFrequencyButton = view.findViewById(R.id.action_frequency_button);
+        actionFrequencyButton.setOnClickListener(v -> showFrequencyMenu(v));
 
         if (getArguments() != null) {
             action = (Action) getArguments().getSerializable("action");
@@ -113,10 +118,10 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
 
         saveActionButton.setOnClickListener(v -> {
             String name = actionName.getText().toString().trim();
-            duration = Duration.ofMillis(endTime - startTime);
             String location = actionLocation.getText().toString().trim();
             String note = actionNote.getText().toString().trim();
             boolean remind = actionRemind.isChecked();
+            int goal_id = action.getGoal_id();
 
             if (name.isEmpty() || location.isEmpty() || note.isEmpty()) {
                 // Show error message
@@ -124,10 +129,13 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
                 return;
             }
 
+            duration = Duration.ofMillis(endTime - startTime);
+
+            //TODO:这里的id还不对
             if (action == null) {
                 action = new Action(
                         0,
-                        0, // Set the appropriate goal_id
+                        goal_id, // Set the appropriate goal_id
                         name,
                         duration,
                         location,
@@ -157,6 +165,73 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
         return view;
     }
 
+    /**
+     * Show a popup menu to select the frequency of the action
+     * @param v
+     */
+    private void showFrequencyMenu(View v) {
+        LayoutInflater inflater = LayoutInflater.from(requireContext());
+        View popupView = inflater.inflate(R.layout.frequency_menu, null);
+        PopupWindow popupWindow = new PopupWindow(popupView,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true);
+
+        popupWindow.getElevation();
+        popupWindow.showAsDropDown(getView(), 0, 0, 1);
+
+
+        //TODO:连接数据库，同时要把这个menu调到最上面，位置还不对
+        popupView.findViewById(R.id.frequency_once).setOnClickListener(_v -> {
+            actionType = "once";
+            popupWindow.dismiss();
+        });
+
+        popupView.findViewById(R.id.frequency_multiple_times).setOnClickListener(_v -> {
+            showMultipleTimesDialog();
+            popupWindow.dismiss();
+        });
+
+        popupView.findViewById(R.id.frequency_fixed_time).setOnClickListener(_v -> {
+            actionType = "fixed";
+            popupWindow.dismiss();
+        });
+
+        popupWindow.setOnDismissListener(() -> {
+            // Handle any additional actions on dismiss if needed
+        });
+    }
+
+    /**
+     * Show a dialog to select multiple days
+     */
+    private void showMultipleTimesDialog() {
+        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        boolean[] checkedDays = new boolean[days.length];
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Select Days")
+                .setMultiChoiceItems(days, checkedDays, (dialog, which, isChecked) -> checkedDays[which] = isChecked)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    StringBuilder selectedDays = new StringBuilder();
+                    for (int i = 0; i < checkedDays.length; i++) {
+                        if (checkedDays[i]) {
+                            if (selectedDays.length() > 0) {
+                                selectedDays.append(", ");
+                            }
+                            selectedDays.append(days[i]);
+                        }
+                    }
+                    actionType = "multiple: " + selectedDays.toString();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    /**
+     * Set an alarm for the given end time
+     * @param timeInMillis
+     * @param actionName
+     */
     private void setAlarm(long timeInMillis, String actionName) {
         AlarmManager alarmManager = (AlarmManager) requireContext()
                 .getSystemService(Context.ALARM_SERVICE);
@@ -200,6 +275,7 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
     }
 
     private void saveActionToDatabase(Action action) {
+        action.setType(actionType); // Set the action type before saving
         dbHelper.getActionDao().insert(action);
         if (onActionSavedListener != null) {
             onActionSavedListener.onActionSaved();

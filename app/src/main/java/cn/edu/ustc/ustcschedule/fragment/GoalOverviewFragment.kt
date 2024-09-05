@@ -1,8 +1,8 @@
 package cn.edu.ustc.ustcschedule.fragment
 
 import android.app.AlertDialog
-import android.os.Bundle
 import android.app.Dialog
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +12,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.edu.ustc.timeflow.bean.Action
@@ -85,11 +86,7 @@ class GoalOverviewFragment : Fragment() {
     }
 
     private fun showEditActionDialog(action: Action) {
-        val dialog = AddActionDialogFragment.newInstance(action, object : AddActionDialogFragment.OnActionSavedListener {
-            override fun onActionSaved() {
-                refreshData()
-            }
-        })
+        val dialog = AddActionDialogFragment.newInstance(action) { refreshData() }
         dialog.show(parentFragmentManager, "AddActionDialogFragment")
     }
 
@@ -111,60 +108,11 @@ class GoalOverviewFragment : Fragment() {
     }
 
     private fun showAddActionDialog() {
-        val dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.dialog_add_action)
-
-        val actionName: EditText = dialog.findViewById(R.id.action_name)
-        val actionDuration: EditText = dialog.findViewById(R.id.action_duration)
-        val actionLocation: EditText = dialog.findViewById(R.id.action_location)
-        val actionNote: EditText = dialog.findViewById(R.id.action_note)
-        val actionRemind: CheckBox = dialog.findViewById(R.id.action_remind)
-        val actionStartTime: Button = dialog.findViewById(R.id.action_start_time)
-        val actionEndTime: Button = dialog.findViewById(R.id.action_end_time)
-        val actionTimePicker: com.loper7.date_time_picker.DateTimePicker = dialog.findViewById(R.id.action_time_picker)
-        val saveButton: Button = dialog.findViewById(R.id.save_action_button)
-
-        actionStartTime.setOnClickListener {
-            // Handle start time selection
-        }
-
-        actionEndTime.setOnClickListener {
-            // Handle end time selection
-        }
-
-        saveButton.setOnClickListener {
-            val name = actionName.text.toString()
-            val duration = actionDuration.text.toString().toLong()
-            val location = actionLocation.text.toString()
-            val note = actionNote.text.toString()
-            val remind = actionRemind.isChecked
-
-            // Create new Action object
-//            val newAction = Action(
-//                id = 0,
-//                goal_id = 0, // Set the appropriate goal_id
-//                name = name,
-//                duration = duration,
-//                location = location,
-//                note = note,
-//                remind = remind,
-//                type = "once", // Set the appropriate type
-//                finished = false,
-//                restrictions = emptyList() // Set the appropriate restrictions
-//            )
-//
-//            saveActionToDatabase(newAction)
-            dialog.dismiss()
-        }
-
-        dialog.show()
+        val addActionDialog = AddActionDialogFragment()
+        addActionDialog.show(parentFragmentManager, "AddActionDialogFragment")
     }
 
-    private fun saveActionToDatabase(action: Action) {
-        val dbHelper = DBHelper(requireContext())
-        dbHelper.getActionDao().insert(action)
-        refreshData()
-    }
+
 
     /**
      * Refresh the data displayed in the RecyclerView.
