@@ -85,7 +85,7 @@ class GoalOverviewFragment : Fragment() {
     }
 
     private fun showEditActionDialog(action: Action) {
-        val dialog = AddActionDialogFragment.newInstance(action)
+        val dialog = AddActionDialogFragment(action)
         dialog.show(parentFragmentManager, "AddActionDialogFragment")
     }
 
@@ -167,6 +167,7 @@ class GoalOverviewFragment : Fragment() {
      */
     private fun refreshData() {
         val dbHelper = DBHelper(requireContext())
+        // FIXME: This should be updated to fetch actions for the currently selected goal
         actionList = dbHelper.getActionDao().getAll()
         adapter.actionList = actionList
         adapter.notifyDataSetChanged()
@@ -209,4 +210,5 @@ class GoalOverviewFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

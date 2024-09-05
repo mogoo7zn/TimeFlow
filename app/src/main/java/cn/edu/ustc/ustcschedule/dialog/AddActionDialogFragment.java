@@ -39,12 +39,11 @@ public class AddActionDialogFragment extends DialogFragment {
     private Duration duration = Duration.ZERO;
     private Action action;
 
-    public static AddActionDialogFragment newInstance(Action action) {
-        AddActionDialogFragment fragment = new AddActionDialogFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("action", (Serializable) action);
-        fragment.setArguments(args);
-        return fragment;
+    public AddActionDialogFragment(Action action) {
+        this.action=action;
+    }
+    public AddActionDialogFragment() {
+        action=null;
     }
 
     @Override
