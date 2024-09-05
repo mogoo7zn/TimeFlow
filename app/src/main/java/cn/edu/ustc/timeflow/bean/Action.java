@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import cn.edu.ustc.timeflow.util.RestrictionConverter;
  * Represents an action associated with a task.
  */
 @Entity (tableName = "action")
-public class Action {
+public class Action implements Serializable {
     @PrimaryKey(autoGenerate = true)
     int id;
     @ColumnInfo(name = "goal_id")
