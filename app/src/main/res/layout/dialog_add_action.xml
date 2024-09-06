@@ -89,6 +89,18 @@
         app:layout_constraintStart_toEndOf="@id/action_start_time"
         app:layout_constraintTop_toBottomOf="@id/action_note" />
 
+    <Button
+        android:id="@+id/action_frequency_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Frequency"
+        app:layout_constraintStart_toEndOf="@id/action_end_time"
+        app:layout_constraintTop_toBottomOf="@id/action_note"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp" />
+
+
+
     <com.loper7.date_time_picker.DateTimePicker
         android:id="@+id/action_time_picker"
         android:layout_width="match_parent"
