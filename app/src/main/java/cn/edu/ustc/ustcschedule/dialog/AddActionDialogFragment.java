@@ -77,7 +77,9 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
         DateTimePicker actionTimePicker = view.findViewById(R.id.action_time_picker);
         Button saveActionButton = view.findViewById(R.id.save_action_button);
         Button actionFrequencyButton = view.findViewById(R.id.action_frequency_button);
-        actionFrequencyButton.setOnClickListener(v -> showFrequencyMenu(v));
+        actionFrequencyButton.setOnClickListener(v -> AddActionDialogFragment.this.showFrequencyMenu(v));
+
+        view.findViewById(R.id.action_start_time).setRotation(180);
 
         if (getArguments() != null) {
             action = (Action) getArguments().getSerializable("action");
@@ -129,6 +131,12 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
                 return;
             }
 
+            if (actionType == null || actionType.isEmpty()) {
+                // Show error message
+                Toast.makeText(requireContext(), "请选择频率", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             duration = Duration.ofMillis(endTime - startTime);
 
             //TODO:这里的id还不对
@@ -177,28 +185,28 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 true);
 
-        popupWindow.getElevation();
-        popupWindow.showAsDropDown(getView(), 0, 0, 1);
+        popupWindow.showAsDropDown(v, 0, -80);
 
 
         //TODO:连接数据库，同时要把这个menu调到最上面，位置还不对
-        popupView.findViewById(R.id.frequency_once).setOnClickListener(_v -> {
+        popupView.findViewById(R.id.frequency_once).setOnClickListener(v1 -> {
             actionType = "once";
             popupWindow.dismiss();
         });
 
-        popupView.findViewById(R.id.frequency_multiple_times).setOnClickListener(_v -> {
+        popupView.findViewById(R.id.frequency_multiple_times).setOnClickListener(v1 -> {
             showMultipleTimesDialog();
             popupWindow.dismiss();
         });
 
-        popupView.findViewById(R.id.frequency_fixed_time).setOnClickListener(_v -> {
+        popupView.findViewById(R.id.frequency_fixed_time).setOnClickListener(v1 -> {
             actionType = "fixed";
             popupWindow.dismiss();
         });
 
         popupWindow.setOnDismissListener(() -> {
-            // Handle any additional actions on dismiss if needed
+            CheckBox actionFrequencyButton = v.findViewById(R.id.action_frequency_button);
+            actionFrequencyButton.setChecked(false);
         });
     }
 
@@ -206,12 +214,12 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
      * Show a dialog to select multiple days
      */
     private void showMultipleTimesDialog() {
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        String[] days = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
         boolean[] checkedDays = new boolean[days.length];
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Select Days")
+        builder.setTitle("选择每周星期")
                 .setMultiChoiceItems(days, checkedDays, (dialog, which, isChecked) -> checkedDays[which] = isChecked)
-                .setPositiveButton("OK", (dialog, which) -> {
+                .setPositiveButton("确定", (dialog, which) -> {
                     StringBuilder selectedDays = new StringBuilder();
                     for (int i = 0; i < checkedDays.length; i++) {
                         if (checkedDays[i]) {
@@ -223,7 +231,7 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
                     }
                     actionType = "multiple: " + selectedDays.toString();
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton("取消", null)
                 .show();
     }
 

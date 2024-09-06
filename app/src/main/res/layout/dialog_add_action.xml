@@ -49,29 +49,28 @@
         app:layout_constraintTop_toBottomOf="@id/action_location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"/>
 
     <CheckBox
         android:id="@+id/action_remind"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:drawableTop="@drawable/ic_clock_fill"
-        android:layout_marginEnd="24dp"
         style="@style/TabButton"
-        app:layout_constraintTop_toBottomOf="@id/action_note"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:drawableTop="@drawable/ic_clock_fill"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintTop_toBottomOf="@id/action_note" />
 
     <CheckBox
         android:id="@+id/action_start_time"
         style="@style/TabButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="6dp"
-        android:background="@drawable/round_corner_button"
-        android:text="@string/start_time"
-        android:textColor="@color/grey"
+        android:drawableTop="@drawable/ic_end_sand_clock"
         app:circularflow_radiusInDP="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/action_note" />
@@ -80,24 +79,23 @@
         android:id="@+id/action_end_time"
         style="@style/TabButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="6dp"
-        android:background="@drawable/round_corner_button"
-        android:text="@string/end_time"
-        android:textColor="@color/grey"
+        android:drawableTop="@drawable/ic_end_sand_clock"
         app:layout_constraintStart_toEndOf="@id/action_start_time"
         app:layout_constraintTop_toBottomOf="@id/action_note" />
 
-    <Button
+    <CheckBox
         android:id="@+id/action_frequency_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Frequency"
-        app:layout_constraintStart_toEndOf="@id/action_end_time"
-        app:layout_constraintTop_toBottomOf="@id/action_note"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="6dp" />
+        style="@style/TabButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="78dp"
+        android:drawableTop="@drawable/ic_frequency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_note" />
 
 
 
