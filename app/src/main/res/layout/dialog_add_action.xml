@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="7.5dp"
         android:drawableTop="@drawable/ic_end_sand_clock"
         app:circularflow_radiusInDP="6dp"
         app:layout_constraintStart_toStartOf="parent"
