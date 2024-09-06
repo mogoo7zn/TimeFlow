@@ -7,7 +7,24 @@
 用户近期学习工作情况，或自我督促，或提醒应适当放松。此外，软件还附加感兴趣的二课报名上线提醒，运动时间与频率监测以及番茄钟、消息过滤等
 专注助手。最后，希望我们的软件能成为科大师生的时间管理助手，让科大人生活充实而多彩。
 
-___
+---
+
+# 功能列表
+- [x] 任务的日/周/月视图
+- [x] 显示日程的桌面组件
+- [x] Goal与Action的显示
+- [x] Milestone的显示
+- [x] 登录教务系统, 获取并转化课表数据
+---
+- [ ] Goal的显示优化(其他相关信息)
+- [ ] Goal的添加/修改/删除
+- [ ] Action的添加/修改/删除
+- [ ] 自动规划
+- [ ] 帮助与关于页面
+- [ ] 深色模式
+- [ ] 多语言
+---
 # TimeFlow
 ## introduction
 Our app will be an intelligent and handy tool for students and teachers in USTC to make full use of their time. 
+
