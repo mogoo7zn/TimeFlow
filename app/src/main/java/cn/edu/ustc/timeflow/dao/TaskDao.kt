@@ -8,7 +8,7 @@ import androidx.room.Query
 import androidx.room.TypeConverters
 import androidx.room.Update
 import cn.edu.ustc.timeflow.bean.Task
-import cn.edu.ustc.timeflow.util.DateTimeConverter
+import cn.edu.ustc.timeflow.converter.DateTimeConverter
 import java.time.LocalDateTime
 
 /**

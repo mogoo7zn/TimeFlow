@@ -17,9 +17,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import cn.edu.ustc.timeflow.util.CourseTableWebConverter
+import cn.edu.ustc.timeflow.converter.CourseTableWebConverter
 import cn.edu.ustc.timeflow.util.SharedPreferenceHelper
-import cn.edu.ustc.timeflow.util.UstcJWConverter
+import cn.edu.ustc.timeflow.converter.UstcJWConverter
 import com.example.timeflow.R
 
 

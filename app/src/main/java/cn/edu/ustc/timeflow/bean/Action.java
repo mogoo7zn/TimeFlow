@@ -10,10 +10,9 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.util.List;
 
-import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction;
 import cn.edu.ustc.timeflow.restriction.Restriction;
-import cn.edu.ustc.timeflow.util.DurationConverter;
-import cn.edu.ustc.timeflow.util.RestrictionConverter;
+import cn.edu.ustc.timeflow.converter.DurationConverter;
+import cn.edu.ustc.timeflow.converter.RestrictionConverter;
 
 /**
  * Represents an action associated with a task.

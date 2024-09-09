@@ -5,7 +5,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
 import cn.edu.ustc.timeflow.restriction.Restriction
-import cn.edu.ustc.timeflow.util.RestrictionFactory
+import cn.edu.ustc.timeflow.converter.RestrictionFactory
 
 import org.junit.Test
 import org.junit.runner.RunWith

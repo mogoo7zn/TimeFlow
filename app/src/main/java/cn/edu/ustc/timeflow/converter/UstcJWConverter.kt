@@ -1,9 +1,8 @@
-package cn.edu.ustc.timeflow.util
+package cn.edu.ustc.timeflow.converter
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.bean.Course
 import cn.edu.ustc.timeflow.bean.Goal
@@ -11,12 +10,11 @@ import cn.edu.ustc.timeflow.database.ActionDB
 import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
 import cn.edu.ustc.timeflow.restriction.Restriction
 import cn.edu.ustc.timeflow.restriction.TimeRestriction
+import cn.edu.ustc.timeflow.util.DBHelper
 import cn.edu.ustc.timeflow.util.SharedPreferenceHelper.Companion.getString
 import cn.edu.ustc.timeflow.util.SharedPreferenceHelper.Companion.saveString
-import com.google.android.material.internal.ContextUtils.getActivity
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.time.Duration
 import java.time.LocalDate

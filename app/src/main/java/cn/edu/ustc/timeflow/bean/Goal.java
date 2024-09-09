@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import cn.edu.ustc.timeflow.util.DateTimeConverter;
+import cn.edu.ustc.timeflow.converter.DateTimeConverter;
 
 @Entity
 public class Goal {

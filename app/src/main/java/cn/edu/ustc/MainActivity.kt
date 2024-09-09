@@ -19,13 +19,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import cn.edu.ustc.timeflow.model.SimpleScheduler
 import cn.edu.ustc.timeflow.model.StandardScheduler
 import cn.edu.ustc.timeflow.model.StandardValuer
+import cn.edu.ustc.timeflow.notification.AlarmHelper
 import cn.edu.ustc.timeflow.notification.NotificationHelper
 import cn.edu.ustc.timeflow.util.DBHelper
 import cn.edu.ustc.timeflow.util.SharedPreferenceHelper
-import cn.edu.ustc.timeflow.util.getActivity
 import cn.edu.ustc.timeflow.widget.ScheduleWidget
 import cn.edu.ustc.ui.WebActivity
 import com.example.timeflow.R
@@ -153,6 +152,8 @@ class MainActivity : AppCompatActivity() {
                 android.Manifest.permission.RECEIVE_BOOT_COMPLETED
             )
             requestPermissions(permissions, 0)
+
+
         }
 
 
@@ -164,18 +165,11 @@ class MainActivity : AppCompatActivity() {
         val settings = menu.findItem(R.id.nav_settings)
         settings.setOnMenuItemClickListener {
             // TODO: Test the notification
-            NotificationHelper.sendNotification(
-                this,
-                "TimeFlow",
-                "This is a test notification"
-            )
 
-            NotificationHelper.sendTaskNotification(
-                this,
-                "TimeFlow",
-                "This is a test task notification",
-                100
-            )
+
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.SECOND, 5)
+            AlarmHelper.setAlarm(this, calendar, "Pending", "Test")
             true
         }
 

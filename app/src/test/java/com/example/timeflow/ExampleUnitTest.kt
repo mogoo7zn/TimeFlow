@@ -5,8 +5,8 @@ import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
 import cn.edu.ustc.timeflow.restriction.Restriction
 import cn.edu.ustc.timeflow.restriction.TimeRestriction
-import cn.edu.ustc.timeflow.util.RestrictionFactory
-import cn.edu.ustc.timeflow.util.ScheduleConverter
+import cn.edu.ustc.timeflow.converter.RestrictionFactory
+import cn.edu.ustc.timeflow.converter.ScheduleConverter
 import org.junit.Test
 
 import org.junit.Assert.*

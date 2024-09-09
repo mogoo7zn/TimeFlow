@@ -8,7 +8,7 @@ import androidx.room.TypeConverters;
 
 import java.time.LocalDateTime;
 
-import cn.edu.ustc.timeflow.util.DateTimeConverter;
+import cn.edu.ustc.timeflow.converter.DateTimeConverter;
 
 @Entity(tableName = "task")
 public class  Task {
@@ -61,6 +61,8 @@ public class  Task {
     @ColumnInfo(name = "note")
     String note;
 
+    @Ignore
+    Boolean remind;
 
     @Ignore
     Integer overlap;
@@ -181,4 +183,11 @@ public class  Task {
         this.note = note;
     }
 
+    public Boolean getRemind() {
+        return remind;
+    }
+
+    public void setRemind(Boolean remind) {
+        this.remind = remind;
+    }
 }

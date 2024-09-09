@@ -5,12 +5,10 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
-import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.bean.Goal
-import cn.edu.ustc.timeflow.util.DateTimeConverter
+import cn.edu.ustc.timeflow.converter.DateTimeConverter
 import java.time.LocalDateTime
 
 @Dao

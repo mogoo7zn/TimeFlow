@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 
 import java.time.LocalDateTime;
 
-import cn.edu.ustc.timeflow.util.DateTimeConverter;
+import cn.edu.ustc.timeflow.converter.DateTimeConverter;
 
 @Entity(tableName = "milestone")
 public class Milestone {
