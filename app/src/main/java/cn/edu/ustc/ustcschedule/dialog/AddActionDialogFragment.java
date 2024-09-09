@@ -188,7 +188,7 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
         popupWindow.showAsDropDown(v, 0, -80);
 
 
-        //TODO:连接数据库，同时要把这个menu调到最上面，位置还不对
+        //TODO:连接数据库，同时要把这个menu调到最上面
         popupView.findViewById(R.id.frequency_once).setOnClickListener(v1 -> {
             actionType = "once";
             popupWindow.dismiss();

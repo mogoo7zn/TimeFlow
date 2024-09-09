@@ -31,6 +31,15 @@ public class AddGoalDialogFragment extends DialogFragment {
     private CheckBox goalActive;
     private Button saveGoalButton;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (getDialog() != null && getDialog().getWindow() != null) {
+//            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -59,7 +68,7 @@ public class AddGoalDialogFragment extends DialogFragment {
         boolean active = goalActive.isChecked();
 
         if (name.isEmpty() || reason.isEmpty() || measure.isEmpty()) {
-            Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "填写完毕再存呦", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -72,7 +81,7 @@ public class AddGoalDialogFragment extends DialogFragment {
         GoalDao goalDao = db.getGoalDao();
         goalDao.insert(goal);
 
-        Toast.makeText(requireContext(), "Goal saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "已存储", Toast.LENGTH_SHORT).show();
         dismiss();
     }
 }

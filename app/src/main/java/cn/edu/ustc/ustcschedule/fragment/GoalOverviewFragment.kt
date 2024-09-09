@@ -1,18 +1,14 @@
 package cn.edu.ustc.ustcschedule.fragment
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.edu.ustc.timeflow.bean.Action
@@ -20,6 +16,7 @@ import cn.edu.ustc.timeflow.bean.Goal
 import cn.edu.ustc.timeflow.util.DBHelper
 import cn.edu.ustc.ui.adapter.FragmentGoalOverviewRecyclerItemAdapter
 import cn.edu.ustc.ustcschedule.dialog.AddActionDialogFragment
+import cn.edu.ustc.ustcschedule.dialog.AddGoalDialogFragment
 import com.example.timeflow.R
 import com.example.timeflow.databinding.FragmentGoalOverviewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -135,13 +132,15 @@ class GoalOverviewFragment : Fragment() {
         val goalNames = goalList.map { it.content }
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, goalNames)
         listView.adapter = adapter
+        val addGoalButton = view.findViewById<Button>(R.id.add_goal_button)
 
         listView.setOnItemClickListener { _, _, position, _ ->
             val selectedGoal = goalList[position]
             onGoalSelected(selectedGoal)
             dialog.dismiss()
-
         }
+
+        addGoalButton.setOnClickListener { showAddGoalDialog() }
 
         dialog.setOnDismissListener { binding.currentGoalPicker.isChecked = false }
         dialog.setContentView(view)
@@ -155,6 +154,11 @@ class GoalOverviewFragment : Fragment() {
         adapter.notifyDataSetChanged()
         view?.findViewById<TextView>(R.id.current_goal)?.text = goal.content
         view?.findViewById<TextView>(R.id.goal_count)?.text = goalList.size.toString()
+    }
+
+    private fun showAddGoalDialog() {
+        val addGoalDialogFragment = AddGoalDialogFragment()
+        addGoalDialogFragment.show(parentFragmentManager, "AddGoalDialogFragment")
     }
 
     override fun onDestroyView() {
