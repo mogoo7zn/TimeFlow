@@ -72,8 +72,10 @@ public class DayScheduleFragment extends Fragment {
             addActionDialog.show(getParentFragmentManager(), "AddActionDialogFragment");
         });
 
-//
 
+        /**
+         * 选择日期
+         */
         ImageView imageView = view.findViewById(R.id.filter);
         imageView.setOnClickListener(v -> {
             new CardDatePickerDialog.Builder(getContext())

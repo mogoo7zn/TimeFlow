@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Once"
+        android:text="@string/frequency_once"
         android:clickable="true"
         android:focusable="true" />
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Multiple Times a Week"
+        android:text="@string/frequency_multiple_times"
         android:clickable="true"
         android:focusable="true" />
 
@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Fixed Time Every Week"
+        android:text="@string/frequency_fixed_time"
         android:clickable="true"
         android:focusable="true" />
 
