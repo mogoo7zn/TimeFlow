@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
 
     <application
         android:allowBackup="true"
@@ -31,6 +34,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/schedule_widget_info" />
         </receiver>
+        <receiver android:name="cn.edu.ustc.timeflow.notification.NotificationReceiver"
+            android:exported="true"
+            android:permission="Pending" />
+        <receiver android:name="cn.edu.ustc.timeflow.notification.TaskFinishReceiver"
+            android:exported="true"
+            android:permission="Task" />
 
         <activity
             android:name="cn.edu.ustc.ui.WebActivity"
@@ -46,8 +55,10 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="cn.edu.ustc.timeflow.util.AlarmReceiver" android:exported="true"/>
-        <service android:name="cn.edu.ustc.timeflow.util.AlarmService" android:exported="true"/>
+        <receiver android:name="cn.edu.ustc.timeflow.util.AlarmReceiver" android:exported="true"
+            android:permission="Alarm" />
+        <service android:name="cn.edu.ustc.timeflow.util.AlarmService" android:exported="true"
+            android:permission="Alarm" />
     </application>
 
 </manifest>

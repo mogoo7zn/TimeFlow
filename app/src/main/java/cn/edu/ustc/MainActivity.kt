@@ -5,11 +5,13 @@ import android.app.DatePickerDialog
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -20,6 +22,7 @@ import androidx.navigation.ui.setupWithNavController
 import cn.edu.ustc.timeflow.model.SimpleScheduler
 import cn.edu.ustc.timeflow.model.StandardScheduler
 import cn.edu.ustc.timeflow.model.StandardValuer
+import cn.edu.ustc.timeflow.notification.NotificationHelper
 import cn.edu.ustc.timeflow.util.DBHelper
 import cn.edu.ustc.timeflow.util.SharedPreferenceHelper
 import cn.edu.ustc.timeflow.util.getActivity
@@ -38,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -120,8 +125,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-
-
         //初次使用
         if(!SharedPreferenceHelper.getBoolean(this, "notFirst", false)){
 
@@ -132,13 +135,50 @@ class MainActivity : AppCompatActivity() {
 //            SimpleScheduler.getTimeTable(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
             var StandardScheduler = StandardScheduler(this, StandardValuer(this))
             StandardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
+
+
+            // 权限请求
+            /*
+            * <uses-permission android:name="android.permission.INTERNET" />
+            * <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+            * <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+            * <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+            * <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+            * */
+            val permissions = arrayOf(
+                android.Manifest.permission.INTERNET,
+                android.Manifest.permission.POST_NOTIFICATIONS,
+                android.Manifest.permission.SCHEDULE_EXACT_ALARM,
+                android.Manifest.permission.SET_ALARM,
+                android.Manifest.permission.RECEIVE_BOOT_COMPLETED
+            )
+            requestPermissions(permissions, 0)
         }
+
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+        val settings = menu.findItem(R.id.nav_settings)
+        settings.setOnMenuItemClickListener {
+            // TODO: Test the notification
+            NotificationHelper.sendNotification(
+                this,
+                "TimeFlow",
+                "This is a test notification"
+            )
+
+            NotificationHelper.sendTaskNotification(
+                this,
+                "TimeFlow",
+                "This is a test task notification",
+                100
+            )
+            true
+        }
+
         val update = menu.findItem(R.id.update_online)
         update.setOnMenuItemClickListener {
             //打开WebActivity
@@ -233,7 +273,6 @@ class MainActivity : AppCompatActivity() {
                 // 转换为当周的周日
                 val date = LocalDate.of(year, month + 1, dayOfMonth)
                 date.minusDays(date.dayOfWeek.value.toLong())
-
                 SharedPreferenceHelper.saveString(this,"startdate", date.toString())
             }, LocalDate.now().year, LocalDate.now().monthValue - 1, LocalDate.now().dayOfMonth)
             // 设为周日开始
