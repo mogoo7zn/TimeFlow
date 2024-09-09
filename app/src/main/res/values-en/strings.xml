@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TimeFlow</string>
 
@@ -5,21 +6,20 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
-    <string name="name_dict">用户名</string>
+    <string name="name_dict">User Name</string>
     <string name="email_address">EmailAddress</string>
     <string name="profile_photo">ProfilePhoto</string>
 
-    <string name="update">云更新</string>
+    <string name="update">Cloud Update</string>
+    <string name="home">HomePage</string>
+    <string name="overview">GoalsOverview</string>
+    <string name="clock">Deadline List</string>
 
-    <string name="home">主页</string>
-    <string name="overview">目标一览</string>
-    <string name="clock">催债单</string>
-
-    <string name="current_goal">当前目标</string>
+    <string name="current_goal">Current Goal</string>
     <string name="goal_connecting_string">个目标  |  当前目标：</string>
-    <string name="goal_tag">运动</string>
-    <string name="current_action">当前行动</string>
-    <string name="current_task">当前任务</string>
+    <string name="goal_tag">sports</string>
+    <string name="current_action">Current Action</string>
+    <string name="current_task">Current Task</string>
     <string name="action_description">行动描述</string>
     <string name="action_start_time">2024.09.01 09:00</string>
     <string name="action_end_time">2024.09.01 10:00</string>
@@ -243,5 +243,4 @@
     <string name="user_info_setting">用户信息</string>
     <string name="shift_language">切换语言</string>
     <string name="setting_start_week">设置开学周</string>
-    <string name="alarm_premission_not_granted">闹钟权限未开启, 请授予权限</string>
 </resources>
