@@ -293,8 +293,8 @@ class MainActivity : AppCompatActivity() {
         appVersionTextView.text = "Version: $versionName"
 
         builder.setView(dialogLayout)
-            .setTitle("About")
-            .setPositiveButton("OK") { dialog, _ ->
+            .setTitle(R.string.about)
+            .setPositiveButton(R.string.OK) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()

@@ -5,59 +5,57 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-
     <string name="name_dict">User Name</string>
-    <string name="email_address">EmailAddress</string>
-    <string name="profile_photo">ProfilePhoto</string>
+    <string name="email_address">Email Address</string>
+    <string name="profile_photo">Profile Photo</string>
 
     <string name="update">Cloud Update</string>
-    <string name="home">HomePage</string>
-    <string name="overview">GoalsOverview</string>
+    <string name="home">Home Page</string>
+    <string name="overview">Goals Overview</string>
     <string name="clock">Deadline List</string>
 
     <string name="current_goal">Current Goal</string>
-    <string name="goal_connecting_string">个目标  |  当前目标：</string>
-    <string name="goal_tag">sports</string>
+    <string name="goal_connecting_string">Goals | Current Goal:</string>
+    <string name="goal_tag">Sports</string>
     <string name="current_action">Current Action</string>
     <string name="current_task">Current Task</string>
-    <string name="action_description">行动描述</string>
+    <string name="action_description">Action Description</string>
     <string name="action_start_time">2024.09.01 09:00</string>
     <string name="action_end_time">2024.09.01 10:00</string>
-    <string name="action_place">地点</string>
-    <string name="goal_picker_menu_title">选择目标</string>
-    <string name="all_actions">全部行动</string>
+    <string name="action_place">Location</string>
+    <string name="goal_picker_menu_title">Select Goal</string>
+    <string name="all_actions">All Actions</string>
 
-    <string name="deadline_picker_title">选择范围</string>
-    <string name="deadline_intro">本</string>
-    <string name="deadline_unit">周</string>
-    <string name="deadline_connecting_string">剩余</string>
+    <string name="deadline_picker_title">Select Range</string>
+    <string name="deadline_intro">This</string>
+    <string name="deadline_unit">Week</string>
+    <string name="deadline_connecting_string">Remaining</string>
 
-    <string name="action_name">准备做什么？</string>
-    <string name="action_duration">持续时间（分钟）</string>
-    <string name="action_location">地点</string>
-    <string name="action_note">添加描述</string>
-    <string name="action_remind">提醒</string>
-    <string name="deadline_ending">个行动</string>
-    <string name="start_time">开始时间</string>
-    <string name="end_time">结束时间</string>
-    <string name="frequency">频率</string>
-    <string name="frequency_once">单次</string>
-    <string name="frequency_multiple_times">每周多次</string>
-    <string name="frequency_fixed_time">每周固定时间</string>
+    <string name="action_name">What to do?</string>
+    <string name="action_duration">Duration (minutes)</string>
+    <string name="action_location">Location</string>
+    <string name="action_note">Add Description</string>
+    <string name="action_remind">Reminder</string>
+    <string name="deadline_ending">Actions</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="frequency">Frequency</string>
+    <string name="frequency_once">Once</string>
+    <string name="frequency_multiple_times">Multiple Times a Week</string>
+    <string name="frequency_fixed_time">Fixed Time Every Week</string>
 
-
-    <string name="menu_setting">设置</string>
-    <string name="menu_profile">个人资料</string>
+    <string name="menu_setting">Settings</string>
+    <string name="menu_profile">Profile</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="all">全部行动</string>
-    <string name="year">年</string>
-    <string name="month">月</string>
-    <string name="_month">本月</string>
-    <string name="day">日</string>
-    <string name="week">星期</string>
-    <string name="_week">本周</string>
-    <string name="hour">时</string>
-    <string name="min">分</string>
+    <string name="all">All Actions</string>
+    <string name="year">Year</string>
+    <string name="month">Month</string>
+    <string name="_month">This Month</string>
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="_week">This Week</string>
+    <string name="hour">Hour</string>
+    <string name="min">Minute</string>
 
     <string-array name="days_of_week">
         <item>Monday</item>
@@ -69,12 +67,12 @@
         <item>Sunday</item>
     </string-array>
 
-    <string name="schedule">日程</string>
-    <string name="schedule_day">日程-日</string>
-    <string name="schedule_week">日程-周</string>
-    <string name="schedule_month">日程-月</string>
-    <string name="deadline">计时</string>
-    <string name="todolist">任务</string>
+    <string name="schedule">Schedule</string>
+    <string name="schedule_day">Schedule - Day</string>
+    <string name="schedule_week">Schedule - Week</string>
+    <string name="schedule_month">Schedule - Month</string>
+    <string name="deadline">Deadline</string>
+    <string name="todolist">To-Do List</string>
 
     <string name="time0">00:00</string>
     <string name="time2">02:00</string>
@@ -98,108 +96,108 @@
     <string name="fri">Fri</string>
     <string name="sat">Sat</string>
 
-    <string name="left">还有</string>
-    <string name="past">已过</string>
-    <string name="days">天</string>
+    <string name="left">Remaining</string>
+    <string name="past">Past</string>
+    <string name="days">Days</string>
 
-    <string name="courses">课程</string>
-    <string name="homework">作业</string>
-    <string name="exercise">锻炼</string>
-    <string name="reading">阅读</string>
-    <string name="task">事件</string>
-    <string name="plan">计划</string>
+    <string name="courses">Courses</string>
+    <string name="homework">Homework</string>
+    <string name="exercise">Exercise</string>
+    <string name="reading">Reading</string>
+    <string name="task">Task</string>
+    <string name="plan">Plan</string>
 
-    <string name="goal_name">目标名称</string>
-    <string name="goal_description">目标描述</string>
-    <string name="goal_deadline">目标截止日期</string>
-    <string name="goal_reason">目标原因</string>
-    <string name="goal_measure">目标衡量标准</string>
+    <string name="goal_name">Goal Name</string>
+    <string name="goal_description">Goal Description</string>
+    <string name="goal_deadline">Goal Deadline</string>
+    <string name="goal_reason">Goal Reason</string>
+    <string name="goal_measure">Goal Measure</string>
 
-    <string name="add_event">加入事件</string>
-    <string name="title">事件名称</string>
-    <string name="title_hint">事件名称（不超过15个字）</string>
-    <string name="type">类型</string>
-    <string name="date">日期</string>
-    <string name="time">时间</string>
-    <string name="time_start">开始时间</string>
-    <string name="time_end">结束时间</string>
-    <string name="importance">重要性</string>
-    <string name="is_repeat">是否重复</string>
-    <string name="period">周期</string>
-    <string name="place">地点</string>
-    <string name="place_hint">地点（不超过10个字）</string>
-    <string name="position">教室</string>
-    <string name="position_hint">教室（不超过10个字）</string>
-    <string name="description">描述</string>
-    <string name="description_hint">描述（不超过100个字）</string>
-    <string name="repetitive">是否重复</string>
-    <string name="cycle">重复周期</string>
-    <string name="save">保存</string>
-    <string name="teacher">老师</string>
-    <string name="teacher_hint">老师（不超过100个字）</string>
-    <string name="workload">预计工作量（小时）</string>
-    <string name="workload_hint">预计工作量（小于1000小时）</string>
-    <string name="add_course">添加课程</string>
-    <string name="add_task">添加事件</string>
-    <string name="add_todo">添加待办</string>
-    <string name="import_courses">导入课程</string>
+    <string name="add_event">Add Event</string>
+    <string name="title">Event Name</string>
+    <string name="title_hint">Event Name (no more than 15 characters)</string>
+    <string name="type">Type</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="time_start">Start Time</string>
+    <string name="time_end">End Time</string>
+    <string name="importance">Importance</string>
+    <string name="is_repeat">Repeat</string>
+    <string name="period">Period</string>
+    <string name="place">Location</string>
+    <string name="place_hint">Location (no more than 10 characters)</string>
+    <string name="position">Classroom</string>
+    <string name="position_hint">Classroom (no more than 10 characters)</string>
+    <string name="description">Description</string>
+    <string name="description_hint">Description (no more than 100 characters)</string>
+    <string name="repetitive">Repeat</string>
+    <string name="cycle">Repeat Cycle</string>
+    <string name="save">Save</string>
+    <string name="teacher">Teacher</string>
+    <string name="teacher_hint">Teacher (no more than 100 characters)</string>
+    <string name="workload">Estimated Workload (hours)</string>
+    <string name="workload_hint">Estimated Workload (less than 1000 hours)</string>
+    <string name="add_course">Add Course</string>
+    <string name="add_task">Add Task</string>
+    <string name="add_todo">Add To-Do</string>
+    <string name="import_courses">Import Courses</string>
 
-    <string name="OK">确定</string>
-    <string name="commit">提交</string>
-    <string name="cancel">取消</string>
-    <string name="quit">退出登录</string>
-    <string name="sign_in">登录</string>
-    <string name="back">返回</string>
+    <string name="OK">OK</string>
+    <string name="commit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="quit">Log Out</string>
+    <string name="sign_in">Sign In</string>
+    <string name="back">Back</string>
 
-    <string name="move">日程转移</string>
-    <string name="save_template">保存模板</string>
-    <string name="share">分享日程</string>
-    <string name="remind_book">借阅提醒</string>
-    <string name="school_bus">校车时刻</string>
-    <string name="setting">设置</string>
-    <string name="about">关于</string>
-    <string name="help">帮助</string>
+    <string name="move">Schedule Transfer</string>
+    <string name="save_template">Save Template</string>
+    <string name="share">Share Schedule</string>
+    <string name="remind_book">Borrow Reminder</string>
+    <string name="school_bus">School Bus Schedule</string>
+    <string name="setting">Settings</string>
+    <string name="about">About</string>
+    <string name="help">Help</string>
 
-    <string name="personal_info">个人信息</string>
-    <string name="profile_check">登录统一身份认证</string>
-    <string name="check_update">检查更新</string>
-    <string name="auto_update">自动更新</string>
-    <string name="permission_manager">权限管理</string>
-    <string name="reminder_manager">通知管理</string>
-    <string name="personalization">个性化</string>
-    <string name="focus">禅</string>
-    <string name="profile_check_summary">开启后课表可自动导入</string>
+    <string name="personal_info">Personal Information</string>
+    <string name="profile_check">Login Unified Authentication</string>
+    <string name="check_update">Check for Updates</string>
+    <string name="auto_update">Auto Update</string>
+    <string name="permission_manager">Permission Management</string>
+    <string name="reminder_manager">Notification Management</string>
+    <string name="personalization">Personalization</string>
+    <string name="focus">Zen</string>
+    <string name="profile_check_summary">Enable to automatically import schedule</string>
 
-    <string name="least_important">重要</string>
-    <string name="important">较重要</string>
-    <string name="most_important">很重要</string>
+    <string name="least_important">Important</string>
+    <string name="important">More Important</string>
+    <string name="most_important">Very Important</string>
 
-    <string name="name">姓名</string>
-    <string name="ID">学号</string>
-    <string name="current_version">当前版本</string>
+    <string name="name">Name</string>
+    <string name="ID">Student ID</string>
+    <string name="current_version">Current Version</string>
 
-    <string name="version">最新版本</string>
+    <string name="version">Latest Version</string>
 
-    <string name="delete_title">确认删除？</string>
-    <string name="delete_text">选择无法撤销,请慎重。</string>
-    <string name="delete">删除</string>
+    <string name="delete_title">Confirm Deletion?</string>
+    <string name="delete_text">This action cannot be undone, please be cautious.</string>
+    <string name="delete">Delete</string>
 
-    <string name="password">密码</string>
+    <string name="password">Password</string>
 
-    <string name="start">开始</string>
-    <string name="exit">退出</string>
-    <string name="stop">暂停</string>
-    <string name="resume">返回</string>
-    <string name="yes">确定</string>
-    <string name="cont"> 继续</string>
+    <string name="start">Start</string>
+    <string name="exit">Exit</string>
+    <string name="stop">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="yes">Confirm</string>
+    <string name="cont">Continue</string>
 
     <string-array name="task_type_array_name">
-        <item>作业</item>
-        <item>阅读</item>
+        <item>Homework</item>
+        <item>Reading</item>
     </string-array>
 
     <string-array name="todo_type_array_name">
-        <item>锻炼</item>
+        <item>Exercise</item>
         <item>DDL</item>
     </string-array>
 
@@ -215,35 +213,35 @@
     <item name="Tag_DDL" type="id" />
 
     <string-array name="importance_array_name">
-        <item>很重要</item>
-        <item>重要</item>
-        <item>一般</item>
+        <item>Very Important</item>
+        <item>Important</item>
+        <item>General</item>
     </string-array>
 
     <string-array name="yes_or_no">
-        <item>否</item>
-        <item>是</item>
+        <item>No</item>
+        <item>Yes</item>
     </string-array>
 
     <string-array name="period_array_name">
-        <item>日</item>
-        <item>周</item>
-        <item>月</item>
-        <item>年</item>
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
     </string-array>
 
     <string-array name="DDL_or_task">
         <item>DDL</item>
-        <item>任务</item>
+        <item>Task</item>
     </string-array>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
-    <string name="auto_schedule">自动规划</string>
-    <string name="user_info_setting">用户信息</string>
-    <string name="shift_language">切换语言</string>
-    <string name="setting_start_week">设置开学周</string>
-    <string name="alarm_premission_not_granted">闹钟权限未开启, 请授予权限</string>
-    <string name="developer">开发者: 罗浩民 王子宁</string>
+    <string name="auto_schedule">Auto Schedule</string>
+    <string name="user_info_setting">User Info</string>
+    <string name="shift_language">Switch Language</string>
+    <string name="setting_start_week">Set Start Week</string>
+    <string name="alarm_premission_not_granted">Alarm permission not granted, please grant permission</string>
+    <string name="developer">Developers: Luo Haomin, Wang Zining</string>
     <string name="contact">Contact: luohaomin@mail.ustc.edu.cn</string>
 </resources>

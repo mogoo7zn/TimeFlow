@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TimeFlow</string>
+    <string name="app_name">时间流</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -237,7 +237,7 @@
         <item>任务</item>
     </string-array>
     <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <string name="add_widget">添加桌面组件</string>
     <string name="app_widget_description">This is an app widget description</string>
     <string name="auto_schedule">自动规划</string>
     <string name="user_info_setting">用户信息</string>
@@ -245,5 +245,5 @@
     <string name="setting_start_week">设置开学周</string>
     <string name="alarm_premission_not_granted">闹钟权限未开启, 请授予权限</string>
     <string name="developer">开发者: 罗浩民 王子宁</string>
-    <string name="contact">Contact: luohaomin@mail.ustc.edu.cn</string>
+    <string name="contact">联系我们: luohaomin@mail.ustc.edu.cn</string>
 </resources>
