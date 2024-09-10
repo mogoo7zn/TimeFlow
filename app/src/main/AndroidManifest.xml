@@ -34,12 +34,19 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/schedule_widget_info" />
         </receiver>
+
         <receiver android:name="cn.edu.ustc.timeflow.notification.NotificationReceiver"
             android:exported="true"
             android:permission="Pending" />
         <receiver android:name="cn.edu.ustc.timeflow.notification.TaskFinishReceiver"
             android:exported="true"
             android:permission="Task" />
+
+        <receiver android:name="cn.edu.ustc.timeflow.util.AlarmReceiver" android:exported="true"
+            android:permission="Alarm" />
+        <service android:name="cn.edu.ustc.timeflow.util.AlarmService" android:exported="true"
+            android:permission="Alarm" />
+
 
         <activity
             android:name="cn.edu.ustc.ui.WebActivity"
@@ -59,10 +66,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="cn.edu.ustc.timeflow.util.AlarmReceiver" android:exported="true"
-            android:permission="Alarm" />
-        <service android:name="cn.edu.ustc.timeflow.util.AlarmService" android:exported="true"
-            android:permission="Alarm" />
+
     </application>
 
 </manifest>

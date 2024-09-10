@@ -173,7 +173,8 @@ class MainActivity : AppCompatActivity() {
         val update = menu.findItem(R.id.update_online)
         update.setOnMenuItemClickListener {
             //打开WebActivity
-            val intent = android.content.Intent(this, WebActivity::class.java)
+            val intent = Intent(this, WebActivity::class.java)
+            intent.putExtra("tag", "CourseTable")
             startActivity(intent)
             true
         }
@@ -241,13 +242,17 @@ class MainActivity : AppCompatActivity() {
             SharedPreferenceHelper.saveString(this, "username", username)
             SharedPreferenceHelper.saveString(this, "password", password)
 
-            // Optionally, reload the WebView or perform other actions with the new credentials
-            // Todo: reload and check if the credentials are correct
+            //用WebView 检验
+            val intent = Intent(this, WebActivity::class.java)
+            intent.putExtra("tag","login")
+            startActivity(intent)
         }
         builder.setNegativeButton("Cancel") { dialog, which ->
             dialog.dismiss()
         }
         builder.show()
+
+
     }
 
     private fun showChangeStartWeekDialog() {
