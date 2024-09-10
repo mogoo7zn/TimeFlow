@@ -10,7 +10,7 @@ import cn.edu.ustc.timeflow.dao.TaskDao
 /**
  * The task database for this app
  */
-@Database(entities = [Task::class], version = 2)
+@Database(entities = [Task::class], version = 3)
 abstract class TaskDB : RoomDatabase() {
     abstract fun taskDao(): TaskDao
     companion object {

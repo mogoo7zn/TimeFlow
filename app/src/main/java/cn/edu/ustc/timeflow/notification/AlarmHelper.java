@@ -13,24 +13,30 @@ import com.example.timeflow.R;
 import java.util.Calendar;
 
 public class AlarmHelper {
-    public static void setAlarm(Context context, Calendar calendar, String title, String content) {
+    private static boolean isRequestScheduleExactAlarmStarted = false;
+
+    public static void setAlarm(Context context, Calendar calendar, int TaskId, String type) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (alarmManager.canScheduleExactAlarms()) {
                 Intent intent = new Intent(context, NotificationReceiver.class);
-                intent.putExtra("title", title);
-                intent.putExtra("content", content);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                intent.putExtra("task_id", TaskId);
+                intent.putExtra("type", type);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, TaskId, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             } else {
                 Toast.makeText(context, R.string.alarm_premission_not_granted, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-                context.startActivity(intent);
+                if (!isRequestScheduleExactAlarmStarted) {
+                    isRequestScheduleExactAlarmStarted = true;
+                    Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                    context.startActivity(intent);
+                }
             }
         }
     }
-    public static void setAlarm(Context context, Calendar calendar, int TaskId){
+
+    public static void setTaskFinishAlarm(Context context, Calendar calendar, int TaskId) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -41,10 +47,12 @@ public class AlarmHelper {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             } else {
                 Toast.makeText(context, R.string.alarm_premission_not_granted, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-                context.startActivity(intent);
+                if (!isRequestScheduleExactAlarmStarted) {
+                    isRequestScheduleExactAlarmStarted = true;
+                    Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                    context.startActivity(intent);
+                }
             }
         }
     }
-
 }

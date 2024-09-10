@@ -33,7 +33,7 @@ interface TaskDao {
     fun getAll(): List<Task>
 
     @Query("SELECT * FROM task WHERE id = :id")
-    fun getById(id: Int): Task
+    fun getById(id: Int): Task?
 
     @Query("SELECT * FROM task WHERE action_id = :actionId ORDER BY task_end")
     fun getByActionId(actionId: Int): List<Task>
@@ -72,9 +72,10 @@ interface TaskDao {
 
     fun updateFinished(taskId: Int, isFinished: Boolean) {
         val task = getById(taskId)
-        task.finished = isFinished
-        update(task)
-
+        if (task != null) {
+            task.finished = isFinished
+            update(task)
+        }
     }
 
 }

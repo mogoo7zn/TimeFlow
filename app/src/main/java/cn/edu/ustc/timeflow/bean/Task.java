@@ -61,7 +61,7 @@ public class  Task {
     @ColumnInfo(name = "note")
     String note;
 
-    @Ignore
+    @ColumnInfo(name = "remind")
     Boolean remind;
 
     @Ignore
@@ -77,6 +77,7 @@ public class  Task {
         this.action_id = action.getId();
         this.evaluation = "";
         this.finished = false;
+        this.remind = action.isRemind();
         this.location = action.getLocation();
         this.note = action.getNote();
     }

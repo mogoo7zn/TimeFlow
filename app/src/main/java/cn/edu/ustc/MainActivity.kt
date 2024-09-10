@@ -22,7 +22,7 @@ import androidx.navigation.ui.setupWithNavController
 import cn.edu.ustc.timeflow.model.StandardScheduler
 import cn.edu.ustc.timeflow.model.StandardValuer
 import cn.edu.ustc.timeflow.notification.AlarmHelper
-import cn.edu.ustc.timeflow.notification.NotificationHelper
+import cn.edu.ustc.timeflow.notification.NotificationSystem
 import cn.edu.ustc.timeflow.util.DBHelper
 import cn.edu.ustc.timeflow.util.SharedPreferenceHelper
 import cn.edu.ustc.timeflow.widget.ScheduleWidget
@@ -165,11 +165,6 @@ class MainActivity : AppCompatActivity() {
         val settings = menu.findItem(R.id.nav_settings)
         settings.setOnMenuItemClickListener {
             // TODO: Test the notification
-
-
-            val calendar = Calendar.getInstance()
-            calendar.add(Calendar.SECOND, 5)
-            AlarmHelper.setAlarm(this, calendar, "Pending", "Test")
             true
         }
 
@@ -218,6 +213,9 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         sendBroadcast(intent)
 
+        //更新通知
+        val notificationSystem = NotificationSystem(this)
+        notificationSystem.updateNotification()
 
     }
 

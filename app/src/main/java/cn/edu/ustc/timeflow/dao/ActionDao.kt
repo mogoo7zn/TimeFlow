@@ -13,9 +13,9 @@ interface ActionDao {
     @Query("SELECT * FROM 'action' ")
     fun getAll(): List<Action>
     @Query("SELECT * FROM 'action' WHERE id = :id")
-    fun getById(id: Int): Action
+    fun getById(id: Int): Action?
     @Query("SELECT * FROM 'action' WHERE action_name = :name")
-    fun getByName(name: String): Action
+    fun getByName(name: String): Action?
     @Query("SELECT * FROM 'action' WHERE action_type = :type")
     fun getByType(type: String): List<Action>
     @Query("SELECT * FROM 'action' WHERE action_finished = :finished")
