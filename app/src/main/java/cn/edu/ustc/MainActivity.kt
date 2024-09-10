@@ -21,7 +21,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import cn.edu.ustc.timeflow.model.StandardScheduler
 import cn.edu.ustc.timeflow.model.StandardValuer
-import cn.edu.ustc.timeflow.notification.AlarmHelper
 import cn.edu.ustc.timeflow.notification.NotificationSystem
 import cn.edu.ustc.timeflow.util.DBHelper
 import cn.edu.ustc.timeflow.util.SharedPreferenceHelper
@@ -40,20 +39,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.appBarMain.toolbar)
 
         //This is the bottom navigation bar that is displayed on the bottom of the screen.
         val radioGroup = binding.appBarMain.navBar
-
-
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.home -> {
@@ -82,8 +77,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //This is the drawer layout that is displayed on the left side of the screen.
         val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
         // Passing each menu ID as a set of Ids because each
@@ -94,31 +89,41 @@ class MainActivity : AppCompatActivity() {
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // 侧边栏
+        val navView: NavigationView = binding.navView
         navView.setupWithNavController(navController)
+        // 设置Nav_header
+        val headerView = navView.getHeaderView(0)
+        val username = headerView.findViewById<TextView>(R.id.textViewName)
+        var user = SharedPreferenceHelper.getString(this, "username", "未登录")
+        if(user == ""){
+            user = "未登录"
+        }
+        username.text = user
+
+        val email = headerView.findViewById<TextView>(R.id.textViewEmail)
+
+        // TODO: 从数据库中获取用户的email
+        email.text = ""
 
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_info_settings -> {
                     showUpdateCredentialsDialog()
-                    true
                 }
                 R.id.nav_about -> {
                     // Handle about click
-                    true
                 }
                 R.id.nav_help -> {
                     // Handle help click
-                    true
                 }
                 R.id.shift_language -> {
                     // Handle shift language click
-                    true
                 }
                 R.id.change_startweek -> {
                     showChangeStartWeekDialog()
-                    true
                 }
-                else -> false
             }
             drawerLayout.closeDrawers()
             true
@@ -130,12 +135,9 @@ class MainActivity : AppCompatActivity() {
             SharedPreferenceHelper.saveBoolean(this, "notFirst", true)
             DBHelper(this).generateSample()
 
-//            val SimpleScheduler = SimpleScheduler(this, StandardValuer(this))
-//            SimpleScheduler.getTimeTable(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
-            var StandardScheduler = StandardScheduler(this, StandardValuer(this))
-            StandardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
 
-
+            val standardScheduler = StandardScheduler(this, StandardValuer(this))
+            standardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
             // 权限请求
             /*
             * <uses-permission android:name="android.permission.INTERNET" />
@@ -195,6 +197,7 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
