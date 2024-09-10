@@ -244,4 +244,5 @@
     <string name="shift_language">切换语言</string>
     <string name="setting_start_week">设置开学周</string>
     <string name="alarm_premission_not_granted">闹钟权限未开启, 请授予权限</string>
+    <string name="developer">开发者: 罗浩民 王子宁</string>
 </resources>

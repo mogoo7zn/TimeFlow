@@ -101,11 +101,9 @@ class MainActivity : AppCompatActivity() {
             user = "未登录"
         }
         username.text = user
-
         val email = headerView.findViewById<TextView>(R.id.textViewEmail)
-
         // TODO: 从数据库中获取用户的email
-        email.text = ""
+        email.text = "USTC"
 
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -113,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                     showUpdateCredentialsDialog()
                 }
                 R.id.nav_about -> {
-                    // Handle about click
+                    showAboutDialog()
                 }
                 R.id.nav_help -> {
                     // Handle help click
@@ -283,6 +281,23 @@ class MainActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         builder.show()
+    }
+    private fun showAboutDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.dialog_about, null)
+
+        // Set the app version dynamically if needed
+        val appVersionTextView = dialogLayout.findViewById<TextView>(R.id.app_version)
+        val versionName = packageManager.getPackageInfo(packageName, 0).versionName
+        appVersionTextView.text = "Version: $versionName"
+
+        builder.setView(dialogLayout)
+            .setTitle("About")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }
 
