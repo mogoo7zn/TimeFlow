@@ -1,4 +1,4 @@
-package cn.edu.ustc.ustcschedule.fragment
+package cn.edu.ustc.timeflow.ui.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.bean.Goal
 import cn.edu.ustc.timeflow.util.DBHelper
-import cn.edu.ustc.ui.adapter.FragmentGoalOverviewRecyclerItemAdapter
-import cn.edu.ustc.ustcschedule.dialog.AddActionDialogFragment
-import cn.edu.ustc.ustcschedule.dialog.AddGoalDialogFragment
+import cn.edu.ustc.timeflow.ui.adapter.FragmentGoalOverviewRecyclerItemAdapter
+import cn.edu.ustc.timeflow.ui.dialog.AddActionDialogFragment
+import cn.edu.ustc.timeflow.ui.dialog.AddGoalDialogFragment
 import com.example.timeflow.R
 import com.example.timeflow.databinding.FragmentGoalOverviewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog

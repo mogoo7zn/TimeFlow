@@ -1,4 +1,4 @@
-package cn.edu.ustc.ustcschedule.fragment
+package cn.edu.ustc.timeflow.ui.fragment
 
 import android.os.Bundle
 import android.os.CountDownTimer

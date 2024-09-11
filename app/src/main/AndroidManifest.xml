@@ -49,7 +49,7 @@
 
 
         <activity
-            android:name="cn.edu.ustc.ui.WebActivity"
+            android:name="cn.edu.ustc.timeflow.ui.WebActivity"
             android:exported="true" />
         <activity
             android:name="cn.edu.ustc.MainActivity"
@@ -58,7 +58,7 @@
 
         </activity>
         <activity
-            android:name="cn.edu.ustc.ustcschedule.HelloActivity"
+            android:name="cn.edu.ustc.timeflow.ui.HelloActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

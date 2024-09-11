@@ -1,4 +1,4 @@
-package cn.edu.ustc.ustcschedule.dialog;
+package cn.edu.ustc.timeflow.ui.dialog;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -6,8 +6,6 @@ import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,24 +13,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import com.example.timeflow.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.loper7.date_time_picker.DateTimePicker;
 
-import java.io.Serializable;
 import java.time.Duration;
 import java.util.ArrayList;
 
 import cn.edu.ustc.timeflow.bean.Action;
-import cn.edu.ustc.timeflow.dao.ActionDao;
 import cn.edu.ustc.timeflow.util.AlarmReceiver;
 import cn.edu.ustc.timeflow.util.DBHelper;
 

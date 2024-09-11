@@ -244,4 +244,6 @@
     <string name="alarm_premission_not_granted">Alarm permission not granted, please grant permission</string>
     <string name="developer">Developers: Luo Haomin, Wang Zining</string>
     <string name="contact">Contact: luohaomin@mail.ustc.edu.cn</string>
+    <string name="Autoscheduling">Scheduling automatically</string>
+    <string name="AutoScheduled">Automatic scheduling completed</string>
 </resources>

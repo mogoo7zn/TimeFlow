@@ -1,4 +1,4 @@
-package cn.edu.ustc.ustcschedule;
+package cn.edu.ustc.timeflow.ui;
 
 import android.content.Intent;
 import android.graphics.Typeface;

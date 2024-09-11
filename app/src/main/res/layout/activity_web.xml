@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cn.edu.ustc.ui.WebActivity">
+    tools:context="cn.edu.ustc.timeflow.ui.WebActivity">
     <WebView
         android:id="@+id/web_view"
         android:layout_marginTop="36dp"

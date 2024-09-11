@@ -1,4 +1,4 @@
-package cn.edu.ustc.ustcschedule.dialog;
+package cn.edu.ustc.timeflow.ui.dialog;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

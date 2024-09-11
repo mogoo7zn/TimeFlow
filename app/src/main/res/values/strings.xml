@@ -246,4 +246,6 @@
     <string name="alarm_premission_not_granted">闹钟权限未开启, 请授予权限</string>
     <string name="developer">开发者: 罗浩民 王子宁</string>
     <string name="contact">联系我们: luohaomin@mail.ustc.edu.cn</string>
+    <string name="Autoscheduling">自动安排中</string>
+    <string name="AutoScheduled">自动安排完成</string>
 </resources>

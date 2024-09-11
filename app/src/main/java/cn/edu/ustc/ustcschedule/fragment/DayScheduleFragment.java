@@ -2,8 +2,6 @@ package cn.edu.ustc.ustcschedule.fragment;
 
 
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
-import androidx.fragment.app.DialogFragment;
 
 import com.example.timeflow.R;
 import com.example.timeflow.databinding.FragmentScheduleDayBinding;
@@ -30,7 +26,7 @@ import com.loper7.date_time_picker.dialog.CardDatePickerDialog;
 import java.time.LocalDate;
 import java.util.Calendar;
 
-import cn.edu.ustc.ustcschedule.dialog.AddActionDialogFragment;
+import cn.edu.ustc.timeflow.ui.dialog.AddActionDialogFragment;
 
 import cn.edu.ustc.ustcschedule.util.ClassTextInit;
 

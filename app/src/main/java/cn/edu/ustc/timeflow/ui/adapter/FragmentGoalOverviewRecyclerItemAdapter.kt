@@ -1,4 +1,4 @@
-package cn.edu.ustc.ui.adapter
+package cn.edu.ustc.timeflow.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

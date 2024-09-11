@@ -7,7 +7,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.widget.EditText
 import android.widget.TextView
@@ -25,11 +25,15 @@ import cn.edu.ustc.timeflow.notification.NotificationSystem
 import cn.edu.ustc.timeflow.util.DBHelper
 import cn.edu.ustc.timeflow.util.SharedPreferenceHelper
 import cn.edu.ustc.timeflow.widget.ScheduleWidget
-import cn.edu.ustc.ui.WebActivity
+import cn.edu.ustc.timeflow.ui.WebActivity
 import com.example.timeflow.R
 import com.example.timeflow.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Calendar
@@ -38,6 +42,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var progressDialog: AlertDialog
+
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,27 +53,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        //This is the bottom navigation bar that is displayed on the bottom of the screen.
+        val progressDialogView = LayoutInflater.from(this).inflate(R.layout.process_dialog, null)
+        progressDialogView.findViewById<TextView>(R.id.progress_dialog_text).text = getString(R.string.Autoscheduling)
+        progressDialog = AlertDialog.Builder(this)
+            .setView(progressDialogView)
+            .setCancelable(false)
+            .create()
+
+        // This is the bottom navigation bar that is displayed on the bottom of the screen.
         val radioGroup = binding.appBarMain.navBar
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.home -> {
-                    //Toast.makeText(this, "home", Toast.LENGTH_SHORT).show()
                     findNavController(R.id.nav_host_fragment_content_main)
                         .popBackStack(R.id.dayScheduleFragment, true)
                     findNavController(R.id.nav_host_fragment_content_main)
                         .navigate(R.id.dayScheduleFragment)
-
                 }
-
                 R.id.plan_overview -> {
-                    //Toast.makeText(this, "plan_overview", Toast.LENGTH_SHORT).show()
                     findNavController(R.id.nav_host_fragment_content_main)
                         .popBackStack(R.id.fragment_plan_overview, true)
                     findNavController(R.id.nav_host_fragment_content_main)
                         .navigate(R.id.fragment_plan_overview)
                 }
-
                 R.id.deadline_list -> {
                     findNavController(R.id.nav_host_fragment_content_main)
                         .popBackStack(R.id.fragment_deadline_list, true)
@@ -77,12 +85,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //This is the drawer layout that is displayed on the left side of the screen.
+        // This is the drawer layout that is displayed on the left side of the screen.
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.dayScheduleFragment, R.id.fragment_plan_overview, R.id.fragment_deadline_list
@@ -97,12 +103,11 @@ class MainActivity : AppCompatActivity() {
         val headerView = navView.getHeaderView(0)
         val username = headerView.findViewById<TextView>(R.id.textViewName)
         var user = SharedPreferenceHelper.getString(this, "username", "未登录")
-        if(user == ""){
+        if (user == "") {
             user = "未登录"
         }
         username.text = user
         val email = headerView.findViewById<TextView>(R.id.textViewEmail)
-        // TODO: 从数据库中获取用户的email
         email.text = "USTC"
 
         navView.setNavigationItemSelectedListener { menuItem ->
@@ -127,23 +132,14 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        //初次使用
-        if(!SharedPreferenceHelper.getBoolean(this, "notFirst", false)){
-
+        // 初次使用
+        if (!SharedPreferenceHelper.getBoolean(this, "notFirst", false)) {
             SharedPreferenceHelper.saveBoolean(this, "notFirst", true)
             DBHelper(this).generateSample()
 
-
             val standardScheduler = StandardScheduler(this, StandardValuer(this))
             standardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
-            // 权限请求
-            /*
-            * <uses-permission android:name="android.permission.INTERNET" />
-            * <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-            * <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-            * <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
-            * <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-            * */
+
             val permissions = arrayOf(
                 android.Manifest.permission.INTERNET,
                 android.Manifest.permission.POST_NOTIFICATIONS,
@@ -152,51 +148,46 @@ class MainActivity : AppCompatActivity() {
                 android.Manifest.permission.RECEIVE_BOOT_COMPLETED
             )
             requestPermissions(permissions, 0)
-
-
         }
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         val settings = menu.findItem(R.id.nav_settings)
         settings.setOnMenuItemClickListener {
-            // TODO: Test the notification
             true
         }
 
         val update = menu.findItem(R.id.update_online)
         update.setOnMenuItemClickListener {
-            //打开WebActivity
             val intent = Intent(this, WebActivity::class.java)
             intent.putExtra("tag", "CourseTable")
             startActivity(intent)
             true
         }
 
-        val AutoSchedule = menu.findItem(R.id.auto_schedule)
-        AutoSchedule.setOnMenuItemClickListener {
+        val autoSchedule = menu.findItem(R.id.auto_schedule)
+        autoSchedule.setOnMenuItemClickListener {
+            progressDialog.show()
 
-            //TODO: 调用自动排课算法
-//            var SimpleScheduler = SimpleScheduler(this, StandardValuer(this))
-//            SimpleScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
-            var StandardScheduler = StandardScheduler(this, StandardValuer(this))
-            StandardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
+            CoroutineScope(Dispatchers.IO).launch {
+                // 调用自动排课算法
+                val StandardScheduler = StandardScheduler(this@MainActivity, StandardValuer(this@MainActivity))
+                StandardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
 
-            Snackbar.make(binding.root, "自动安排成功", Snackbar.LENGTH_SHORT).show()
-
-            // 更新页面显示
-            val navController = findNavController(R.id.nav_host_fragment_content_main)
-            navController.navigate(navController.currentDestination!!.id)
-
+                withContext(Dispatchers.Main) {
+                    Snackbar.make(binding.root, R.string.AutoScheduled, Snackbar.LENGTH_SHORT)
+                        .show()
+                    progressDialog.dismiss()
+                    // 更新页面显示
+                    val navController = findNavController(R.id.nav_host_fragment_content_main)
+                    navController.navigate(navController.currentDestination!!.id)
+                }
+            }
             true
         }
         return true
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -205,20 +196,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        //更新widget
         val intent = Intent(this, ScheduleWidget::class.java)
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         val ids = AppWidgetManager.getInstance(application).getAppWidgetIds(
             ComponentName(application, ScheduleWidget::class.java)
         )
-        Log.d("MainActivity", "onPause: ${ids.size}")
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         sendBroadcast(intent)
 
-        //更新通知
         val notificationSystem = NotificationSystem(this)
         notificationSystem.updateNotification()
-
     }
 
     private fun showUpdateCredentialsDialog() {
@@ -228,7 +215,6 @@ class MainActivity : AppCompatActivity() {
         val usernameEditText = dialogLayout.findViewById<EditText>(R.id.username)
         val passwordEditText = dialogLayout.findViewById<EditText>(R.id.password)
 
-        // Pre-fill the EditTexts with the current username and password
         usernameEditText.setText(SharedPreferenceHelper.getString(this, "username", ""))
         passwordEditText.setText(SharedPreferenceHelper.getString(this, "password", ""))
 
@@ -240,17 +226,14 @@ class MainActivity : AppCompatActivity() {
             SharedPreferenceHelper.saveString(this, "username", username)
             SharedPreferenceHelper.saveString(this, "password", password)
 
-            //用WebView 检验
             val intent = Intent(this, WebActivity::class.java)
-            intent.putExtra("tag","login")
+            intent.putExtra("tag", "login")
             startActivity(intent)
         }
         builder.setNegativeButton("Cancel") { dialog, which ->
             dialog.dismiss()
         }
         builder.show()
-
-
     }
 
     private fun showChangeStartWeekDialog() {
@@ -259,22 +242,18 @@ class MainActivity : AppCompatActivity() {
         val dialogLayout = inflater.inflate(R.layout.dialog_change_start_week, null)
         val startWeekTextView = dialogLayout.findViewById<TextView>(R.id.startweek_textview)
 
-        // Display the current start week
         val currentStartWeek = SharedPreferenceHelper.getString(this, "startdate", "未设置")
         startWeekTextView.text = currentStartWeek
 
         builder.setView(dialogLayout)
         builder.setTitle("修改起始周")
         builder.setPositiveButton("修改") { _, _ ->
-            // Open DatePicker to select new start week
-            val datePickerDialog = DatePickerDialog(this, { _,year, month, dayOfMonth ->
-                // 转换为当周的周日
+            val datePickerDialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
                 val date = LocalDate.of(year, month + 1, dayOfMonth)
                 date.minusDays(date.dayOfWeek.value.toLong())
-                SharedPreferenceHelper.saveString(this,"startdate", date.toString())
+                SharedPreferenceHelper.saveString(this, "startdate", date.toString())
             }, LocalDate.now().year, LocalDate.now().monthValue - 1, LocalDate.now().dayOfMonth)
-            // 设为周日开始
-            datePickerDialog.datePicker.firstDayOfWeek =Calendar.SUNDAY
+            datePickerDialog.datePicker.firstDayOfWeek = Calendar.SUNDAY
             datePickerDialog.show()
         }
         builder.setNegativeButton("取消") { dialog, _ ->
@@ -282,12 +261,12 @@ class MainActivity : AppCompatActivity() {
         }
         builder.show()
     }
+
     private fun showAboutDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.dialog_about, null)
 
-        // Set the app version dynamically if needed
         val appVersionTextView = dialogLayout.findViewById<TextView>(R.id.app_version)
         val versionName = packageManager.getPackageInfo(packageName, 0).versionName
         appVersionTextView.text = "Version: $versionName"
@@ -300,4 +279,3 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 }
-

@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/fragment_plan_overview"
-        android:name="cn.edu.ustc.ustcschedule.fragment.GoalOverviewFragment"
+        android:name="cn.edu.ustc.timeflow.ui.fragment.GoalOverviewFragment"
         android:label="@string/overview"
         tools:layout="@layout/fragment_goal_overview" >
         <action
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/fragment_deadline_list"
-        android:name="cn.edu.ustc.ustcschedule.fragment.DeadlineListFragment"
+        android:name="cn.edu.ustc.timeflow.ui.fragment.DeadlineListFragment"
         android:label="@string/clock"
         tools:layout="@layout/fragment_deadline_list" >
         <action
