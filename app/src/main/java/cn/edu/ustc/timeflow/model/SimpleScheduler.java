@@ -86,7 +86,7 @@ public class SimpleScheduler extends Scheduler {
     private void RepeatingHandler(LocalDateTime date , List<Action> actions, TimeTable timeTable) {
 //        //对非固定任务进行排序
         actions.sort((o1, o2) -> {
-            return Double.compare(valuer.valuate(o2), valuer.valuate(o1));
+            return Double.compare(valuer.valuate(o2,date), valuer.valuate(o1,date));
         });
 //        //遍历所有任务，将重复任务加入时间表
         for (Action action : actions) {

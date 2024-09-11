@@ -36,9 +36,7 @@ public class StandardValuer implements Valuer{
     public StandardValuer(Context context){
         this.context=context;
     }
-    public double valuate(Action action){
-        return getAbsoluteUrgency(action)+getRelativeUrgency(action);
-    }
+
 
     public double getAbsoluteUrgency(Action action){
         return 1/Math.pow(getRemainingTime(action),alpha);
@@ -126,5 +124,10 @@ public class StandardValuer implements Valuer{
         );
 
         return (double) leftTimes / Duration.between(now, intervalEndTime).toMinutes();
+    }
+
+    @Override
+    public double valuate(Action action, LocalDateTime time) {
+        return 0;
     }
 }

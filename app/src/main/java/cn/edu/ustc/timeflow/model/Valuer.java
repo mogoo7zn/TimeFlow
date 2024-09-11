@@ -1,5 +1,7 @@
 package cn.edu.ustc.timeflow.model;
 
+import java.time.LocalDateTime;
+
 import cn.edu.ustc.timeflow.bean.Action;
 
 /**
@@ -11,5 +13,5 @@ import cn.edu.ustc.timeflow.bean.Action;
  * @see SimpleValuer
  */
 public interface Valuer {
-    public double valuate(Action action);
+    public double valuate(Action action, LocalDateTime time);
 }

@@ -31,6 +31,7 @@ public class FixedTimeRestriction extends Restriction{
         start=LocalTime.parse(codes[0]);
         end=LocalTime.parse(codes[1]);
         type=Integer.parseInt(codes[2]);
+
         for(int i=3;i<codes.length;i++){
             days.add(Integer.parseInt(codes[i]));
         }

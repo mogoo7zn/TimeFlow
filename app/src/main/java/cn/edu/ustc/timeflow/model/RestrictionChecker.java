@@ -2,12 +2,16 @@ package cn.edu.ustc.timeflow.model;
 
 import android.content.Context;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import cn.edu.ustc.timeflow.bean.Action;
 import cn.edu.ustc.timeflow.bean.Task;
 import cn.edu.ustc.timeflow.dao.TaskDao;
 import cn.edu.ustc.timeflow.restriction.AmountRestriction;
 import cn.edu.ustc.timeflow.restriction.IntervalRestriction;
 import cn.edu.ustc.timeflow.restriction.Restriction;
+import cn.edu.ustc.timeflow.restriction.TimeRestriction;
 import cn.edu.ustc.timeflow.util.DBHelper;
 
 public class RestrictionChecker {
@@ -22,23 +26,48 @@ public class RestrictionChecker {
     }
 
     public boolean RestrictionCheck() {
-        for (Restriction restriction : action.getRestrictions()) {
-            if (restriction.getClass().getSimpleName().equals("AmountRestriction")) {
-                int total = ((AmountRestriction) restriction).getTotal();
-                int todo = ((AmountRestriction) restriction).getTodo();
-                int finished = ((AmountRestriction) restriction).getFinished();
-                if (total <= todo + finished) {
-                    return false;
-                }
-            }
-            else if (restriction.getClass().getSimpleName().equals("IntervalRestriction")) {
-                IntervalRestriction intervalRestriction = (IntervalRestriction) restriction;
-                TaskDao taskDao = new DBHelper(context).getTaskDao();
-                if (taskDao.countByActionIdWithTime(action.getId(), task.getStart().minusDays(intervalRestriction.getInterval()),task.getStart()) >= intervalRestriction.getRepeat_times()) {
-                    return false;
-                }
+        if(task.getEnd().isAfter(LocalDateTime.now()))
+            return false;
+
+
+        for (Restriction restriction : action.getRestrictions("AmountRestriction")) {
+            AmountRestriction amountRestriction = (AmountRestriction) restriction;
+            int total = amountRestriction.getTotal();
+            int todo = amountRestriction.getTodo();
+            int finished = amountRestriction.getFinished();
+            if (total <= todo + finished) {
+                return false;
             }
         }
+
+
+        for (Restriction restriction : action.getRestrictions("IntervalRestriction")) {
+            IntervalRestriction intervalRestriction = (IntervalRestriction) restriction;
+            TaskDao taskDao = new DBHelper(context).getTaskDao();
+            if (taskDao.countByActionIdWithTime(action.getId(), task.getStart().minusDays(intervalRestriction.getInterval()),task.getStart()) >= intervalRestriction.getRepeat_times()) {
+                return false;
+            }
+        }
+
+        boolean tag = false;
+        if(action.getRestrictions("TimeRestriction").size() == 0) {
+            tag = true;
+        }
+
+        for (Restriction restriction : action.getRestrictions("TimeRestriction")) {
+            // 其中有一个符合即可
+            TimeRestriction timeRestriction = (TimeRestriction) restriction;
+            if (task.getStart().isAfter(timeRestriction.getStart()) && task.getStart().isBefore(timeRestriction.getEnd())) {
+                tag = true;
+                break;
+            }
+        }
+        if (!tag) {
+            return false;
+        }
+
+
+
         return true;
     }
 }
