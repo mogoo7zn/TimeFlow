@@ -1,12 +1,15 @@
 package cn.edu.ustc.timeflow.ui.adapter
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import cn.edu.ustc.timeflow.bean.Action
+import cn.edu.ustc.timeflow.restriction.TimeRestriction
 import com.example.timeflow.R
 
 class FragmentGoalOverviewRecyclerItemAdapter(
@@ -31,6 +34,7 @@ class FragmentGoalOverviewRecyclerItemAdapter(
         return ViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val action = actionList[position]
         holder.bind(action)
@@ -42,9 +46,32 @@ class FragmentGoalOverviewRecyclerItemAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val actionName: TextView = itemView.findViewById(R.id.action_name)
+        private val actionDuration: TextView = itemView.findViewById(R.id.action_time)
+        private val actionDescription: TextView = itemView.findViewById(R.id.action_description)
+        private val actionPlace: TextView = itemView.findViewById(R.id.action_place)
 
+
+        @RequiresApi(Build.VERSION_CODES.S)
         fun bind(action: Action) {
             actionName.text = action.name
+            var timeString =""
+            if (action.duration.toHours()>0){
+                timeString += action.duration.toHours().toString() + context.getString(R.string.hour)
+            }
+            if (action.duration.toMinutesPart()>0){
+                timeString += action.duration.toMinutesPart().toString() + context.getString(R.string.min)
+            }
+            actionDuration.text = timeString
+
+            // 如果note太长，只显示前20个字符，后面用省略号代替
+            if (action.note.length > 50) {
+                actionDescription.text = action.note.substring(0, 50) + "..."
+            } else {
+                actionDescription.text = action.note
+            }
+
+            actionPlace.text = action.location
+
             itemView.setOnClickListener {
                 onItemClickListener?.onItemClick(action)
             }

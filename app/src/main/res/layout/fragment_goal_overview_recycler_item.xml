@@ -59,7 +59,7 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
-                android:id="@+id/action_start_time"
+                android:id="@+id/action_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -70,17 +70,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/action_description" />
 
-            <TextView
-                android:id="@+id/action_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/action_end_time"
-                android:textColor="@color/dark_grey"
-                android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@id/action_start_time"
-                app:layout_constraintTop_toBottomOf="@id/action_description" />
+
 
             <TextView
                 android:id="@+id/action_place"
@@ -91,7 +81,7 @@
                 android:text="@string/action_place"
                 android:textColor="@color/dark_grey"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@id/action_end_time"
+                app:layout_constraintStart_toEndOf="@id/action_time"
                 app:layout_constraintTop_toBottomOf="@id/action_description" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

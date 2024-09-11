@@ -15,7 +15,7 @@
     <string name="clock">Deadline List</string>
 
     <string name="current_goal">Current Goal</string>
-    <string name="goal_connecting_string">Goals | Current Goal:</string>
+    <string name="goal_connecting_string">"Goals "</string>
     <string name="goal_tag">Sports</string>
     <string name="current_action">Current Action</string>
     <string name="current_task">Current Task</string>
@@ -246,4 +246,5 @@
     <string name="contact">Contact: luohaomin@mail.ustc.edu.cn</string>
     <string name="Autoscheduling">Scheduling automatically</string>
     <string name="AutoScheduled">Automatic scheduling completed</string>
+    <string name="action_count">Actions</string>
 </resources>

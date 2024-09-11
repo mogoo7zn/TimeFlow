@@ -16,7 +16,8 @@
     <string name="clock">催债单</string>
 
     <string name="current_goal">当前目标</string>
-    <string name="goal_connecting_string">个目标  |  当前目标：</string>
+    <string name="goal_connecting_string">个目标 |  </string>
+    <string name="action_count">个行动</string>
     <string name="goal_tag">运动</string>
     <string name="current_action">当前行动</string>
     <string name="current_task">当前任务</string>

@@ -29,13 +29,21 @@ public class AddGoalDialogFragment extends DialogFragment {
     private EditText goalPriority;
     private CheckBox goalFinished;
     private CheckBox goalActive;
-    private Button saveGoalButton;
+    private final Goal goal;
+
+
+    public AddGoalDialogFragment() {
+        goal = new Goal();
+    }
+
+    public AddGoalDialogFragment(Goal goal) {
+        this.goal = goal;
+    }
 
     @Override
     public void onStart() {
         super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
-//            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
             getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }
@@ -52,7 +60,14 @@ public class AddGoalDialogFragment extends DialogFragment {
         goalPriority = view.findViewById(R.id.goal_priority);
         goalFinished = view.findViewById(R.id.goal_finished);
         goalActive = view.findViewById(R.id.goal_active);
-        saveGoalButton = view.findViewById(R.id.save_goal_button);
+        Button saveGoalButton = view.findViewById(R.id.save_goal_button);
+
+        goalName.setText(goal.getContent());
+        goalReason.setText(goal.getReason());
+        goalMeasure.setText(goal.getMeasure());
+        goalPriority.setText(String.valueOf(goal.getPriority()));
+        goalFinished.setChecked(goal.isFinished());
+        goalActive.setChecked(goal.isActive());
 
         saveGoalButton.setOnClickListener(v -> saveGoal());
 
@@ -60,6 +75,7 @@ public class AddGoalDialogFragment extends DialogFragment {
     }
 
     private void saveGoal() {
+
         String name = goalName.getText().toString().trim();
         String reason = goalReason.getText().toString().trim();
         String measure = goalMeasure.getText().toString().trim();
@@ -72,14 +88,22 @@ public class AddGoalDialogFragment extends DialogFragment {
             return;
         }
 
-        Goal goal = new Goal(name, LocalDateTime.now(), LocalDateTime.now().plusDays(1), reason, priority);
+        goal.setContent(name);
+        goal.setReason(reason);
+        goal.setPriority(priority);
+        goal.setStart(LocalDateTime.now());
+        goal.setEnd(LocalDateTime.now());
         goal.setMeasure(measure);
         goal.setFinished(finished);
         goal.setActive(active);
 
         DBHelper db = new DBHelper(requireContext());
         GoalDao goalDao = db.getGoalDao();
-        goalDao.insert(goal);
+        if (goal.getId() == 0) {
+            goalDao.insert(goal);
+        } else {
+            goalDao.update(goal);
+        }
 
         Toast.makeText(requireContext(), "已存储", Toast.LENGTH_SHORT).show();
         dismiss();

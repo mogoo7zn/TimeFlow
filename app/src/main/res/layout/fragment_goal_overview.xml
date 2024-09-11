@@ -41,25 +41,22 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="6dp"/>.
 
-    <TextView
-        android:id="@+id/goal_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/goal_connecting_string"
-        android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@id/current_goal"
-        app:layout_constraintStart_toEndOf="@id/goal_count"
-        android:layout_marginTop="6dp"/>
+
 
     <TextView
-        android:id="@+id/goal_tag"
-        android:layout_width="wrap_content"
+        android:id="@+id/goal_description"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintHorizontal_bias="0.0"
         android:text="@string/goal_tag"
-        app:layout_constraintTop_toBottomOf="@id/current_goal"
-        app:layout_constraintStart_toEndOf="@id/goal_text"
-        android:layout_marginTop="6dp"/>
+        android:textSize="12sp"
+        android:ellipsize="none"
+        android:singleLine="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/goal_count" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_action_fab"
@@ -79,9 +76,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/goal_overview_recycler_view"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="120dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/current_goal"
+        app:layout_constraintTop_toBottomOf="@+id/goal_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
