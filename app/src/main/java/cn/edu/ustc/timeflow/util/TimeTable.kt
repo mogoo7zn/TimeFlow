@@ -111,38 +111,23 @@ class TimeTable {
 
     fun getAvailableTime(): List<Pair<LocalDateTime, LocalDateTime>> {
         val availableTime: MutableList<Pair<LocalDateTime, LocalDateTime>> = mutableListOf()
-        var overlap = 0
+        var currentStart = start
 
         if (tasks.isEmpty()) {
             availableTime.add(Pair(start, end))
             return availableTime
         }
-        var starts = tasks.map { it.start }.toMutableList()
-        var ends = tasks.map { it.end }.toMutableList()
 
-        starts.sort()
-        ends.sort()
-
-        var i = 0
-        var j = 0
-
-        while (i < starts.size && j < ends.size) {
-            if (starts[i] < ends[j]) {
-                if (overlap == 0) {
-                    availableTime.add(Pair(start, starts[i]))
-                }
-                i++
-                overlap++
-            } else {
-                j++
-                overlap--
-                if (overlap == 0) {
-                    availableTime.add(Pair(ends[j - 1], if (j < ends.size) ends[j] else end))
-                }
+        for (task in tasks) {
+            if (currentStart < task.start) {
+                availableTime.add(Pair(currentStart, task.start))
             }
+            // 更新currentStart为 task.end 与 currentStart 中较迟的一个
+            currentStart = if (task.end > currentStart) task.end else currentStart
         }
-        if (i < starts.size) {
-            availableTime.add(Pair(starts[i], end))
+
+        if (currentStart < end) {
+            availableTime.add(Pair(currentStart, end))
         }
 
         return availableTime

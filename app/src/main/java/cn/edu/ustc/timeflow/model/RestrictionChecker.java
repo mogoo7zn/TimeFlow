@@ -26,7 +26,7 @@ public class RestrictionChecker {
     }
 
     public boolean RestrictionCheck() {
-        if(task.getEnd().isAfter(LocalDateTime.now()))
+        if(task.getEnd().isBefore(LocalDateTime.now()))
             return false;
 
 
@@ -49,10 +49,7 @@ public class RestrictionChecker {
             }
         }
 
-        boolean tag = false;
-        if(action.getRestrictions("TimeRestriction").size() == 0) {
-            tag = true;
-        }
+        boolean tag = action.getRestrictions("TimeRestriction").isEmpty();
 
         for (Restriction restriction : action.getRestrictions("TimeRestriction")) {
             // 其中有一个符合即可
@@ -65,9 +62,6 @@ public class RestrictionChecker {
         if (!tag) {
             return false;
         }
-
-
-
         return true;
     }
 }

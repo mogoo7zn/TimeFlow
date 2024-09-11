@@ -1,6 +1,7 @@
 package cn.edu.ustc.timeflow.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -31,6 +32,7 @@ public class StandardScheduler extends Scheduler{
             TimeTable timeTable = new TimeTable(context, date);
             RemoveUnfinishedFutureTask(timeTable, date);
             FixedTaskHandler(timeTable, date);
+            RepeatingTaskHandler(timeTable,date);
             timeTable.sync();
         }
         return null;
@@ -57,7 +59,6 @@ public class StandardScheduler extends Scheduler{
                 for (Restriction restriction : restrictions) {
 
                     FixedTimeRestriction fixedTimeRestriction = (FixedTimeRestriction) restriction;
-                    StringBuilder s= new StringBuilder("Restriction: ");
 
                     switch (fixedTimeRestriction.getType()) {//0:daily,1:weekly,2:monthly,3:yearly
                         case 0:
@@ -65,11 +66,7 @@ public class StandardScheduler extends Scheduler{
                             break;
                         case 1:
                             if (fixedTimeRestriction.getDays().contains(date.getDayOfWeek().getValue())) {
-//                                for (int i : fixedTimeRestriction.getDays()) {
-//                                    s.append(i).append(" ");
-//                                }
-//                                s.append("On Day of ").append(date.getDayOfWeek().getValue()).append("  And ").append(date);
-//                                Log.d("SS", s.toString());
+
                                 AddFixedTask(timeTable, date, action, fixedTimeRestriction);
                             }
                             break;
@@ -115,29 +112,43 @@ public class StandardScheduler extends Scheduler{
         // 获取所有重复任务
         // 检查时间范围是否符合其他限制
         // 符合则加入
-        //TODO: test
+
         PriorityQueue<Action> actions = new PriorityQueue<>((o1, o2) -> Double.compare(valuer.valuate(o2,LocalDateTime.of(date,LocalTime.of(12,0))), valuer.valuate(o1,LocalDateTime.of(date,LocalTime.of(12,0)))));
 
-        actions.addAll(actionDao.getByType("Repeating"));
-        while (!actions.isEmpty()) {
+            actions.addAll(actionDao.getByType("Repeating"));
+        
+        int maxIterations = 30; // Maximum iterations
+        int iterationCount = 0;
+
+        while (!actions.isEmpty() && iterationCount < maxIterations) {
             Action action = actions.poll();
-            List<kotlin.Pair<LocalDateTime, LocalDateTime>> AvailableTime = timeTable.getAvailableTime();
-            //遍历时间表，找到第一个合适的时间段，将任务加入时间表
-            for (kotlin.Pair<LocalDateTime, LocalDateTime> pair : AvailableTime) {
+            List<kotlin.Pair<LocalDateTime, LocalDateTime>> availableTime = timeTable.getAvailableTime();
+
+            for (kotlin.Pair<LocalDateTime, LocalDateTime> pair : availableTime) {
                 LocalDateTime start = pair.getFirst();
                 LocalDateTime end = pair.getSecond();
                 Duration duration = Duration.between(start, end);
+
                 assert action != null;
                 if (duration.toMinutes() >= action.getDuration().toMinutes()) {
                     Task task = new Task(action, start, start.plus(action.getDuration()));
-                    if(new RestrictionChecker(context, action, task).RestrictionCheck())
+                    if (new RestrictionChecker(context, action, task).RestrictionCheck()) {
                         timeTable.addTask(task);
+                    }
                     break;
                 }
             }
+
             timeTable.sync();
-            if(valuer.valuate(action,LocalDateTime.of(date,LocalTime.of(12,0))) > 0)
+            if (valuer.valuate(action, LocalDateTime.of(date, LocalTime.of(12, 0))) > 0) {
                 actions.add(action);
+            }
+
+            iterationCount++;
+        }
+
+        if (iterationCount >= maxIterations) {
+            Log.w("StandardScheduler", "Reached maximum iteration count, possible infinite loop detected.");
         }
         timeTable.sync();
     }

@@ -23,7 +23,7 @@ public class AlarmHelper {
                 Intent intent = new Intent(context, NotificationReceiver.class);
                 intent.putExtra("task_id", TaskId);
                 intent.putExtra("type", type);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, TaskId, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, TaskId, intent, PendingIntent.FLAG_IMMUTABLE );
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             } else {
                 Toast.makeText(context, R.string.alarm_premission_not_granted, Toast.LENGTH_LONG).show();
