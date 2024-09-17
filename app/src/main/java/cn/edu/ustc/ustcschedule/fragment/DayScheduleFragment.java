@@ -64,7 +64,7 @@ public class DayScheduleFragment extends Fragment {
         FloatingActionButton addActionFab = view.findViewById(R.id.add_action_fab);
         addActionFab.setOnClickListener(v -> {
 
-            AddActionDialogFragment addActionDialog = new AddActionDialogFragment(0, getContext());
+            AddActionDialogFragment addActionDialog = new AddActionDialogFragment(-1, getContext());
             addActionDialog.show(getParentFragmentManager(), "AddActionDialogFragment");
         });
 

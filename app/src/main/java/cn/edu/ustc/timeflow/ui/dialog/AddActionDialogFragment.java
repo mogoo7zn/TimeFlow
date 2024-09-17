@@ -33,6 +33,7 @@ import cn.edu.ustc.timeflow.bean.Action;
 import cn.edu.ustc.timeflow.bean.Goal;
 import cn.edu.ustc.timeflow.dao.ActionDao;
 import cn.edu.ustc.timeflow.dao.GoalDao;
+import cn.edu.ustc.timeflow.ui.adapter.ActionTimeAdapter;
 import cn.edu.ustc.timeflow.util.AlarmReceiver;
 import cn.edu.ustc.timeflow.util.DBHelper;
 
@@ -43,7 +44,7 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
     private Action action;
     private String actionType = "Fixed"; // Default action type
     private int goalId;
-    private Context context;
+    private final Context context;
 
     public AddActionDialogFragment(int goalId, Context context) {
         action = new Action();
@@ -54,10 +55,9 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
 
     public AddActionDialogFragment(Action action,Context context) {
         this.action = action;
-        dbHelper= new DBHelper(requireContext());
+        dbHelper= new DBHelper(context);
         this.context = context;
     }
-
 
     @Override
     public void onStart() {
@@ -84,9 +84,11 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
 
         // TODO: Implement the following features
         ImageButton actionAddTimeButton = view.findViewById(R.id.action_add_time);
-        ListView actionDeadlineList = view.findViewById(R.id.action_deadline_list);
+        ListView actionTimeList = view.findViewById(R.id.action_time_list);
         ImageButton actionAddRestrictionButton = view.findViewById(R.id.action_add_restriction);
         ListView actionRestrictionList = view.findViewById(R.id.action_restriction_list);
+
+        actionTimeList.setAdapter(new ActionTimeAdapter(context,action));
 
 
         if (action != null) {
