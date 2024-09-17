@@ -249,4 +249,6 @@
     <string name="contact">联系我们: luohaomin@mail.ustc.edu.cn</string>
     <string name="Autoscheduling">自动安排中</string>
     <string name="AutoScheduled">自动安排完成</string>
+    <string name="action_type">固定时间</string>
+    <string name="restriction">条件</string>
 </resources>

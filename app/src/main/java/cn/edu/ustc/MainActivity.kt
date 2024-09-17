@@ -135,7 +135,13 @@ class MainActivity : AppCompatActivity() {
         // 初次使用
         if (!SharedPreferenceHelper.getBoolean(this, "notFirst", false)) {
             SharedPreferenceHelper.saveBoolean(this, "notFirst", true)
-            DBHelper(this).generateSample()
+
+            // 读取系统语言， 生成对应示例数据
+            if (resources.configuration.locale.language == "zh") {
+                DBHelper(this).generateSample_zh()
+            } else {
+                DBHelper(this).generateSample_en()
+            }
 
             val standardScheduler = StandardScheduler(this, StandardValuer(this))
             standardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))

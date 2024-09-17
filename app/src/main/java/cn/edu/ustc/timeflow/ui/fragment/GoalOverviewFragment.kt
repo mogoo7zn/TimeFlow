@@ -28,6 +28,7 @@ class GoalOverviewFragment : Fragment() {
     private lateinit var adapter: FragmentGoalOverviewRecyclerItemAdapter
     private lateinit var actionList: List<Action>
     private lateinit var goalList: List<Goal>
+    private var currentGoal: Goal? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +53,7 @@ class GoalOverviewFragment : Fragment() {
 
         if(goalList.isNotEmpty()) {
             fetchAndDisplayActionsForGoal(goalList[0])
+            currentGoal = goalList[0]
         }
 
         // Set up CheckBox listener
@@ -83,7 +85,7 @@ class GoalOverviewFragment : Fragment() {
     }
 
     private fun showEditActionDialog(action: Action) {
-        val dialog = AddActionDialogFragment.newInstance(action) { refreshData() }
+        val dialog = AddActionDialogFragment(action,context)
         dialog.show(parentFragmentManager, "AddActionDialogFragment")
     }
 
@@ -105,10 +107,9 @@ class GoalOverviewFragment : Fragment() {
     }
 
     private fun showAddActionDialog() {
-        val addActionDialog = AddActionDialogFragment()
-        addActionDialog.show(parentFragmentManager, "AddActionDialogFragment")
+        currentGoal?.let { AddActionDialogFragment(it.id,context) }
+            ?.show(parentFragmentManager, "AddActionDialogFragment")
     }
-
 
 
     /**
@@ -155,7 +156,7 @@ class GoalOverviewFragment : Fragment() {
         view?.findViewById<TextView>(R.id.current_goal)?.text = goal.content
         view?.findViewById<TextView>(R.id.goal_count)?.text = goalList.size.toString() + getString(R.string.goal_connecting_string) +" " + actionList.size.toString() + getString(R.string.action_count)
         view?.findViewById<TextView>(R.id.goal_description)?.text = goal.reason
-
+        currentGoal = goal
         view?.findViewById<TextView>(R.id.current_goal)?.setOnClickListener {
             val dialog = AddGoalDialogFragment(goal)
             dialog.show(parentFragmentManager, "AddGoalDialogFragment")

@@ -99,7 +99,7 @@ class DBHelper (val context :Context){
     /**
      * Generate sample data for user to learn how to use the app
      */
-    fun generateSample(){
+    fun generateSample_en(){
         val goalDao = getGoalDao()
         val milestoneDao = getMilestoneDao()
         val actionDao = getActionDao()
@@ -217,6 +217,126 @@ class DBHelper (val context :Context){
         val restriction6: Restriction = FixedTimeRestriction(LocalTime.of(12,30),LocalTime.of(13,0),FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList())
 
         action6.addRestriction(restriction6)
+
+        actionDao.insert(action1)
+        actionDao.insert(action2)
+        actionDao.insert(action3)
+        actionDao.insert(action4)
+        actionDao.insert(action5)
+        actionDao.insert(action6)
+    }
+
+    fun generateSample_zh() {
+        val goalDao = getGoalDao()
+        val milestoneDao = getMilestoneDao()
+        val actionDao = getActionDao()
+        val taskDao = getTaskDao()
+        // 清除所有数据
+        goalDao.deleteAll()
+        milestoneDao.deleteAll()
+        actionDao.deleteAll()
+        taskDao.deleteAll()
+
+        // 添加目标：过上健康的生活
+        val healthGoal: Goal = Goal().apply {
+            content = "过上健康的生活"
+            priority = 1
+            start = null
+            end = null
+            isActive = true
+            isFinished = false
+            reason = "我想活得更长更快乐，我想变得更有活力和更高效，这样我就能在生活中取得更多成就。"
+        }
+
+        goalDao.insert(healthGoal)
+        healthGoal.id = goalDao.getAll().last().id
+
+        // 添加里程碑：3个月内减重10公斤；1个月内按时睡觉
+        val milestone1: Milestone = Milestone().apply {
+            goal_id = healthGoal.id
+            content = "3个月内减重10公斤"
+            time = LocalDateTime.now().plusMonths(3)
+            isFinished = false
+            goalName = healthGoal.content
+        }
+
+        val milestone2: Milestone = Milestone().apply {
+            goal_id = healthGoal.id
+            content = "1个月内按时睡觉"
+            time = LocalDateTime.now().plusMonths(1)
+            isFinished = false
+            goalName = healthGoal.content
+        }
+
+        milestoneDao.insert(milestone1)
+        milestoneDao.insert(milestone2)
+
+        // 添加行动：每周去健身房3次；晚上11点到早上7点睡觉；每天8点吃早餐；每天12点吃午餐；每天6点吃晚餐；每天午餐后小睡30分钟
+        val action1: Action = Action().apply {
+            goal_id = healthGoal.id
+            name = "去健身房"
+            type = "Repeating"
+            duration = Duration.ofHours(1)
+            location = "健身房"
+            note = "记得带水，穿运动服"
+            overlapping = false
+            addRestriction(IntervalRestriction(7, 3))
+        }
+
+        val action2: Action = Action().apply {
+            goal_id = healthGoal.id
+            name = "按时睡觉"
+            type = "Fixed"
+            duration = Duration.ofHours(8)
+            location = "卧室"
+            note = "把手机放下！！！"
+            overlapping = false
+            addRestriction(FixedTimeRestriction(LocalTime.of(23, 0), LocalTime.of(7, 0), FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList()))
+        }
+
+        val action3: Action = Action().apply {
+            goal_id = healthGoal.id
+            name = "吃早餐"
+            type = "Fixed"
+            duration = Duration.ofMinutes(30)
+            location = "厨房"
+            note = "多吃蔬菜"
+            overlapping = false
+            addRestriction(FixedTimeRestriction(LocalTime.of(7, 0), LocalTime.of(7, 30), FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList()))
+        }
+
+        val action4: Action = Action().apply {
+            goal_id = healthGoal.id
+            name = "吃午餐"
+            type = "Fixed"
+            duration = Duration.ofMinutes(30)
+            location = "厨房"
+            note = "多吃蔬菜"
+            overlapping = false
+            addRestriction(FixedTimeRestriction(LocalTime.of(12, 0), LocalTime.of(12, 30), FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList()))
+        }
+
+        val action5: Action = Action().apply {
+            goal_id = healthGoal.id
+            name = "吃晚餐"
+            type = "Fixed"
+            duration = Duration.ofMinutes(30)
+            location = "厨房"
+            note = "多吃蔬菜"
+            overlapping = false
+            addRestriction(FixedTimeRestriction(LocalTime.of(18, 30), LocalTime.of(19, 0), FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList()))
+        }
+
+        val action6: Action = Action().apply {
+            goal_id = healthGoal.id
+            name = "小睡"
+            type = "Fixed"
+            duration = Duration.ofMinutes(30)
+            location = "客厅"
+            note = "休息一下"
+            overlapping = false
+            addRestriction(FixedTimeRestriction(LocalTime.of(12, 30), LocalTime.of(13, 0), FixedTimeRestriction.FixedTimeRestrictionType.DAILY, ArrayList()))
+        }
 
         actionDao.insert(action1)
         actionDao.insert(action2)

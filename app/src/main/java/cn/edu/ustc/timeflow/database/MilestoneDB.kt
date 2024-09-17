@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import cn.edu.ustc.timeflow.bean.Milestone
 import cn.edu.ustc.timeflow.dao.MilestoneDao
 
-@Database(entities = [Milestone::class], version = 1)
+@Database(entities = [Milestone::class], version = 2)
 abstract class MilestoneDB : RoomDatabase() {
     abstract fun milestoneDao(): MilestoneDao
     companion object {

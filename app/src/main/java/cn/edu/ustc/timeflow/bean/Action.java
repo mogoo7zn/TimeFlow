@@ -54,6 +54,13 @@ public class Action implements Serializable {
 
     public Action() {
         // Default constructor required for calls to DataSnapshot.getValue(Action.class)
+        // SET DEFAULT VALUES
+        this.name = "";
+        this.duration = Duration.ofMinutes(0);
+        this.location = "";
+        this.note = "";
+        this.remind = false;
+        restrictions = new java.util.ArrayList<>();
     }
     @Ignore
     public Action(int goal_id, String name) {

@@ -23,6 +23,7 @@ class MilestoneAdapter(
         val milestoneTime: TextView = view.findViewById(R.id.milestone_time)
         val timeLeft: TextView = view.findViewById(R.id.time_left)
         val milestoneFinished: CheckBox = view.findViewById(R.id.milestone_finished)
+        val milestoneTag = view.findViewById<TextView>(R.id.GoalTag)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,6 +36,7 @@ class MilestoneAdapter(
         val milestone = milestoneList[position]
         holder.milestoneName.text = milestone.content
         holder.milestoneTime.text = milestone.time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        holder.milestoneTag.text = milestone.goalName
 
         val now = LocalDateTime.now()
         val duration = Duration.between(now, milestone.time)

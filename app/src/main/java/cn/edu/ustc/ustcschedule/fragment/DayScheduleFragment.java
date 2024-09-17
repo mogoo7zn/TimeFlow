@@ -47,7 +47,6 @@ public class DayScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-
         ClassTextInit textInit = new ClassTextInit();
         ScrollView scrollView = view.findViewById(R.id.scroll);
 
@@ -64,7 +63,8 @@ public class DayScheduleFragment extends Fragment {
 
         FloatingActionButton addActionFab = view.findViewById(R.id.add_action_fab);
         addActionFab.setOnClickListener(v -> {
-            AddActionDialogFragment addActionDialog = new AddActionDialogFragment();
+
+            AddActionDialogFragment addActionDialog = new AddActionDialogFragment(0, getContext());
             addActionDialog.show(getParentFragmentManager(), "AddActionDialogFragment");
         });
 

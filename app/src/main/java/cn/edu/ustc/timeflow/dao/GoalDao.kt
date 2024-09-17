@@ -40,7 +40,7 @@ interface GoalDao {
     fun getByEndDate(endDate: LocalDateTime): List<Goal>
 
     @Query("SELECT * FROM goal WHERE goal_name = :content")
-    fun getByContent(content: String): List<Goal>
+    fun getByContent(content: String): Goal?
 
     @Query("DELETE FROM goal WHERE id = :id")
     fun deleteById(id: Int)

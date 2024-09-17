@@ -11,9 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.PopupWindow;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,36 +22,47 @@ import androidx.annotation.Nullable;
 
 import com.example.timeflow.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.loper7.date_time_picker.DateTimePicker;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import cn.edu.ustc.timeflow.bean.Action;
+import cn.edu.ustc.timeflow.bean.Goal;
+import cn.edu.ustc.timeflow.dao.ActionDao;
+import cn.edu.ustc.timeflow.dao.GoalDao;
 import cn.edu.ustc.timeflow.util.AlarmReceiver;
 import cn.edu.ustc.timeflow.util.DBHelper;
 
 public class AddActionDialogFragment extends BottomSheetDialogFragment {
-    private long startTime = 0;
-    private long endTime = 0;
-    private DBHelper dbHelper;
-    private Duration duration = Duration.ZERO;
-    private Action action;
-    private String actionType = "once"; // Default action type
 
-    public static AddActionDialogFragment newInstance(Action action) {
-        AddActionDialogFragment fragment = new AddActionDialogFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("action", action);
-        fragment.setArguments(args);
-        return fragment;
+    private DBHelper dbHelper;
+
+    private Action action;
+    private String actionType = "Fixed"; // Default action type
+    private int goalId;
+    private Context context;
+
+    public AddActionDialogFragment(int goalId, Context context) {
+        action = new Action();
+        dbHelper= new DBHelper(context);
+        this.goalId = goalId;
+        this.context = context;
     }
+
+    public AddActionDialogFragment(Action action,Context context) {
+        this.action = action;
+        dbHelper= new DBHelper(requireContext());
+        this.context = context;
+    }
+
 
     @Override
     public void onStart() {
         super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
-//            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
             getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }
@@ -65,50 +77,36 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
         EditText actionName = view.findViewById(R.id.action_name);
         EditText actionLocation = view.findViewById(R.id.action_location);
         EditText actionNote = view.findViewById(R.id.action_note);
-        CheckBox actionRemind = view.findViewById(R.id.action_remind);
-        CheckBox actionStartTime = view.findViewById(R.id.action_start_time);
-        CheckBox actionEndTime = view.findViewById(R.id.action_end_time);
-        DateTimePicker actionTimePicker = view.findViewById(R.id.action_time_picker);
+        EditText actionDuration = view.findViewById(R.id.action_duration);
+        SwitchMaterial actionRemindSwitch = view.findViewById(R.id.action_remind_switch);
+        SwitchMaterial actionTypeSwitch = view.findViewById(R.id.action_type_switch);
         Button saveActionButton = view.findViewById(R.id.save_action_button);
-        Button actionFrequencyButton = view.findViewById(R.id.action_frequency_button);
-        actionFrequencyButton.setOnClickListener(v -> AddActionDialogFragment.this.showFrequencyMenu(v));
 
-        view.findViewById(R.id.action_start_time).setRotation(180);
+        // TODO: Implement the following features
+        ImageButton actionAddTimeButton = view.findViewById(R.id.action_add_time);
+        ListView actionDeadlineList = view.findViewById(R.id.action_deadline_list);
+        ImageButton actionAddRestrictionButton = view.findViewById(R.id.action_add_restriction);
+        ListView actionRestrictionList = view.findViewById(R.id.action_restriction_list);
 
-        if (getArguments() != null) {
-            action = (Action) getArguments().getSerializable("action");
-            if (action != null) {
-                actionName.setText(action.getName());
-                actionLocation.setText(action.getLocation());
-                actionNote.setText(action.getNote());
-                actionRemind.setChecked(action.isRemind());
-                // Set start and end time if available
-                // actionTimePicker.setStartTime(action.getStartTime());
-                // actionTimePicker.setEndTime(action.getEndTime());
-            }
+
+        if (action != null) {
+            actionName.setText(action.getName());
+            actionLocation.setText(action.getLocation());
+            actionNote.setText(action.getNote());
+            actionRemindSwitch.setChecked(action.isRemind());
+            actionDuration.setText(action.getDuration().toString());
         }
 
-        actionStartTime.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                actionTimePicker.setVisibility(View.VISIBLE);
-                actionTimePicker.setOnDateTimeChangedListener((millis) -> {
-                    startTime = millis;
-                    return null;
-                });
-            } else {
-                actionTimePicker.setVisibility(View.GONE);
-            }
-        });
 
-        actionEndTime.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        actionTypeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            View actionFixedTime = view.findViewById(R.id.action_FixedTime);
+            View actionRepeatingTime = view.findViewById(R.id.action_RepeatingTime);
             if (isChecked) {
-                actionTimePicker.setVisibility(View.VISIBLE);
-                actionTimePicker.setOnDateTimeChangedListener((millis) -> {
-                    endTime = millis;
-                    return null;
-                });
+                actionFixedTime.setVisibility(View.VISIBLE);
+                actionRepeatingTime.setVisibility(View.GONE);
             } else {
-                actionTimePicker.setVisibility(View.GONE);
+                actionFixedTime.setVisibility(View.GONE);
+                actionRepeatingTime.setVisibility(View.VISIBLE);
             }
         });
 
@@ -116,50 +114,27 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
             String name = actionName.getText().toString().trim();
             String location = actionLocation.getText().toString().trim();
             String note = actionNote.getText().toString().trim();
-            boolean remind = actionRemind.isChecked();
-            int goal_id = action.getGoal_id();
+            boolean remind = actionRemindSwitch.isChecked();
+            Duration duration = Duration.parse(actionDuration.getText().toString().trim());
 
             if (name.isEmpty() || location.isEmpty() || note.isEmpty()) {
-                // Show error message
                 Toast.makeText(requireContext(), "填完再存呦~", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (actionType == null || actionType.isEmpty()) {
-                // Show error message
                 Toast.makeText(requireContext(), "请选择频率", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            duration = Duration.ofMillis(endTime - startTime);
-
-            //TODO:这里的id还不对
-            if (action == null) {
-                action = new Action(
-                        0,
-                        goal_id, // Set the appropriate goal_id
-                        name,
-                        duration,
-                        location,
-                        note,
-                        remind,
-                        "once", // Set the appropriate type
-                        false,
-                        new ArrayList<>() // Set the appropriate restrictions
-                );
-            } else {
-                action.setName(name);
-                action.setLocation(location);
-                action.setNote(note);
-                action.setRemind(remind);
-                action.setDuration(duration);
-            }
+            action.setGoal_id(goalId);
+            action.setName(name);
+            action.setLocation(location);
+            action.setNote(note);
+            action.setRemind(remind);
+            action.setDuration(duration);
 
             saveActionToDatabase(action);
 
-            if (remind) {
-                setAlarm(endTime, name);
-            }
 
             dismiss();
         });
@@ -167,120 +142,24 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
         return view;
     }
 
-    /**
-     * Show a popup menu to select the frequency of the action
-     * @param v
-     */
-    private void showFrequencyMenu(View v) {
-        LayoutInflater inflater = LayoutInflater.from(requireContext());
-        View popupView = inflater.inflate(R.layout.frequency_menu, null);
-        PopupWindow popupWindow = new PopupWindow(popupView,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                true);
-
-        popupWindow.showAsDropDown(v, 0, -80);
-
-
-        //TODO:连接数据库，同时要把这个menu调到最上面
-        popupView.findViewById(R.id.frequency_once).setOnClickListener(v1 -> {
-            actionType = "once";
-            popupWindow.dismiss();
-        });
-
-        popupView.findViewById(R.id.frequency_multiple_times).setOnClickListener(v1 -> {
-            showMultipleTimesDialog();
-            popupWindow.dismiss();
-        });
-
-        popupView.findViewById(R.id.frequency_fixed_time).setOnClickListener(v1 -> {
-            actionType = "fixed";
-            popupWindow.dismiss();
-        });
-
-        popupWindow.setOnDismissListener(() -> {
-            CheckBox actionFrequencyButton = v.findViewById(R.id.action_frequency_button);
-            actionFrequencyButton.setChecked(false);
-        });
-    }
-
-    /**
-     * Show a dialog to select multiple days
-     */
-    private void showMultipleTimesDialog() {
-        String[] days = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
-        boolean[] checkedDays = new boolean[days.length];
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("选择每周星期")
-                .setMultiChoiceItems(days, checkedDays, (dialog, which, isChecked) -> checkedDays[which] = isChecked)
-                .setPositiveButton("确定", (dialog, which) -> {
-                    StringBuilder selectedDays = new StringBuilder();
-                    for (int i = 0; i < checkedDays.length; i++) {
-                        if (checkedDays[i]) {
-                            if (selectedDays.length() > 0) {
-                                selectedDays.append(", ");
-                            }
-                            selectedDays.append(days[i]);
-                        }
-                    }
-                    actionType = "multiple: " + selectedDays.toString();
-                })
-                .setNegativeButton("取消", null)
-                .show();
-    }
-
-    /**
-     * Set an alarm for the given end time
-     * @param timeInMillis
-     * @param actionName
-     */
-    private void setAlarm(long timeInMillis, String actionName) {
-        AlarmManager alarmManager = (AlarmManager) requireContext()
-                .getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(requireContext(), AlarmReceiver.class);
-        intent.putExtra("action_name", actionName);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(requireContext(),
-                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
-    }
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setTitle("Add Action");
-        return dialog;
-    }
-
-    public interface OnActionSavedListener {
-        void onActionSaved();
-    }
-
-    private OnActionSavedListener onActionSavedListener;
-
-    /**
-     * Create a new instance of AddActionDialogFragment
-     * @param action
-     * @param listener
-     * @return
-     */
-    public static AddActionDialogFragment newInstance(Action action, OnActionSavedListener listener) {
-        AddActionDialogFragment fragment = new AddActionDialogFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("action", action);
-        fragment.setArguments(args);
-        fragment.setOnActionSavedListener(listener);
-        return fragment;
-    }
-
-    public void setOnActionSavedListener(OnActionSavedListener listener) {
-        this.onActionSavedListener = listener;
-    }
-
     private void saveActionToDatabase(Action action) {
-        action.setType(actionType); // Set the action type before saving
-        dbHelper.getActionDao().insert(action);
-        if (onActionSavedListener != null) {
-            onActionSavedListener.onActionSaved();
+        action.setType(actionType);
+        ActionDao dao= dbHelper.getActionDao();
+        GoalDao goalDao = dbHelper.getGoalDao();
+
+        if (action.getGoal_id() == -1) {
+            if(goalDao.getByContent("Default")==null){
+                goalDao.insert(new Goal("Default", LocalDateTime.now(), LocalDateTime.MAX,"",0));
+            }
+            action.setGoal_id(goalDao.getByContent("Default").getId());
         }
+
+        if (action.getId() == 0) {
+            dao.insert(action);
+        } else {
+            dao.update(action);
+        }
+
     }
+
 }

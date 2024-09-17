@@ -36,6 +36,17 @@ public class Milestone {
     @ColumnInfo(name = "milestone_finished")
     boolean finished;
 
+    public String getGoalName() {
+        return goalName;
+    }
+
+    public void setGoalName(String goalName) {
+        this.goalName = goalName;
+    }
+
+    @ColumnInfo(name = "goal_name")
+    String goalName;
+
     public int getId() {
         return id;
     }

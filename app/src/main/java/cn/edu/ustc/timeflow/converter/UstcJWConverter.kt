@@ -35,13 +35,14 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
         val goalDao = DBHelper(context).getGoalDao()
 
         var courseGoal = goalDao.getByContent("课程表")
-        if (courseGoal.isEmpty()) {
+        if (courseGoal==null) {
             val goal = Goal("课程表",null,null,"",0)
             goalDao.insert(goal)
         }
 
         courseGoal = goalDao.getByContent("课程表")
-        val goal = courseGoal.get(0).id
+
+        val goal = courseGoal!!.id
 
 
 

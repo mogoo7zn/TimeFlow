@@ -13,7 +13,6 @@ android {
     packagingOptions {
         resources.excludes.add("META-INF/AL2.0")
         resources.excludes.add("META-INF/LGPL2.1")
-
     }
     defaultConfig {
         applicationId = "com.example.timeflow"
@@ -52,7 +51,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.jsoup)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -68,52 +66,21 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("com.github.loper7:DateTimePicker:0.6.3")
 
-    implementation("com.google.android.material:material:1.1.0") // 为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
-    implementation("com.github.loper7:DateTimePicker:0.6.3") // 具体版本请看顶部jitpack标识，如0.6.3,仅支持androidx
-
-
-//    implementation("com.haibin:calendarview:3.6.8")
-    //implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     val roomVersion = "2.6.1"
-
     implementation(libs.androidx.room.runtime)
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-
-    // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$roomVersion")
-    // To use Kotlin Symbol Processing (KSP)
-    //ksp("androidx.room:room-compiler:$room_version")
-
-    // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$roomVersion")
-
-    // optional - RxJava2 support for Room
     implementation("androidx.room:room-rxjava2:$roomVersion")
-
-    // optional - RxJava3 support for Room
     implementation("androidx.room:room-rxjava3:$roomVersion")
-
-    // optional - Guava support for Room, including Optional and ListenableFuture
     implementation("androidx.room:room-guava:$roomVersion")
-
-    // optional - Test helpers
     testImplementation("androidx.room:room-testing:$roomVersion")
-
-    // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:$roomVersion")
 
-    // Mockito for unit testing
     testImplementation("org.mockito:mockito-core:4.0.0")
     androidTestImplementation("org.mockito:mockito-android:4.0.0")
-
-    // AndroidX Test - JUnit4
     testImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-
-    // Fragment testing
     debugImplementation("androidx.fragment:fragment-testing:1.5.7")
-
     implementation("com.google.android.material:material:1.1.0")
-
 }

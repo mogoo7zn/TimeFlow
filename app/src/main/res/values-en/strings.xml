@@ -247,4 +247,6 @@
     <string name="Autoscheduling">Scheduling automatically</string>
     <string name="AutoScheduled">Automatic scheduling completed</string>
     <string name="action_count">Actions</string>
+    <string name="action_type">固定时间</string>
+    <string name="restriction">条件</string>
 </resources>
