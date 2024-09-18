@@ -65,6 +65,7 @@ dependencies {
     implementation(project(":WidgetLib"))
     implementation(libs.androidx.activity)
     implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.core.i18n)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

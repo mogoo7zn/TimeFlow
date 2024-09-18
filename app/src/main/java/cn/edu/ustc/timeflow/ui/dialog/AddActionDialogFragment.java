@@ -73,7 +73,7 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
         Button actionFrequencyButton = view.findViewById(R.id.action_frequency_button);
         actionFrequencyButton.setOnClickListener(v -> AddActionDialogFragment.this.showFrequencyMenu(v));
 
-        view.findViewById(R.id.action_start_time).setRotation(180);
+//        view.findViewById(R.id.action_start_time).setRotation(180);
 
         if (getArguments() != null) {
             action = (Action) getArguments().getSerializable("action");

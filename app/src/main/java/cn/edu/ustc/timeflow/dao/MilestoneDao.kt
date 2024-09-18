@@ -42,7 +42,7 @@ interface MilestoneDao {
     @Query("DELETE FROM milestone")
     fun deleteAll()
 
-    @Query("SELECT * FROM milestone WHERE milestone_time >= date('now', '-' || :days || ' day')")
+    @Query("SELECT * FROM milestone WHERE milestone_time <= date('now', '+' || :days || ' day')")
     fun getMilestonesForTimeRange(days: Int): List<Milestone>
 
     @Query("SELECT * FROM milestone")
