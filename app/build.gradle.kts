@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.Packaging
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -10,10 +12,7 @@ plugins {
 android {
     namespace = "com.example.timeflow"
     compileSdk = 34
-    packagingOptions {
-        resources.excludes.add("META-INF/AL2.0")
-        resources.excludes.add("META-INF/LGPL2.1")
-    }
+
     defaultConfig {
         applicationId = "com.example.timeflow"
         minSdk = 26

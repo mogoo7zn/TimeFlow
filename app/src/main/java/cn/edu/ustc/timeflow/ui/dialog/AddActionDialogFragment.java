@@ -27,12 +27,14 @@ import com.loper7.date_time_picker.DateTimePicker;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import cn.edu.ustc.timeflow.bean.Action;
 import cn.edu.ustc.timeflow.bean.Goal;
 import cn.edu.ustc.timeflow.dao.ActionDao;
 import cn.edu.ustc.timeflow.dao.GoalDao;
+import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction;
 import cn.edu.ustc.timeflow.ui.adapter.ActionTimeAdapter;
 import cn.edu.ustc.timeflow.util.AlarmReceiver;
 import cn.edu.ustc.timeflow.util.DBHelper;
@@ -99,6 +101,15 @@ public class AddActionDialogFragment extends BottomSheetDialogFragment {
             actionDuration.setText(action.getDuration().toString());
         }
 
+        actionAddTimeButton.setOnClickListener(v -> {
+            action.addRestriction(new FixedTimeRestriction(
+                LocalTime.now().withSecond(0).withNano(0),
+                LocalTime.now().plusHours(1).withSecond(0).withNano(0),
+                FixedTimeRestriction.FixedTimeRestrictionType.DAILY,
+                new ArrayList<>()
+            ));
+            actionTimeList.setAdapter(new ActionTimeAdapter(context,action));
+        });
 
         actionTypeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             View actionFixedTime = view.findViewById(R.id.action_FixedTime);

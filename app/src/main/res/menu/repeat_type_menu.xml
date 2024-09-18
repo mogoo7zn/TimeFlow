@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/daily" android:title="每天"/>
+    <item android:id="@+id/weekly" android:title="每周"/>
+    <item android:id="@+id/monthly" android:title="每月"/>
+    <item android:id="@+id/yearly" android:title="每年"/>
+</menu>

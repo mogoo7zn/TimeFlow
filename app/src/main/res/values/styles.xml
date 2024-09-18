@@ -43,6 +43,7 @@
         <item name="android:textColorPrimary">@color/blue_500</item>
     </style>
 
+
     <style name="Widget.TimeFlow.AppWidget.Container" parent="android:Widget">
         <item name="android:id">@android:id/background</item>
         <item name="android:background">?android:attr/colorBackground</item>
