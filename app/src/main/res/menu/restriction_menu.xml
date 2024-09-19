@@ -1,0 +1,12 @@
+<!-- res/menu/restriction_menu.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_time_restriction"
+        android:title="Time Restriction" />
+    <item
+        android:id="@+id/menu_amount_restriction"
+        android:title="Amount Restriction" />
+    <item
+        android:id="@+id/menu_interval_restriction"
+        android:title="Interval Restriction" />
+</menu>

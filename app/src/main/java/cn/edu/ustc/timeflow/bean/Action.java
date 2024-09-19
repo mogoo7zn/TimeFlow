@@ -147,5 +147,14 @@ public class Action implements Serializable {
         }
         return res;
     }
+    public List<Restriction> getRestrictionsWithout(String type) {
+        List<Restriction> res = new java.util.ArrayList<>();
+        for (Restriction restriction : restrictions) {
+            if (!restriction.getClass().getSimpleName().equals(type)) {
+                res.add(restriction);
+            }
+        }
+        return res;
+    }
 
 }

@@ -1,178 +1,202 @@
-package cn.edu.ustc.timeflow.ui.dialog;
+package cn.edu.ustc.timeflow.ui.dialog
 
-import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.Toast;
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CompoundButton
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.PopupMenu
+import android.widget.Toast
+import cn.edu.ustc.timeflow.bean.Action
+import cn.edu.ustc.timeflow.bean.Goal
+import cn.edu.ustc.timeflow.restriction.AmountRestriction
+import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction
+import cn.edu.ustc.timeflow.restriction.IntervalRestriction
+import cn.edu.ustc.timeflow.restriction.TimeRestriction
+import cn.edu.ustc.timeflow.ui.adapter.ActionTimeAdapter
+import cn.edu.ustc.timeflow.ui.adapter.RestrictionAdapter
+import cn.edu.ustc.timeflow.util.DBHelper
+import com.example.timeflow.R
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.switchmaterial.SwitchMaterial
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.LocalTime
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+class AddActionDialogFragment : BottomSheetDialogFragment {
+    private var dbHelper: DBHelper
 
-import com.example.timeflow.R;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.loper7.date_time_picker.DateTimePicker;
+    private var action: Action?
+    private var actionType: String = "Fixed" // Default action type
+    private var goalId = 0
+    private val context: Context
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-
-import cn.edu.ustc.timeflow.bean.Action;
-import cn.edu.ustc.timeflow.bean.Goal;
-import cn.edu.ustc.timeflow.dao.ActionDao;
-import cn.edu.ustc.timeflow.dao.GoalDao;
-import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction;
-import cn.edu.ustc.timeflow.ui.adapter.ActionTimeAdapter;
-import cn.edu.ustc.timeflow.util.AlarmReceiver;
-import cn.edu.ustc.timeflow.util.DBHelper;
-
-public class AddActionDialogFragment extends BottomSheetDialogFragment {
-
-    private DBHelper dbHelper;
-
-    private Action action;
-    private String actionType = "Fixed"; // Default action type
-    private int goalId;
-    private final Context context;
-
-    public AddActionDialogFragment(int goalId, Context context) {
-        action = new Action();
-        dbHelper= new DBHelper(context);
-        this.goalId = goalId;
-        this.context = context;
+    constructor(goalId: Int, context: Context) {
+        action = Action()
+        dbHelper = DBHelper(context)
+        this.goalId = goalId
+        this.context = context
     }
 
-    public AddActionDialogFragment(Action action,Context context) {
-        this.action = action;
-        dbHelper= new DBHelper(context);
-        this.context = context;
+    constructor(action: Action?, context: Context) {
+        this.action = action
+        dbHelper = DBHelper(context)
+        this.context = context
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (getDialog() != null && getDialog().getWindow() != null) {
-            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    override fun onStart() {
+        super.onStart()
+        if (dialog != null && dialog!!.window != null) {
+            dialog!!.window!!
+                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         }
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_add_action, container, false);
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.dialog_add_action, container, false)
 
-        dbHelper = new DBHelper(requireContext());
-        EditText actionName = view.findViewById(R.id.action_name);
-        EditText actionLocation = view.findViewById(R.id.action_location);
-        EditText actionNote = view.findViewById(R.id.action_note);
-        EditText actionDuration = view.findViewById(R.id.action_duration);
-        SwitchMaterial actionRemindSwitch = view.findViewById(R.id.action_remind_switch);
-        SwitchMaterial actionTypeSwitch = view.findViewById(R.id.action_type_switch);
-        Button saveActionButton = view.findViewById(R.id.save_action_button);
+        dbHelper = DBHelper(requireContext())
+        val actionName = view.findViewById<EditText>(R.id.action_name)
+        val actionLocation = view.findViewById<EditText>(R.id.action_location)
+        val actionNote = view.findViewById<EditText>(R.id.action_note)
+        val actionDuration = view.findViewById<EditText>(R.id.action_duration)
+        val actionRemindSwitch = view.findViewById<SwitchMaterial>(R.id.action_remind_switch)
+        val actionTypeSwitch = view.findViewById<SwitchMaterial>(R.id.action_type_switch)
+        val saveActionButton = view.findViewById<Button>(R.id.save_action_button)
 
         // TODO: Implement the following features
-        ImageButton actionAddTimeButton = view.findViewById(R.id.action_add_time);
-        ListView actionTimeList = view.findViewById(R.id.action_time_list);
-        ImageButton actionAddRestrictionButton = view.findViewById(R.id.action_add_restriction);
-        ListView actionRestrictionList = view.findViewById(R.id.action_restriction_list);
+        val actionAddTimeButton = view.findViewById<ImageButton>(R.id.action_add_time)
+        val actionTimeList = view.findViewById<ListView>(R.id.action_time_list)
+        val actionAddRestrictionButton = view.findViewById<ImageButton>(R.id.action_add_restriction)
+        val actionRestrictionList = view.findViewById<ListView>(R.id.action_restriction_list)
 
-        actionTimeList.setAdapter(new ActionTimeAdapter(context,action));
 
+        actionTimeList.adapter = ActionTimeAdapter(context, action!!)
+        actionRestrictionList.adapter = RestrictionAdapter(context, action!!)
 
         if (action != null) {
-            actionName.setText(action.getName());
-            actionLocation.setText(action.getLocation());
-            actionNote.setText(action.getNote());
-            actionRemindSwitch.setChecked(action.isRemind());
-            actionDuration.setText(action.getDuration().toString());
+            actionName.setText(action!!.name)
+            actionLocation.setText(action!!.location)
+            actionNote.setText(action!!.note)
+            actionRemindSwitch.isChecked = action!!.isRemind
+            actionDuration.setText(action!!.duration.toString())
         }
 
-        actionAddTimeButton.setOnClickListener(v -> {
-            action.addRestriction(new FixedTimeRestriction(
-                LocalTime.now().withSecond(0).withNano(0),
-                LocalTime.now().plusHours(1).withSecond(0).withNano(0),
-                FixedTimeRestriction.FixedTimeRestrictionType.DAILY,
-                new ArrayList<>()
-            ));
-            actionTimeList.setAdapter(new ActionTimeAdapter(context,action));
-        });
+        actionAddTimeButton.setOnClickListener { v: View? ->
+            action!!.addRestriction(
+                FixedTimeRestriction(
+                    LocalTime.now().withSecond(0).withNano(0),
+                    LocalTime.now().plusHours(1).withSecond(0).withNano(0),
+                    FixedTimeRestriction.FixedTimeRestrictionType.DAILY,
+                    ArrayList()
+                )
+            )
+            actionTimeList.adapter = ActionTimeAdapter(context, action!!)
+        }
 
-        actionTypeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            View actionFixedTime = view.findViewById(R.id.action_FixedTime);
-            View actionRepeatingTime = view.findViewById(R.id.action_RepeatingTime);
+        //true->fixed time, false->repeating time
+        actionTypeSwitch.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+            val actionFixedTime = view.findViewById<View>(R.id.action_FixedTime)
+            val actionRepeatingTime = view.findViewById<View>(R.id.action_RepeatingTime)
             if (isChecked) {
-                actionFixedTime.setVisibility(View.VISIBLE);
-                actionRepeatingTime.setVisibility(View.GONE);
+                actionFixedTime.visibility = View.VISIBLE
+                actionRepeatingTime.visibility = View.VISIBLE
+                actionType = "Fixed"
             } else {
-                actionFixedTime.setVisibility(View.GONE);
-                actionRepeatingTime.setVisibility(View.VISIBLE);
+                actionFixedTime.visibility = View.GONE
+                actionRepeatingTime.visibility = View.VISIBLE
+                actionType = "Repeating"
             }
-        });
+        }
+        actionTypeSwitch.isChecked = action!!.type == "Fixed"
 
-        saveActionButton.setOnClickListener(v -> {
-            String name = actionName.getText().toString().trim();
-            String location = actionLocation.getText().toString().trim();
-            String note = actionNote.getText().toString().trim();
-            boolean remind = actionRemindSwitch.isChecked();
-            Duration duration = Duration.parse(actionDuration.getText().toString().trim());
+        saveActionButton.setOnClickListener { v: View? ->
+            val name = actionName.text.toString().trim { it <= ' ' }
+            val location = actionLocation.text.toString().trim { it <= ' ' }
+            val note = actionNote.text.toString().trim { it <= ' ' }
+            val remind = actionRemindSwitch.isChecked
+            val duration = Duration.parse(actionDuration.text.toString().trim { it <= ' ' })
 
             if (name.isEmpty() || location.isEmpty() || note.isEmpty()) {
-                Toast.makeText(requireContext(), "填完再存呦~", Toast.LENGTH_SHORT).show();
-                return;
+                Toast.makeText(requireContext(), "填完再存呦~", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-            if (actionType == null || actionType.isEmpty()) {
-                Toast.makeText(requireContext(), "请选择频率", Toast.LENGTH_SHORT).show();
-                return;
+            if (actionType.isEmpty()) {
+                Toast.makeText(requireContext(), "请选择频率", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
-            action.setGoal_id(goalId);
-            action.setName(name);
-            action.setLocation(location);
-            action.setNote(note);
-            action.setRemind(remind);
-            action.setDuration(duration);
+            action!!.goal_id = goalId
+            action!!.name = name
+            action!!.location = location
+            action!!.note = note
+            action!!.isRemind = remind
+            action!!.duration = duration
 
-            saveActionToDatabase(action);
-
-
-            dismiss();
-        });
-
-        return view;
-    }
-
-    private void saveActionToDatabase(Action action) {
-        action.setType(actionType);
-        ActionDao dao= dbHelper.getActionDao();
-        GoalDao goalDao = dbHelper.getGoalDao();
-
-        if (action.getGoal_id() == -1) {
-            if(goalDao.getByContent("Default")==null){
-                goalDao.insert(new Goal("Default", LocalDateTime.now(), LocalDateTime.MAX,"",0));
-            }
-            action.setGoal_id(goalDao.getByContent("Default").getId());
+            saveActionToDatabase(action)
+            dismiss()
         }
 
-        if (action.getId() == 0) {
-            dao.insert(action);
+        actionAddRestrictionButton.setOnClickListener { v: View? ->
+            val popupMenu = PopupMenu(context, v)
+            val inflater1 = popupMenu.menuInflater
+            inflater1.inflate(R.menu.restriction_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { item: MenuItem ->
+                when (item.itemId) {
+                    R.id.menu_time_restriction ->                         // Handle Time Restriction
+                        action!!.addRestriction(
+                            TimeRestriction(
+                                LocalDateTime.now(),
+                                LocalDateTime.MAX
+                            )
+                        )
+
+                    R.id.menu_amount_restriction ->                         // Handle Amount Restriction
+                        action!!.addRestriction(AmountRestriction(30, 0, 0))
+
+                    R.id.menu_interval_restriction ->                         // Handle Interval Restriction
+                        action!!.addRestriction(IntervalRestriction(1, 3))
+
+                    else -> return@setOnMenuItemClickListener false
+                }
+                actionRestrictionList.adapter = RestrictionAdapter(context, action!!)
+                true
+            }
+            popupMenu.show()
+        }
+
+        return view
+    }
+
+    private fun saveActionToDatabase(action: Action?) {
+        action!!.type = actionType
+        val dao = dbHelper.getActionDao()
+        val goalDao = dbHelper.getGoalDao()
+
+        if (actionType == "Repeating"){
+            action.restrictions = action.getRestrictionsWithout("FixedTimeRestriction")
+        }
+
+        if (action.goal_id == -1) {
+            if (goalDao.getByContent("Default") == null) {
+                goalDao.insert(Goal("Default", LocalDateTime.now(), LocalDateTime.MAX, "", 0))
+            }
+            action.goal_id = goalDao.getByContent("Default")!!.id
+        }
+
+        if (action.id == 0) {
+            dao.insert(action)
         } else {
-            dao.update(action);
+            dao.update(action)
         }
-
     }
-
 }

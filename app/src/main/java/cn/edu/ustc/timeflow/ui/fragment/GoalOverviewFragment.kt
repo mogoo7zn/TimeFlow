@@ -85,8 +85,10 @@ class GoalOverviewFragment : Fragment() {
     }
 
     private fun showEditActionDialog(action: Action) {
-        val dialog = AddActionDialogFragment(action,context)
-        dialog.show(parentFragmentManager, "AddActionDialogFragment")
+        val dialog = context?.let { AddActionDialogFragment(action, it) }
+        if (dialog != null) {
+            dialog.show(parentFragmentManager, "AddActionDialogFragment")
+        }
     }
 
     private fun showDeleteConfirmationDialog(action: Action) {
@@ -107,7 +109,7 @@ class GoalOverviewFragment : Fragment() {
     }
 
     private fun showAddActionDialog() {
-        currentGoal?.let { AddActionDialogFragment(it.id,context) }
+        currentGoal?.let { context?.let { it1 -> AddActionDialogFragment(it.id, it1) } }
             ?.show(parentFragmentManager, "AddActionDialogFragment")
     }
 

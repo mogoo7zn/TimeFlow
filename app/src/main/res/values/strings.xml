@@ -251,4 +251,9 @@
     <string name="AutoScheduled">自动安排完成</string>
     <string name="action_type">固定时间</string>
     <string name="restriction">条件</string>
+    <string name="todo">"待完成: "</string>
+    <string name="finished">"已完成: "</string>
+    <string name="interval">周期：</string>
+    <string name="repeat_times">重复次数：</string>
+    <string name="total">总量：</string>
 </resources>

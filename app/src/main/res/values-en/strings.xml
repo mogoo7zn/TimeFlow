@@ -247,6 +247,11 @@
     <string name="Autoscheduling">Scheduling automatically</string>
     <string name="AutoScheduled">Automatic scheduling completed</string>
     <string name="action_count">Actions</string>
-    <string name="action_type">固定时间</string>
-    <string name="restriction">条件</string>
+    <string name="action_type">Fixed Time</string>
+    <string name="restriction">Restriction</string>
+    <string name="finished">"Finished: "</string>
+    <string name="todo">"TODO: "</string>
+    <string name="interval">Interval：</string>
+    <string name="repeat_times">"Repeat Times: "</string>
+    <string name="total">Total：</string>
 </resources>

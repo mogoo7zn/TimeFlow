@@ -17,6 +17,11 @@ public class AmountRestriction extends Restriction{
         todo=Integer.parseInt(codes[1]);
         finished=Integer.parseInt(codes[2]);
     }
+    public AmountRestriction(int total, int todo, int finished) {
+        this.total = total;
+        this.todo = todo;
+        this.finished = finished;
+    }
 
     @Override
     public String coding() {
