@@ -202,7 +202,6 @@ class AddActionDialogFragment : BottomSheetDialogFragment {
     }
 
     fun setOnDismissListener(function: () -> Unit) {
-
         dialog?.setOnDismissListener { function() }
     }
 }

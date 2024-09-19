@@ -263,4 +263,5 @@
     <string name="total">总量：</string>
     <string name="add_goal">添加目标</string>
     <string name="set_time">设置时间</string>
+    <string name="tomato">番茄钟</string>
 </resources>

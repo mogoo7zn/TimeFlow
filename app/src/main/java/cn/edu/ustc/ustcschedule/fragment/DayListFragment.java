@@ -22,15 +22,13 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import cn.edu.ustc.timeflow.bean.Task;
 import cn.edu.ustc.timeflow.util.TimeTable;
 import cn.edu.ustc.ustcschedule.dialog.DeleteDialog;
-import cn.edu.ustc.ustcschedule.dialog.LessonDetailDialogFragment;
+import cn.edu.ustc.ustcschedule.dialog.LessonDetailDialog;
 import cn.edu.ustc.ustcschedule.util.Alpha;
 
 public class DayListFragment extends Fragment {
@@ -118,7 +116,8 @@ public class DayListFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         // Show the lesson detail dialog
-                        LessonDetailDialogFragment dialog =new  LessonDetailDialogFragment(
+                        LessonDetailDialog dialog =new LessonDetailDialog(
+                                getActivity(),
                                 task.getContent(),
                                 task.getNote(),task.getLocation(),
                                 format_time.format(starting_time) + " - " + format_time.format(ending_time),

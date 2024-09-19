@@ -1,6 +1,8 @@
 package cn.edu.ustc.ustcschedule.dialog;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -8,31 +10,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.timeflow.R;
 import com.loper7.date_time_picker.DateTimeConfig;
 import com.loper7.date_time_picker.dialog.CardDatePickerDialog;
-import com.loper7.date_time_picker.dialog.CardWeekPickerDialog;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.List;
 
 import cn.edu.ustc.ustcschedule.fragment.DayListFragment;
 
 
-public class LessonDetailDialogFragment extends DialogFragment {
+public class LessonDetailDialog extends DialogFragment {
 
     private String lessonName;
     private String teacherName;
@@ -41,10 +40,12 @@ public class LessonDetailDialogFragment extends DialogFragment {
     private Boolean is_finished;
     private Integer task_id;
     private Fragment fragment;
+    private Activity context;
 
 
 
-    public LessonDetailDialogFragment(String lessonName, String teacherName, String room, String time, Boolean is_finished, Integer task_id, Fragment fragment) {
+    public LessonDetailDialog(Activity context, String lessonName, String teacherName, String room, String time, Boolean is_finished, Integer task_id, Fragment fragment) {
+        this.context = context;
         this.lessonName = lessonName;
         this.teacherName = teacherName;
         this.room = room;
@@ -75,6 +76,7 @@ public class LessonDetailDialogFragment extends DialogFragment {
         CheckBox checkBox = view.findViewById(R.id.lesson_detail_finished);
         Button changeButton = view.findViewById(R.id.lesson_detail_change_time);
         Button deleteButton = view.findViewById(R.id.lesson_detail_delete);
+        ImageButton tomatoButton = view.findViewById(R.id.tomato_button);
 
 
         lessonNameTextView.setText("任务内容: " + lessonName);
@@ -121,6 +123,15 @@ public class LessonDetailDialogFragment extends DialogFragment {
             if (fragment instanceof DayListFragment) {
                 ((DayListFragment) fragment).deleteTask(task_id);
             }
+            dismiss();
+        });
+
+        tomatoButton.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("task_id", task_id);
+            // 跳转到番茄钟
+            NavController findNavController = Navigation.findNavController(context, R.id.nav_host_fragment_content_main);
+            findNavController.navigate(R.id.fragment_tomato, bundle);
             dismiss();
         });
         return view;

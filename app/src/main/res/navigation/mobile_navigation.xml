@@ -38,6 +38,16 @@
             app:destination="@id/dayScheduleFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/fragment_tomato"
+        android:name="cn.edu.ustc.timeflow.ui.fragment.TomatoClockFragment"
+        android:label="@string/tomato"
+        tools:layout="@layout/fragment_goal_overview" >
+        <action
+            android:id="@+id/action_fragment_goal_overview_to_fragment_deadline_list"
+            app:destination="@id/fragment_deadline_list" />
+    </fragment>
+
 
 
     <fragment
