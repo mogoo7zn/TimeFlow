@@ -225,8 +225,8 @@ class MainActivity : AppCompatActivity() {
         passwordEditText.setText(SharedPreferenceHelper.getString(this, "password", ""))
 
         builder.setView(dialogLayout)
-        builder.setTitle("Update Credentials")
-        builder.setPositiveButton("OK") { dialog, which ->
+        builder.setTitle("更新登录信息")
+        builder.setPositiveButton("确定") { _, _ ->
             val username = usernameEditText.text.toString()
             val password = passwordEditText.text.toString()
             SharedPreferenceHelper.saveString(this, "username", username)
@@ -236,7 +236,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("tag", "login")
             startActivity(intent)
         }
-        builder.setNegativeButton("Cancel") { dialog, which ->
+        builder.setNegativeButton("取消") { dialog, which ->
             dialog.dismiss()
         }
         builder.show()

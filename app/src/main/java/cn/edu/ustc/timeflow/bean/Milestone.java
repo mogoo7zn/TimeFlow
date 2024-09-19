@@ -34,7 +34,7 @@ public class Milestone {
     LocalDateTime time;
 
     @ColumnInfo(name = "milestone_finished")
-    boolean finished;
+    public boolean finished;
 
     public String getGoalName() {
         return goalName;

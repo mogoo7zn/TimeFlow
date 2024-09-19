@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/milestone_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/milestone_name" />
+
+    <CheckBox
+        android:id="@+id/milestone_time_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/milestone_time"
+        android:textColor="@color/blue_500"
+        style="@style/TabButton"/>
+
+    <com.loper7.date_time_picker.DateTimePicker
+        android:id="@+id/milestone_time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/action_start_time"
+        android:foregroundGravity="center"
+        android:visibility="gone"/>
+
+
+</LinearLayout>

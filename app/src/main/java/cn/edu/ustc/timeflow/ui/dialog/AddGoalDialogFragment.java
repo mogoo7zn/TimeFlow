@@ -74,6 +74,9 @@ public class AddGoalDialogFragment extends DialogFragment {
         return view;
     }
 
+    /**
+     * Save the goal to the database
+     */
     private void saveGoal() {
 
         String name = goalName.getText().toString().trim();

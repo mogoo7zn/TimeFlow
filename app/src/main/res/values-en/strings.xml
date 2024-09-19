@@ -191,6 +191,11 @@
     <string name="yes">Confirm</string>
     <string name="cont">Continue</string>
 
+    <string name="milestone_name">milestone name</string>
+    <string name="milestone_time">milestone limit time</string>
+    <string name="milestone_finished">Is milestone finished?</string>
+    <string name="add_milestone">Add milestone</string>
+
     <string-array name="task_type_array_name">
         <item>Homework</item>
         <item>Reading</item>
