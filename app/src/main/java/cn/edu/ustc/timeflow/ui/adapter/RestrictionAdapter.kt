@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.NumberPicker
 import android.widget.TextView
 import cn.edu.ustc.timeflow.bean.Action
 import cn.edu.ustc.timeflow.restriction.AmountRestriction
@@ -62,42 +64,35 @@ class RestrictionAdapter(context: Context,val action: Action) :
 
             }
             is AmountRestriction -> {
-                viewHolder.total?.text = Editable.Factory.getInstance().newEditable(restriction.total.toString())
-                viewHolder.total?.setOnFocusChangeListener(View.OnFocusChangeListener { v, hasFocus ->
-                    if (!hasFocus) {
-                        try {
-                            restriction.total = viewHolder.total.text.toString().toInt()
-                        } catch (e: NumberFormatException) {
-                            viewHolder.total.error = "Invalid input. Please enter a valid integer."
-                        }
-                    }
-                })
+
+                viewHolder.total?.minValue = 1
+                viewHolder.total?.maxValue = 20
+                viewHolder.total?.value = restriction.total
+                viewHolder.total?.setOnValueChangedListener { picker, oldVal, newVal ->
+                    restriction.total = newVal
+                    restriction.todo =  restriction.total - restriction.finished
+                    viewHolder.todoLabel?.text = context.getString(R.string.todo)+ " "+restriction.todo.toString()
+                }
 
                 viewHolder.todoLabel?.text = context.getString(R.string.todo)+ " "+restriction.todo.toString()
                 viewHolder.doneLabel?.text = context.getString(R.string.finished)+ " "+restriction.finished.toString()
             }
             is IntervalRestriction -> {
-                viewHolder.intervalValue?.text = Editable.Factory.getInstance().newEditable(restriction.interval.toString())
-                viewHolder.intervalValue?.setOnFocusChangeListener(View.OnFocusChangeListener { v, hasFocus ->
-                    if (!hasFocus) {
-                        try {
-                            restriction.interval = viewHolder.intervalValue.text.toString().toInt()
-                        } catch (e: NumberFormatException) {
-                            viewHolder.intervalValue.error = "Invalid input. Please enter a valid integer."
-                        }
-                    }
-                })
+                viewHolder.intervalValue?.minValue = 1
+                viewHolder.intervalValue?.maxValue = 10
+                viewHolder.intervalValue?.value = restriction.interval
+                viewHolder.intervalValue?.setOnValueChangedListener { picker, oldVal, newVal ->
+                    restriction.interval = newVal
+                }
 
-                viewHolder.repeatValue?.text = Editable.Factory.getInstance().newEditable(restriction.repeat_times.toString())
-                viewHolder.repeatValue?.setOnFocusChangeListener(View.OnFocusChangeListener { v, hasFocus ->
-                    if (!hasFocus) {
-                        try {
-                            restriction.repeat_times = viewHolder.repeatValue.text.toString().toInt()
-                        } catch (e: NumberFormatException) {
-                            viewHolder.repeatValue.error = "Invalid input. Please enter a valid integer."
-                        }
-                    }
-                })
+                viewHolder.repeatValue?.minValue = 1
+                viewHolder.repeatValue?.maxValue = 10
+                viewHolder.repeatValue?.value = restriction.repeat_times
+                viewHolder.repeatValue?.setOnValueChangedListener { picker, oldVal, newVal ->
+                    restriction.repeat_times = newVal
+                }
+
+
             }
         }
 
@@ -116,12 +111,12 @@ class RestrictionAdapter(context: Context,val action: Action) :
         val startTime: TextView? = if (restriction is TimeRestriction) view.findViewById(R.id.start_time) else null
         val endTime: TextView? = if (restriction is TimeRestriction) view.findViewById(R.id.end_time) else null
         //AmountRestriction
-        val total: EditText? = if (restriction is AmountRestriction) view.findViewById(R.id.total) else null
+        val total: NumberPicker? = if (restriction is AmountRestriction) view.findViewById(R.id.total) else null
         val todoLabel: TextView? = if (restriction is AmountRestriction) view.findViewById(R.id.todo_label) else null
         val doneLabel: TextView? = if (restriction is AmountRestriction) view.findViewById(R.id.finished_label) else null
         //IntervalRestriction
-        val intervalValue: EditText? = if (restriction is IntervalRestriction) view.findViewById(R.id.interval_value) else null
-        val repeatValue: EditText? = if (restriction is IntervalRestriction) view.findViewById(R.id.repeat_times_value) else null
+        val intervalValue: NumberPicker? = if (restriction is IntervalRestriction) view.findViewById(R.id.interval_value) else null
+        val repeatValue: NumberPicker? = if (restriction is IntervalRestriction) view.findViewById(R.id.repeat_times_value) else null
     }
 
     private fun showDateTimePicker(context: Context ,textView: TextView,onChozen: (LocalDateTime) -> Unit) {
@@ -137,4 +132,5 @@ class RestrictionAdapter(context: Context,val action: Action) :
             }.build().show()
 
     }
+
 }

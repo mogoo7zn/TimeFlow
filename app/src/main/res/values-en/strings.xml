@@ -256,10 +256,13 @@
     <string name="restriction">Restriction</string>
     <string name="finished">"Finished: "</string>
     <string name="todo">"TODO: "</string>
-    <string name="interval">Interval：</string>
+    <string name="interval">Interval/days ：</string>
     <string name="repeat_times">"Repeat Times: "</string>
     <string name="total">Total：</string>
     <string name="add_goal">Add Goal</string>
     <string name="set_time">Set Time</string>
     <string name="tomato">Tomato Clock</string>
+    <string name="time_restriction">Time Restriction</string>
+    <string name="amount_restriction">Amount Restriction</string>
+    <string name="interval_restriction">Interval Restriction</string>
 </resources>

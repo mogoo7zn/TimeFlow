@@ -30,22 +30,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="12dp"
                 android:text="@string/total"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
 
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
+            <NumberPicker
                 android:id="@+id/total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="10"
-                android:textSize="14sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
@@ -57,12 +54,12 @@
                 android:id="@+id/todo_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="12dp"
+
                 android:text="@string/todo"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/total"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,7 +70,7 @@
                 android:layout_marginStart="30dp"
                 android:text="@string/finished"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/todo_label"
                 app:layout_constraintTop_toTopOf="@+id/todo_label" />

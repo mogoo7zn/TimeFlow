@@ -255,13 +255,16 @@
     <string name="Autoscheduling">自动安排中</string>
     <string name="AutoScheduled">自动安排完成</string>
     <string name="action_type">固定时间</string>
-    <string name="restriction">条件</string>
+    <string name="restriction">约束</string>
     <string name="todo">"待完成: "</string>
     <string name="finished">"已完成: "</string>
-    <string name="interval">周期：</string>
+    <string name="interval">周期/天：</string>
     <string name="repeat_times">重复次数：</string>
     <string name="total">总量：</string>
     <string name="add_goal">添加目标</string>
     <string name="set_time">设置时间</string>
     <string name="tomato">番茄钟</string>
+    <string name="time_restriction">时间约束</string>
+    <string name="amount_restriction">数量约束</string>
+    <string name="interval_restriction">时间间隔约束</string>
 </resources>
