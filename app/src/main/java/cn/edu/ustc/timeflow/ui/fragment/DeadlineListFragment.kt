@@ -1,8 +1,6 @@
 package cn.edu.ustc.timeflow.ui.fragment
 
 import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +9,8 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.PopupWindow
+import android.widget.TextView
 import android.widget.Toast
-import java.time.format.DateTimeFormatter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.edu.ustc.timeflow.ui.adapter.MilestoneAdapter
@@ -20,8 +18,9 @@ import com.example.timeflow.R
 import com.example.timeflow.databinding.FragmentDeadlineListBinding
 import cn.edu.ustc.timeflow.bean.Milestone
 import cn.edu.ustc.timeflow.util.DBHelper
+import com.loper7.date_time_picker.DateTimePicker
 import java.time.LocalDateTime
-import java.util.Calendar
+import java.time.ZoneOffset
 
 class DeadlineListFragment : Fragment() {
 
@@ -31,7 +30,7 @@ class DeadlineListFragment : Fragment() {
     private lateinit var milestoneList: List<Milestone>
     private var allMilestonesInRange = mutableListOf<Milestone>()
     private lateinit var adapter: MilestoneAdapter
-    private var selectedDateTime: LocalDateTime? = null
+    private lateinit var milestoneTimePicker: DateTimePicker
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -110,23 +109,40 @@ class DeadlineListFragment : Fragment() {
      * Show a dialog to add a new milestone.
      */
     private fun showAddMilestoneDialog() {
+        var localDateTime : LocalDateTime = LocalDateTime.now()
         val builder = AlertDialog.Builder(requireContext())
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.dialog_add_milestone, null)
         val milestoneName = dialogLayout.findViewById<EditText>(R.id.milestone_name)
-        val milestoneTimeButton = dialogLayout.findViewById<Button>(R.id.milestone_time_checkbox)
+        val milestoneTimeCheckbox = dialogLayout.findViewById<CheckBox>(R.id.milestone_time_checkbox)
+        milestoneTimePicker = dialogLayout.findViewById<DateTimePicker>(R.id.milestone_time_picker)
 
-        milestoneTimeButton.setOnClickListener {
-            showDateTimePicker()
+        milestoneTimeCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            milestoneTimePicker.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
+
+        milestoneTimePicker.setOnDateTimeChangedListener{
+                millisecond ->
+            run {
+                localDateTime =
+                    LocalDateTime.ofEpochSecond(millisecond / 1000, 0, ZoneOffset.of("+8"))
+                milestoneTimeCheckbox.text = localDateTime.toString()
+            }
+        }
+
+        milestoneTimePicker.setThemeColor(resources.getColor(R.color.blue_500))
+        milestoneTimePicker.setMinMillisecond(System.currentTimeMillis())
+        milestoneTimePicker.setMaxMillisecond(LocalDateTime.now().
+        plusYears(10).
+        toEpochSecond(ZoneOffset.of("+8")) * 1000)
+
 
         builder.setView(dialogLayout)
             .setTitle(R.string.add_milestone)
             .setPositiveButton(R.string.save) { dialog, _ ->
                 val name = milestoneName.text.toString().trim()
-                val time = selectedDateTime
 
-                if (name.isEmpty() || time == null) {
+                if (name.isEmpty() || localDateTime == null) {
                     //TODO:string fault!
                     Toast.makeText(requireContext(), R.string.add_milestone, Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
@@ -134,7 +150,7 @@ class DeadlineListFragment : Fragment() {
 
                 val milestone = Milestone().apply {
                     content = name
-                    this.time = time
+                    time = localDateTime
                 }
 
                 dbHelper.getMilestoneDao().insert(milestone)
@@ -147,16 +163,6 @@ class DeadlineListFragment : Fragment() {
             .show()
     }
 
-    private fun showDateTimePicker() {
-        val calendar = Calendar.getInstance()
-        val datePickerDialog = DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
-            val timePickerDialog = TimePickerDialog(requireContext(), { _, hourOfDay, minute ->
-                selectedDateTime = LocalDateTime.of(year, month + 1, dayOfMonth, hourOfDay, minute)
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true)
-            timePickerDialog.show()
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-        datePickerDialog.show()
-    }
 
     /**
      * Fetch milestones from the database based on the specified time range.

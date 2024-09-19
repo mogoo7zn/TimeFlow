@@ -9,7 +9,7 @@
     <string name="email_address">Email Address</string>
     <string name="profile_photo">Profile Photo</string>
 
-    <string name="update">Cloud Update</string>
+    <string name="update">Cloud Service</string>
     <string name="home">Home Page</string>
     <string name="overview">Goals Overview</string>
     <string name="clock">Deadline List</string>
@@ -22,18 +22,18 @@
     <string name="action_description">Action Description</string>
     <string name="action_start_time">2024.09.01 09:00</string>
     <string name="action_end_time">2024.09.01 10:00</string>
-    <string name="action_place">Location</string>
+    <string name="action_place">Place</string>
     <string name="goal_picker_menu_title">Select Goal</string>
-    <string name="all_actions">All Actions</string>
+    <string name="all_actions">All Milestones</string>
 
-    <string name="deadline_picker_title">Select Range</string>
+    <string name="deadline_picker_title">Set Range</string>
     <string name="deadline_intro">This</string>
     <string name="deadline_unit">Week</string>
     <string name="deadline_connecting_string">Remaining</string>
 
     <string name="action_name">What to do?</string>
     <string name="action_duration">Duration (minutes)</string>
-    <string name="action_location">Location</string>
+    <string name="action_location">Place</string>
     <string name="action_note">Add Description</string>
     <string name="action_remind">Reminder</string>
     <string name="deadline_ending">Actions</string>
@@ -47,7 +47,7 @@
     <string name="menu_setting">Settings</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="all">All Actions</string>
+    <string name="all">All Milestones</string>
     <string name="year">Year</string>
     <string name="month">Month</string>
     <string name="_month">This Month</string>
@@ -122,19 +122,19 @@
     <string name="time_start">Start Time</string>
     <string name="time_end">End Time</string>
     <string name="importance">Importance</string>
-    <string name="is_repeat">Repeat</string>
+    <string name="is_repeat">Repeat Mode</string>
     <string name="period">Period</string>
     <string name="place">Location</string>
-    <string name="place_hint">Location (no more than 10 characters)</string>
+    <string name="place_hint">Location (no more than 10 words)</string>
     <string name="position">Classroom</string>
-    <string name="position_hint">Classroom (no more than 10 characters)</string>
+    <string name="position_hint">Classroom (no more than 10 words)</string>
     <string name="description">Description</string>
-    <string name="description_hint">Description (no more than 100 characters)</string>
+    <string name="description_hint">Description (no more than 50 words)</string>
     <string name="repetitive">Repeat</string>
     <string name="cycle">Repeat Cycle</string>
     <string name="save">Save</string>
     <string name="teacher">Teacher</string>
-    <string name="teacher_hint">Teacher (no more than 100 characters)</string>
+    <string name="teacher_hint">Teacher (no more than 50 words)</string>
     <string name="workload">Estimated Workload (hours)</string>
     <string name="workload_hint">Estimated Workload (less than 1000 hours)</string>
     <string name="add_course">Add Course</string>
@@ -166,20 +166,20 @@
     <string name="reminder_manager">Notification Management</string>
     <string name="personalization">Personalization</string>
     <string name="focus">Zen</string>
-    <string name="profile_check_summary">Enable to automatically import schedule</string>
+    <string name="profile_check_summary">Enable course table import</string>
 
     <string name="least_important">Important</string>
-    <string name="important">More Important</string>
-    <string name="most_important">Very Important</string>
+    <string name="important">Quite Important</string>
+    <string name="most_important">Incredibly Important</string>
 
     <string name="name">Name</string>
-    <string name="ID">Student ID</string>
+    <string name="ID">Student ID/Staff ID</string>
     <string name="current_version">Current Version</string>
 
     <string name="version">Latest Version</string>
 
-    <string name="delete_title">Confirm Deletion?</string>
-    <string name="delete_text">This action cannot be undone, please be cautious.</string>
+    <string name="delete_title">Confirm Deletion</string>
+    <string name="delete_text">Irriversible choice! Please be prudent.</string>
     <string name="delete">Delete</string>
 
     <string name="password">Password</string>
@@ -187,7 +187,7 @@
     <string name="start">Start</string>
     <string name="exit">Exit</string>
     <string name="stop">Pause</string>
-    <string name="resume">Resume</string>
+    <string name="resume">Back</string>
     <string name="yes">Confirm</string>
     <string name="cont">Continue</string>
 
@@ -240,17 +240,17 @@
         <item>Task</item>
     </string-array>
     <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <string name="add_widget">Add widget on table</string>
     <string name="app_widget_description">This is an app widget description</string>
-    <string name="auto_schedule">Auto Schedule</string>
+    <string name="auto_schedule">Auto Scheduling</string>
     <string name="user_info_setting">User Info</string>
     <string name="shift_language">Switch Language</string>
     <string name="setting_start_week">Set Start Week</string>
     <string name="alarm_premission_not_granted">Alarm permission not granted, please grant permission</string>
     <string name="developer">Developers: Luo Haomin, Wang Zining</string>
-    <string name="contact">Contact: luohaomin@mail.ustc.edu.cn</string>
-    <string name="Autoscheduling">Scheduling automatically</string>
-    <string name="AutoScheduled">Automatic scheduling completed</string>
+    <string name="contact">"  Contact us: uohaomin@mail.ustc.edu.cn   \t \t \t \t \t \t \t \t \t \t znwang@mail.ustc.edu.cn"</string>
+    <string name="Autoscheduling">Scheduling</string>
+    <string name="AutoScheduled">Auto scheduling done</string>
     <string name="action_count">Actions</string>
     <string name="action_type">Fixed Time</string>
     <string name="restriction">Restriction</string>
@@ -259,4 +259,6 @@
     <string name="interval">Interval：</string>
     <string name="repeat_times">"Repeat Times: "</string>
     <string name="total">Total：</string>
+    <string name="add_goal">Add Goal</string>
+    <string name="set_time">Set Time</string>
 </resources>

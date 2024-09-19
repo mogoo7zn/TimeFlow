@@ -28,7 +28,7 @@ class RestrictionAdapter(context: Context,val action: Action) :
         val viewHolder: ViewHolder
 
 
-            view = when (restriction) {
+        view = when (restriction) {
                 is TimeRestriction -> {
                     LayoutInflater.from(context).inflate(R.layout.time_restriction_item, parent, false)
                 }
@@ -42,7 +42,7 @@ class RestrictionAdapter(context: Context,val action: Action) :
                     throw IllegalArgumentException("Unknown restriction type")
                 }
             }
-            viewHolder = ViewHolder(view, restriction)
+        viewHolder = ViewHolder(view, restriction)
 
 
         when (restriction) {
@@ -126,7 +126,7 @@ class RestrictionAdapter(context: Context,val action: Action) :
 
     private fun showDateTimePicker(context: Context ,textView: TextView,onChozen: (LocalDateTime) -> Unit) {
         CardDatePickerDialog.builder(context)
-            .setTitle("SET MAX DATE")
+            .setTitle(context.getString(R.string.set_time))
             .setOnChoose {millisecond->
                 run {
                     val date =

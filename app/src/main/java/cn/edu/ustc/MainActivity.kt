@@ -214,6 +214,9 @@ class MainActivity : AppCompatActivity() {
         notificationSystem.updateNotification()
     }
 
+    /**
+     * 展示更新登录信息弹窗
+     */
     private fun showUpdateCredentialsDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
@@ -242,6 +245,9 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
+    /**
+     * 展示修改起始周弹窗
+     */
     private fun showChangeStartWeekDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
@@ -268,6 +274,9 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
+    /**
+     * 展示关于信息弹窗
+     */
     private fun showAboutDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater

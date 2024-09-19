@@ -176,13 +176,13 @@
     <string name="most_important">很重要</string>
 
     <string name="name">姓名</string>
-    <string name="ID">学号</string>
+    <string name="ID">学号/工号</string>
     <string name="current_version">当前版本</string>
 
     <string name="version">最新版本</string>
 
     <string name="delete_title">确认删除？</string>
-    <string name="delete_text">选择无法撤销,请慎重。</string>
+    <string name="delete_text">选择无法撤销,请慎重</string>
     <string name="delete">删除</string>
 
     <string name="password">密码</string>
@@ -251,7 +251,7 @@
     <string name="setting_start_week">设置开学周</string>
     <string name="alarm_premission_not_granted">闹钟权限未开启, 请授予权限</string>
     <string name="developer">开发者: 罗浩民 王子宁</string>
-    <string name="contact">联系我们: luohaomin@mail.ustc.edu.cn \n \t \t \t \t \t \t \t \t \t \t znwang@mail.ustc.edu.cn</string>
+    <string name="contact">联系我们: luohaomin@mail.ustc.edu.cn   \t \t \t \t \t \t \t \t \t \t znwang@mail.ustc.edu.cn</string>
     <string name="Autoscheduling">自动安排中</string>
     <string name="AutoScheduled">自动安排完成</string>
     <string name="action_type">固定时间</string>
@@ -261,4 +261,6 @@
     <string name="interval">周期：</string>
     <string name="repeat_times">重复次数：</string>
     <string name="total">总量：</string>
+    <string name="add_goal">添加目标</string>
+    <string name="set_time">设置时间</string>
 </resources>
