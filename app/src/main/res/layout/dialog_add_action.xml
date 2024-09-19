@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/action_duration"
         android:textSize="12sp"
+        android:inputType="number"
         app:layout_constraintTop_toBottomOf="@id/action_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +85,7 @@
         android:id="@+id/action_FixedTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="230dp"
+        android:maxHeight="150dp"
         app:layout_constraintTop_toBottomOf="@id/action_type_switch"
         app:layout_constraintBottom_toTopOf="@id/action_RepeatingTime"
         android:visibility="visible"
@@ -121,10 +122,8 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxHeight="200dp"
+            android:layout_height="120dp"
             app:layout_constraintTop_toBottomOf="@id/action_add_time"
-
             android:id="@+id/action_time_list"
             tools:listitem="@layout/action_time_item"
             app:layout_constraintVertical_bias="0.0"
@@ -136,10 +135,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="230dp"
+        android:maxHeight="150dp"
         app:layout_constraintTop_toBottomOf="@id/action_FixedTime"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintBottom_toBottomOf="@id/save_action_button"
+        app:layout_constraintBottom_toTopOf="@id/save_action_button"
         android:visibility="visible"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
@@ -169,12 +168,11 @@
         />
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxHeight="200dp"
+            android:layout_height="120dp"
+
             app:layout_constraintTop_toBottomOf="@id/action_add_restriction"
             android:id="@+id/action_restriction_list"
             tools:listitem="@layout/fragment_deadline_list_item"
-
             app:layout_constraintVertical_bias="0.0"
             >
         </ListView>

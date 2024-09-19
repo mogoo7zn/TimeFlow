@@ -18,7 +18,7 @@ import com.loper7.date_time_picker.dialog.CardDatePickerDialog
 import java.time.LocalDateTime
 
 
-class RestrictionAdapter(context: Context, action: Action) :
+class RestrictionAdapter(context: Context,val action: Action) :
     ArrayAdapter<Restriction>(context, 0, action.getRestrictionsWithout("FixedTimeRestriction") as List<Restriction>) {
 
 
@@ -65,7 +65,11 @@ class RestrictionAdapter(context: Context, action: Action) :
                 viewHolder.total?.text = Editable.Factory.getInstance().newEditable(restriction.total.toString())
                 viewHolder.total?.setOnFocusChangeListener(View.OnFocusChangeListener { v, hasFocus ->
                     if (!hasFocus) {
-                        restriction.total = viewHolder.total.text.toString().toInt()
+                        try {
+                            restriction.total = viewHolder.total.text.toString().toInt()
+                        } catch (e: NumberFormatException) {
+                            viewHolder.total.error = "Invalid input. Please enter a valid integer."
+                        }
                     }
                 })
 
@@ -76,16 +80,32 @@ class RestrictionAdapter(context: Context, action: Action) :
                 viewHolder.intervalValue?.text = Editable.Factory.getInstance().newEditable(restriction.interval.toString())
                 viewHolder.intervalValue?.setOnFocusChangeListener(View.OnFocusChangeListener { v, hasFocus ->
                     if (!hasFocus) {
-                        restriction.interval = viewHolder.intervalValue.text.toString().toInt()
+                        try {
+                            restriction.interval = viewHolder.intervalValue.text.toString().toInt()
+                        } catch (e: NumberFormatException) {
+                            viewHolder.intervalValue.error = "Invalid input. Please enter a valid integer."
+                        }
                     }
                 })
+
                 viewHolder.repeatValue?.text = Editable.Factory.getInstance().newEditable(restriction.repeat_times.toString())
                 viewHolder.repeatValue?.setOnFocusChangeListener(View.OnFocusChangeListener { v, hasFocus ->
                     if (!hasFocus) {
-                        restriction.repeat_times = viewHolder.repeatValue.text.toString().toInt()
+                        try {
+                            restriction.repeat_times = viewHolder.repeatValue.text.toString().toInt()
+                        } catch (e: NumberFormatException) {
+                            viewHolder.repeatValue.error = "Invalid input. Please enter a valid integer."
+                        }
                     }
                 })
             }
+        }
+
+        view.setOnLongClickListener {
+            action.removeRestriction(restriction)
+            remove(restriction)
+            notifyDataSetChanged()
+            true
         }
 
         return view

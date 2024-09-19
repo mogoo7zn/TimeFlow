@@ -86,6 +86,7 @@ class GoalOverviewFragment : Fragment() {
 
     private fun showEditActionDialog(action: Action) {
         val dialog = context?.let { AddActionDialogFragment(action, it) }
+        dialog?.setOnDismissListener { refreshData() }
         if (dialog != null) {
             dialog.show(parentFragmentManager, "AddActionDialogFragment")
         }
@@ -109,8 +110,13 @@ class GoalOverviewFragment : Fragment() {
     }
 
     private fun showAddActionDialog() {
-        currentGoal?.let { context?.let { it1 -> AddActionDialogFragment(it.id, it1) } }
-            ?.show(parentFragmentManager, "AddActionDialogFragment")
+        currentGoal?.let { context?.let { it1 ->
+            AddActionDialogFragment(it.id, it1).apply {
+                setOnDismissListener { refreshData() }
+            }.show(parentFragmentManager, "AddActionDialogFragment")
+        }
+        }
+
     }
 
 
@@ -119,7 +125,7 @@ class GoalOverviewFragment : Fragment() {
      */
     private fun refreshData() {
         val dbHelper = DBHelper(requireContext())
-        actionList = dbHelper.getActionDao().getAll()
+        actionList = dbHelper.getActionDao().getActionsForGoal(currentGoal!!.id)
         adapter.actionList = actionList
         adapter.notifyDataSetChanged()
     }

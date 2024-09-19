@@ -17,9 +17,10 @@ import com.example.timeflow.R
 import java.time.LocalTime
 import java.util.*
 
-class ActionTimeAdapter(context: Context, action: Action) :
-    ArrayAdapter<FixedTimeRestriction>(context, 0, action.getRestrictions("FixedTimeRestriction") as List<FixedTimeRestriction>) {
-
+class ActionTimeAdapter(context: Context,val action: Action) :
+    ArrayAdapter<FixedTimeRestriction>(context, 0, action.getRestrictions("FixedTimeRestriction") as List<FixedTimeRestriction>)
+{
+           
     private class ViewHolder(view: View) {
         val startTime: TextView = view.findViewById(R.id.start_time)
         val endTime: TextView = view.findViewById(R.id.end_time)
@@ -85,10 +86,17 @@ class ActionTimeAdapter(context: Context, action: Action) :
                     currentItem.days = days
                 } else {
                     // Handle invalid input, e.g., show an error message
-            viewHolder.repeatParams.error = "Invalid input. Please enter comma-separated integers."
+                    viewHolder.repeatParams.error = "Invalid input. Please enter comma-separated integers."
+                }
+
+            }
         }
-    }
-}
+        view.setOnLongClickListener {
+            action.removeRestriction(currentItem)
+            remove(currentItem)
+            notifyDataSetChanged()
+            true
+        }
         return view
     }
 

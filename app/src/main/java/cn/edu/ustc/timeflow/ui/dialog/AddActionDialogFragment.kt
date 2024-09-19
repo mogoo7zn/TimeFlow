@@ -46,6 +46,7 @@ class AddActionDialogFragment : BottomSheetDialogFragment {
 
     constructor(action: Action?, context: Context) {
         this.action = action
+        goalId = action!!.goal_id
         dbHelper = DBHelper(context)
         this.context = context
     }
@@ -73,7 +74,6 @@ class AddActionDialogFragment : BottomSheetDialogFragment {
         val actionTypeSwitch = view.findViewById<SwitchMaterial>(R.id.action_type_switch)
         val saveActionButton = view.findViewById<Button>(R.id.save_action_button)
 
-        // TODO: Implement the following features
         val actionAddTimeButton = view.findViewById<ImageButton>(R.id.action_add_time)
         val actionTimeList = view.findViewById<ListView>(R.id.action_time_list)
         val actionAddRestrictionButton = view.findViewById<ImageButton>(R.id.action_add_restriction)
@@ -88,7 +88,7 @@ class AddActionDialogFragment : BottomSheetDialogFragment {
             actionLocation.setText(action!!.location)
             actionNote.setText(action!!.note)
             actionRemindSwitch.isChecked = action!!.isRemind
-            actionDuration.setText(action!!.duration.toString())
+            actionDuration.setText(action!!.duration.toMinutes().toString())
         }
 
         actionAddTimeButton.setOnClickListener { v: View? ->
@@ -124,7 +124,7 @@ class AddActionDialogFragment : BottomSheetDialogFragment {
             val location = actionLocation.text.toString().trim { it <= ' ' }
             val note = actionNote.text.toString().trim { it <= ' ' }
             val remind = actionRemindSwitch.isChecked
-            val duration = Duration.parse(actionDuration.text.toString().trim { it <= ' ' })
+            val duration = Duration.ofMinutes(actionDuration.text.toString().toLong())
 
             if (name.isEmpty() || location.isEmpty() || note.isEmpty()) {
                 Toast.makeText(requireContext(), "填完再存呦~", Toast.LENGTH_SHORT).show()
@@ -132,7 +132,7 @@ class AddActionDialogFragment : BottomSheetDialogFragment {
             }
 
             if (actionType.isEmpty()) {
-                Toast.makeText(requireContext(), "请选择频率", Toast.LENGTH_SHORT).show()
+
                 return@setOnClickListener
             }
             action!!.goal_id = goalId
@@ -198,5 +198,11 @@ class AddActionDialogFragment : BottomSheetDialogFragment {
         } else {
             dao.update(action)
         }
+
+    }
+
+    fun setOnDismissListener(function: () -> Unit) {
+
+        dialog?.setOnDismissListener { function() }
     }
 }

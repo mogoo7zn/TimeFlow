@@ -6,10 +6,13 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.List;
 
+import cn.edu.ustc.timeflow.restriction.FixedTimeRestriction;
 import cn.edu.ustc.timeflow.restriction.Restriction;
 import cn.edu.ustc.timeflow.converter.DurationConverter;
 import cn.edu.ustc.timeflow.converter.RestrictionConverter;
@@ -157,4 +160,7 @@ public class Action implements Serializable {
         return res;
     }
 
+    public void removeRestriction(@NotNull Restriction currentItem) {
+        restrictions.remove(currentItem);
+    }
 }
