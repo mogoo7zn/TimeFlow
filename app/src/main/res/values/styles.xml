@@ -46,6 +46,9 @@
 
     <style name="Widget.TimeFlow.AppWidget.Container" parent="android:Widget">
         <item name="android:id">@android:id/background</item>
+<!--        <item name="cornerRadius">-->
+<!--            -->
+<!--        </item>-->
         <item name="android:background">?android:attr/colorBackground</item>
     </style>
 

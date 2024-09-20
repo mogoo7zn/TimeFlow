@@ -28,7 +28,7 @@ public class HelloActivity extends AppCompatActivity {
             "惊风飘白日\n光景西驰流",
             "志士惜日短\n愁人知夜长",
             "人寿几何？逝如朝霜\n时无重至，华不再阳",
-            "盛年不重来，一日难再晨\n及时当勉励，岁月不待人",
+            "盛年不重来\n一日难再晨\n及时当勉励\n岁月不待人",
             "一年之计在于春\n一日之计在于晨",
             "冬者岁之余\n夜者日之余\n阴雨者时之余",
             "失之东隅，收之桑榆",
@@ -38,9 +38,9 @@ public class HelloActivity extends AppCompatActivity {
             "岁去弦吐箭\n忧来蚕抽纶",
             "光阴似箭，日月如梭",
             "年难留，时易损",
-            "天可补，海可填，南山可移\n日月既往，不可复追",
+            "天可补\n海可填\n南山可移\n日月既往，不可复追",
             "勿谓寸阴短，既过难再获\n勿谓一丝微，既绍难再白",
-            "志士惜年，贤人惜日，圣人惜时"
+            "志士惜年\n贤人惜日\n圣人惜时"
 //            "Lost time is never found again.",
 //            "Time flies over us, but leaves its shadow behind.",
 //            "Time is what we want most, but what we use worst.",
