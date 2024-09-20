@@ -265,4 +265,9 @@
     <string name="time_restriction">Time Restriction</string>
     <string name="amount_restriction">Amount Restriction</string>
     <string name="interval_restriction">Interval Restriction</string>
+    <string name="tomato_clock_title">"Tomato Clocks Today: "</string>
+    <string name="tomato_clock_start">Starting Focusing</string>
+    <string name="tomato_statistic">Tomato Statistics</string>
+    <string name="tomato_clock_resume">Take a Gap</string>
+    <string name="tomato_clock_stop">Terminate</string>
 </resources>
