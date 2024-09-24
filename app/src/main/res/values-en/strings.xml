@@ -248,7 +248,7 @@
     <string name="setting_start_week">Set Start Week</string>
     <string name="alarm_premission_not_granted">Alarm permission not granted, please grant permission</string>
     <string name="developer">Developers: Luo Haomin, Wang Zining</string>
-    <string name="contact">"  Contact us: uohaomin@mail.ustc.edu.cn   \t \t \t \t \t \t \t \t \t \t znwang@mail.ustc.edu.cn"</string>
+    <string name="contact">"  Contact us: uohaomin@mail.ustc.edu.cn   \n \t\t\t znwang@mail.ustc.edu.cn"</string>
     <string name="Autoscheduling">Scheduling</string>
     <string name="AutoScheduled">Auto scheduling done</string>
     <string name="action_count">Actions</string>

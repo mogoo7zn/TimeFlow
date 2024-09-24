@@ -20,7 +20,7 @@ public class HelloActivity extends AppCompatActivity {
 
     private static final String[] SLOGANS = {
             "人生天地之间\n若白驹过隙\n忽然而已",
-            "逝者如斯夫，不舍昼夜",
+            "逝者如斯夫\n不舍昼夜",
             "早安，卷王",
             "科·里·科·气",
             "既入我科，勿负韶华",
@@ -40,7 +40,10 @@ public class HelloActivity extends AppCompatActivity {
             "年难留，时易损",
             "天可补，海可填，南山可移\n日月既往，不可复追",
             "勿谓寸阴短，既过难再获\n勿谓一丝微，既绍难再白",
-            "志士惜年，贤人惜日，圣人惜时"
+            "志士惜年，贤人惜日\n圣人惜时",
+            "机会无限\n但时间不是"
+ 
+
 //            "Lost time is never found again.",
 //            "Time flies over us, but leaves its shadow behind.",
 //            "Time is what we want most, but what we use worst.",
