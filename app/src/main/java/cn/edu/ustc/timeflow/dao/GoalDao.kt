@@ -1,5 +1,6 @@
 package cn.edu.ustc.timeflow.dao
 
+import android.content.Context
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,6 +10,7 @@ import androidx.room.TypeConverters
 import androidx.room.Update
 import cn.edu.ustc.timeflow.bean.Goal
 import cn.edu.ustc.timeflow.converter.DateTimeConverter
+import cn.edu.ustc.timeflow.util.DBHelper
 import java.time.LocalDateTime
 
 @Dao
@@ -55,4 +57,10 @@ interface GoalDao {
 
     @Query("DELETE FROM goal")
     fun deleteAll()
+
+    fun deleteWithRelatedAction(context: Context,goal: Goal) {
+        val actionDao = DBHelper(context).getActionDao()
+        actionDao.deleteByGoalId(goal.id)
+        delete(goal)
+    }
 }

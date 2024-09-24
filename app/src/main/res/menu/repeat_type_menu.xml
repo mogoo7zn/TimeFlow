@@ -4,4 +4,5 @@
     <item android:id="@+id/weekly" android:title="每周"/>
     <item android:id="@+id/monthly" android:title="每月"/>
     <item android:id="@+id/yearly" android:title="每年"/>
+    <item android:id="@+id/none" android:title="不重复"/>
 </menu>

@@ -17,7 +17,7 @@ public class FixedTimeRestriction extends Restriction{
     LocalTime start;
     LocalTime end;
     /**
-     * 0:daily,1:weekly,2:monthly,3:yearly
+     * 0:daily,1:weekly,2:monthly,3:yearly,-1:once
      */
     int type;
     /**

@@ -43,6 +43,7 @@ public class StandardScheduler extends Scheduler{
     }
 
     private void RemoveUnfinishedFutureTask(TimeTable timeTable, LocalDate date) {
+        // 删除未完成的未来任务
         timeTable.getTasks().removeIf(task -> task.getStart().isAfter(LocalDateTime.of(date, LocalTime.MIN)) && !task.getFinished());
         timeTable.sync();
     }

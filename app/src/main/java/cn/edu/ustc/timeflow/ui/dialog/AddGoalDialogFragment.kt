@@ -74,7 +74,7 @@ class AddGoalDialogFragment : DialogFragment {
             cancelGoalButton.setOnClickListener { v: View? ->
                 val db = DBHelper(requireContext())
                 val goalDao = db.getGoalDao()
-                goalDao.delete(goal)
+                goalDao.deleteWithRelatedAction(requireContext(),goal)
                 Toast.makeText(requireContext(), "已删除", Toast.LENGTH_SHORT).show()
                 function()
                 dismiss()

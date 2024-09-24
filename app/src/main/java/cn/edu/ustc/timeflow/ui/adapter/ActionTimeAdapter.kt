@@ -71,6 +71,7 @@ class ActionTimeAdapter(context: Context,val action: Action) :
                     1 -> "每周"
                     2 -> "每月"
                     3 -> "每年"
+                    -1 -> "不重复"
                     else -> "未知"
                 }
             }
@@ -123,7 +124,8 @@ class ActionTimeAdapter(context: Context,val action: Action) :
                 R.id.weekly -> 1
                 R.id.monthly -> 2
                 R.id.yearly -> 3
-                else -> -1
+                R.id.none -> -1
+                else -> 408
             }
             onOptionSelected(selectedType)
             true

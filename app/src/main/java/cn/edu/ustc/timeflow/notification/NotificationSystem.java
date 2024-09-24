@@ -40,18 +40,4 @@ public class NotificationSystem {
             }
         }
     }
-    public void sendTestNotification(){
-
-        TaskDao taskDao = new DBHelper(context).getTaskDao();
-        List<Task> tasks = taskDao.getByStartDate(LocalDateTime.now());
-        for(Task task:tasks) {
-            if (task.getRemind()) {
-//                AlarmHelper.setAlarm(context, CalendarLocalDateTimeConverter.INSTANCE.toCalendar(LocalDateTime.now(ZoneId.of("+8")).plusSeconds(10)),task.getId(),"reminder");
-//                AlarmHelper.setAlarm(context, CalendarLocalDateTimeConverter.INSTANCE.toCalendar(LocalDateTime.now(ZoneId.of("+8")).plusSeconds(15)), task.getId(),"finish");
-            } else {
-                // 结束自动标记为完成
-//                AlarmHelper.setTaskFinishAlarm(context, CalendarLocalDateTimeConverter.INSTANCE.toCalendar(LocalDateTime.now(ZoneId.of("+8")).plusSeconds(19)), task.getId());
-            }
-        }
-    }
 }
