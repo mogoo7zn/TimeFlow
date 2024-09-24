@@ -29,14 +29,14 @@
     <string name="deadline_picker_title">Set Range</string>
     <string name="deadline_intro">This</string>
     <string name="deadline_unit">Week</string>
-    <string name="deadline_connecting_string">Remaining</string>
+    <string name="deadline_connecting_string">"Remaining  "</string>
 
     <string name="action_name">What to do?</string>
     <string name="action_duration">Duration (minutes)</string>
     <string name="action_location">Place</string>
     <string name="action_note">Add Description</string>
     <string name="action_remind">Reminder</string>
-    <string name="deadline_ending">Actions</string>
+    <string name="deadline_ending">"  Deadlines"</string>
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
     <string name="frequency">Frequency</string>
@@ -265,4 +265,9 @@
     <string name="time_restriction">Time Restriction</string>
     <string name="amount_restriction">Amount Restriction</string>
     <string name="interval_restriction">Interval Restriction</string>
+    <string name="tomato_clock_title">"Tomato Clocks Today: "</string>
+    <string name="tomato_clock_start">Starting Focusing</string>
+    <string name="tomato_statistic">Tomato Statistics</string>
+    <string name="tomato_clock_resume">Take a Gap</string>
+    <string name="tomato_clock_stop">Terminate</string>
 </resources>

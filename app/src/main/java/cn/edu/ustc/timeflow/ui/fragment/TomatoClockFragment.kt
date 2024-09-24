@@ -16,7 +16,7 @@ class TomatoClockFragment : Fragment() {
 
     private lateinit var progressBar: ProgressBar
     private lateinit var startButton: Button
-    private lateinit var returnButton: Button
+    private lateinit var terminateButton: Button
     private lateinit var tomatoCountTextView: TextView
     private var tomatoCount = 0
     private var isRunning = false
@@ -30,8 +30,8 @@ class TomatoClockFragment : Fragment() {
 
         progressBar = view.findViewById(R.id.progress_bar)
         startButton = view.findViewById(R.id.start_button)
-        returnButton = view.findViewById(R.id.return_button)
-        tomatoCountTextView = view.findViewById(R.id.tomato_count)
+        tomatoCountTextView = view.findViewById(R.id.tomato_title)
+        terminateButton = view.findViewById(R.id.terminate_button)
 
         startButton.setOnClickListener {
             if (isRunning) {
@@ -41,7 +41,7 @@ class TomatoClockFragment : Fragment() {
             }
         }
 
-        returnButton.setOnClickListener {
+        terminateButton.setOnClickListener {
             findNavController().navigateUp()
         }
 
@@ -50,7 +50,7 @@ class TomatoClockFragment : Fragment() {
 
     private fun startTimer() {
         isRunning = true
-        startButton.text = "Stop"
+        startButton.text = getString(R.string.tomato_clock_resume)
         countDownTimer = object : CountDownTimer(1500000, 1000) { // 25 minutes
             override fun onTick(millisUntilFinished: Long) {
                 val progress = (millisUntilFinished / 1500000.0 * 100).toInt()

@@ -267,4 +267,9 @@
     <string name="time_restriction">时间约束</string>
     <string name="amount_restriction">数量约束</string>
     <string name="interval_restriction">时间间隔约束</string>
+    <string name="tomato_clock_title">今日完成番茄数：</string>
+    <string name="tomato_clock_start">开始番茄专注</string>
+    <string name="tomato_statistic">番茄数据</string>
+    <string name="tomato_clock_resume">暂停番茄钟</string>
+    <string name="tomato_clock_stop">终止番茄钟！</string>
 </resources>

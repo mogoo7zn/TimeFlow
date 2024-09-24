@@ -2,6 +2,8 @@ package cn.edu.ustc.timeflow.ui.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +33,15 @@ class DeadlineListFragment : Fragment() {
     private var allMilestonesInRange = mutableListOf<Milestone>()
     private lateinit var adapter: MilestoneAdapter
     private lateinit var milestoneTimePicker: DateTimePicker
+    private lateinit var timeRange: String
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val refreshRunnable = object : Runnable {
+        override fun run() {
+            fetchMilestones(timeRange)
+            handler.postDelayed(this, 60000) // 1 minute delay
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +60,7 @@ class DeadlineListFragment : Fragment() {
         binding.fabAddMilestone.setOnClickListener {
             showAddMilestoneDialog()
         }
-
+        timeRange = arguments?.getString("timeRange") ?: "week"
         return binding.root
     }
 
@@ -64,6 +75,9 @@ class DeadlineListFragment : Fragment() {
 
         val timeRange = arguments?.getString("timeRange") ?: "week"
         fetchMilestones(timeRange)
+
+        // Start the recurring task
+        handler.post(refreshRunnable)
     }
 
     /**
@@ -81,18 +95,21 @@ class DeadlineListFragment : Fragment() {
 
         popupView.findViewById<View>(R.id.menu_week).setOnClickListener {
             onMenuItemSelected("week")
+            timeRange = "week"
             binding.deadlineRange.setText(R.string._week)
             popupWindow.dismiss()
         }
 
         popupView.findViewById<View>(R.id.menu_month).setOnClickListener {
             onMenuItemSelected("month")
+            timeRange = "month"
             binding.deadlineRange.setText(R.string._month)
             popupWindow.dismiss()
         }
 
         popupView.findViewById<View>(R.id.menu_all_actions).setOnClickListener {
             onMenuItemSelected("all")
+            timeRange = "all"
             binding.deadlineRange.setText(R.string.all)
             popupWindow.dismiss()
         }
@@ -109,23 +126,33 @@ class DeadlineListFragment : Fragment() {
      * Show a dialog to add a new milestone.
      */
     private fun showAddMilestoneDialog() {
-        var localDateTime : LocalDateTime = LocalDateTime.now()
+        var localDateTime : LocalDateTime = LocalDateTime.now()     //本地时间
         val builder = AlertDialog.Builder(requireContext())
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.dialog_add_milestone, null)
-        val milestoneName = dialogLayout.findViewById<EditText>(R.id.milestone_name)
+        val milestoneName = dialogLayout.findViewById<EditText>(R.id.milestone_name)    //里程碑名称
         val milestoneTimeCheckbox = dialogLayout.findViewById<CheckBox>(R.id.milestone_time_checkbox)
         milestoneTimePicker = dialogLayout.findViewById<DateTimePicker>(R.id.milestone_time_picker)
 
         milestoneTimeCheckbox.setOnCheckedChangeListener { _, isChecked ->
             milestoneTimePicker.visibility = if (isChecked) View.VISIBLE else View.GONE
+
+            //控制显示内容
+            if (isChecked)
+            {
+                milestoneTimeCheckbox.text = localDateTime.toString()
+            }else{
+                milestoneTimeCheckbox.text = getString(R.string.set_time)
+            }
         }
 
         milestoneTimePicker.setOnDateTimeChangedListener{
                 millisecond ->
             run {
                 localDateTime =
-                    LocalDateTime.ofEpochSecond(millisecond / 1000, 0, ZoneOffset.of("+8"))
+                    LocalDateTime.ofEpochSecond(millisecond / 1000,
+                        0,
+                        ZoneOffset.of("+8"))
                 milestoneTimeCheckbox.text = localDateTime.toString()
             }
         }
@@ -142,20 +169,20 @@ class DeadlineListFragment : Fragment() {
             .setPositiveButton(R.string.save) { dialog, _ ->
                 val name = milestoneName.text.toString().trim()
 
-                if (name.isEmpty() || localDateTime == null) {
-                    //TODO:string fault!
-                    Toast.makeText(requireContext(), R.string.add_milestone, Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
-
                 val milestone = Milestone().apply {
                     content = name
                     time = localDateTime
                 }
 
-                dbHelper.getMilestoneDao().insert(milestone)
-                fetchMilestones("week")
-                dialog.dismiss()
+                if (name.isEmpty() || localDateTime == null) {
+                    Toast.makeText(requireContext(), "填完再存呦~", Toast.LENGTH_SHORT).show()
+                }
+
+                if (name.isNotEmpty() && localDateTime != null) {
+                    dbHelper.getMilestoneDao().insert(milestone)
+                    fetchMilestones(timeRange)
+                    dialog.dismiss()
+                }
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
@@ -187,5 +214,8 @@ class DeadlineListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
+        // Stop the recurring task
+        handler.removeCallbacks(refreshRunnable)
     }
 }
