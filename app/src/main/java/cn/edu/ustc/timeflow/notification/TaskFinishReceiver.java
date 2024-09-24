@@ -20,6 +20,7 @@ public class TaskFinishReceiver extends BroadcastReceiver {
         }
         TaskDao taskDao = new DBHelper(context).getTaskDao();
         Task task = taskDao.getById(taskId);
+        assert task != null;
         task.setFinished(true);
         taskDao.update(task);
     }

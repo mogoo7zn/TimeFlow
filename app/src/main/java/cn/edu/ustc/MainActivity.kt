@@ -132,35 +132,18 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // 初次使用
-        if (!SharedPreferenceHelper.getBoolean(this, "notFirst", false)) {
-            SharedPreferenceHelper.saveBoolean(this, "notFirst", true)
 
-            // 读取系统语言， 生成对应示例数据
-            if (resources.configuration.locale.language == "zh") {
-                DBHelper(this).generateSample_zh()
-            } else {
-                DBHelper(this).generateSample_en()
-            }
-
-            val standardScheduler = StandardScheduler(this, StandardValuer(this))
-            standardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
-
-            val permissions = arrayOf(
-                android.Manifest.permission.INTERNET,
-                android.Manifest.permission.POST_NOTIFICATIONS,
-                android.Manifest.permission.SCHEDULE_EXACT_ALARM,
-                android.Manifest.permission.SET_ALARM,
-                android.Manifest.permission.RECEIVE_BOOT_COMPLETED
-            )
-            requestPermissions(permissions, 0)
-        }
     }
 
+    /**
+     * 溢出菜单
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         val settings = menu.findItem(R.id.nav_settings)
         settings.setOnMenuItemClickListener {
+            val notificationSystem = NotificationSystem(this)
+            notificationSystem.updateNotification()
             true
         }
 
@@ -175,7 +158,6 @@ class MainActivity : AppCompatActivity() {
         val autoSchedule = menu.findItem(R.id.auto_schedule)
         autoSchedule.setOnMenuItemClickListener {
             progressDialog.show()
-
             CoroutineScope(Dispatchers.IO).launch {
                 // 调用自动排课算法
                 val StandardScheduler = StandardScheduler(this@MainActivity, StandardValuer(this@MainActivity))

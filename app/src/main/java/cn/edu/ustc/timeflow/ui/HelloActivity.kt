@@ -1,24 +1,78 @@
-package cn.edu.ustc.timeflow.ui;
+package cn.edu.ustc.timeflow.ui
 
-import android.content.Intent;
-import android.graphics.Typeface;
-import android.os.Bundle;
-import android.os.Handler;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.content.Intent
+import android.graphics.Typeface
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import cn.edu.ustc.MainActivity
+import cn.edu.ustc.timeflow.model.StandardScheduler
+import cn.edu.ustc.timeflow.model.StandardValuer
+import cn.edu.ustc.timeflow.util.DBHelper
+import cn.edu.ustc.timeflow.util.SharedPreferenceHelper
+import com.example.timeflow.R
+import java.time.LocalDateTime
+import java.util.Random
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+class HelloActivity : AppCompatActivity() {
 
-import com.example.timeflow.R;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_hello)
 
-import java.util.Random;
+        val largeIcon = findViewById<ImageView>(R.id.large_icon)
+        val sloganText = findViewById<TextView>(R.id.slogan_text)
+        sloganText.typeface = Typeface.createFromAsset(assets, "font/GenYoMinTW-Medium.ttf")
 
-import cn.edu.ustc.MainActivity;
+        // Set a random slogan
+        val randomSlogan = randomSlogan
+        sloganText.text = randomSlogan
 
-public class HelloActivity extends AppCompatActivity {
+        // Delay and start MainActivity
+        Handler().postDelayed({
+            val intent = Intent(this@HelloActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }, 1500) // 3 seconds delay
 
-    private static final String[] SLOGANS = {
+        // 初次使用
+        if (!SharedPreferenceHelper.getBoolean(this, "notFirst", false)) {
+            SharedPreferenceHelper.saveBoolean(this, "notFirst", true)
+
+            // 读取系统语言， 生成对应示例数据
+            if (resources.configuration.locale.language == "zh") {
+                DBHelper(this).generateSample_zh()
+            } else {
+                DBHelper(this).generateSample_en()
+            }
+
+            val standardScheduler = StandardScheduler(this, StandardValuer(this))
+            standardScheduler.Schedule(LocalDateTime.now(), LocalDateTime.now().plusDays(7))
+
+            val permissions = arrayOf(
+                android.Manifest.permission.INTERNET,
+                android.Manifest.permission.POST_NOTIFICATIONS,
+                android.Manifest.permission.SCHEDULE_EXACT_ALARM,
+                android.Manifest.permission.SET_ALARM,
+                android.Manifest.permission.RECEIVE_BOOT_COMPLETED
+            )
+            requestPermissions(permissions, 0)
+        }
+    }
+
+    private val randomSlogan: String
+        get() {
+            val random = Random()
+            val index = random.nextInt(SLOGANS.size)
+            return SLOGANS[index]
+        }
+
+    companion object {
+        private val SLOGANS = arrayOf(
             "人生天地之间\n若白驹过隙\n忽然而已",
             "逝者如斯夫，不舍昼夜",
             "早安，卷王",
@@ -42,46 +96,19 @@ public class HelloActivity extends AppCompatActivity {
             "勿谓寸阴短，既过难再获\n勿谓一丝微，既绍难再白",
             "志士惜年\n贤人惜日\n圣人惜时",
             "机会无限\n但时间不是"
+            //            "Lost time is never found again.",
+            //            "Time flies over us, but leaves its shadow behind.",
+            //            "Time is what we want most, but what we use worst.",
+            //            "Time is the wisest counselor of all.",
+            //            "Time is the longest distance between two places.",
+            //            "Time is the school in which we learn, time is the fire in which we burn.",
+            //            "Time is a great healer, but a poor beautician.",
+            //            "Time is the coin of your life. You spend it. Do not allow others to spend it for you.",
+            //            "Time is the most valuable thing that we have, because it is the most irrevocable."
+            //            "Time is the friend of the wonderful company, the enemy of the mediocre.",
+            //            "Time is the only thief we can’t get justice against.",
 
 
-//            "Lost time is never found again.",
-//            "Time flies over us, but leaves its shadow behind.",
-//            "Time is what we want most, but what we use worst.",
-//            "Time is the wisest counselor of all.",
-//            "Time is the longest distance between two places.",
-//            "Time is the school in which we learn, time is the fire in which we burn.",
-//            "Time is a great healer, but a poor beautician.",
-//            "Time is the coin of your life. You spend it. Do not allow others to spend it for you.",
-//            "Time is the most valuable thing that we have, because it is the most irrevocable."
-//            "Time is the friend of the wonderful company, the enemy of the mediocre.",
-//            "Time is the only thief we can’t get justice against.",
-
-    };
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hello);
-
-        ImageView largeIcon = findViewById(R.id.large_icon);
-        TextView sloganText = findViewById(R.id.slogan_text);
-        sloganText.setTypeface(Typeface.createFromAsset(getAssets(), "font/GenYoMinTW-Medium.ttf"));
-
-        // Set a random slogan
-        String randomSlogan = getRandomSlogan();
-        sloganText.setText(randomSlogan);
-
-        // Delay and start MainActivity
-        new Handler().postDelayed(() -> {
-            Intent intent = new Intent(HelloActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }, 1500); // 3 seconds delay
-    }
-
-    private String getRandomSlogan() {
-        Random random = new Random();
-        int index = random.nextInt(SLOGANS.length);
-        return SLOGANS[index];
+        )
     }
 }

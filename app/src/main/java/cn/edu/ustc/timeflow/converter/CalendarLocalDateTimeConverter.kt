@@ -1,24 +1,18 @@
 package cn.edu.ustc.timeflow.converter
 
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.Calendar
 
 object CalendarLocalDateTimeConverter {
     fun toLocalDateTime(calendar: Calendar): LocalDateTime {
-        return LocalDateTime.of(
-            calendar[Calendar.YEAR],
-            calendar[Calendar.MONTH] + 1,
-            calendar[Calendar.DAY_OF_MONTH],
-            calendar[Calendar.HOUR_OF_DAY],
-            calendar[Calendar.MINUTE],
-            calendar[Calendar.SECOND]
-        )
+        return LocalDateTime.ofInstant(calendar.toInstant(), calendar.timeZone.toZoneId())
     }
 
-    fun toCalendar(localDateTime: LocalDateTime): Calendar {
+    fun toCalendar(localDateTime: LocalDateTime, zoneId: ZoneId = ZoneId.systemDefault()): Calendar {
         val calendar = Calendar.getInstance()
-        calendar[localDateTime.year, localDateTime.monthValue - 1, localDateTime.dayOfMonth, localDateTime.hour, localDateTime.minute] =
-            localDateTime.second
+        calendar.timeZone = java.util.TimeZone.getTimeZone(zoneId)
+        calendar.time = java.util.Date.from(localDateTime.atZone(zoneId).toInstant())
         return calendar
     }
 }

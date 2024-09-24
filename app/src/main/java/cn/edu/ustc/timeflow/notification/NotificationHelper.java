@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -30,7 +31,8 @@ public class NotificationHelper {
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .build();
 
-        notificationManager.notify(100, notification);
+        notificationManager.notify(title.hashCode(), notification);
+        Log.d("NotificationHelper", "sendNotification: " + title + " " + content);
     }
 
     public static void sendTaskNotification(Context context, String title, String content, int taskId) {
@@ -52,10 +54,10 @@ public class NotificationHelper {
                 .setContentText(content)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                //TODO：soft code
-                .addAction(R.drawable.ic_flag, "已完成", buttonPendingIntent) // Add button here
+                .addAction(R.drawable.ic_flag, context.getString(R.string.finished), buttonPendingIntent) // Add button here
                 .build();
 
-        notificationManager.notify(100, notification);
+        notificationManager.notify(title.hashCode(), notification);
+        Log.d("NotificationHelper", "sendTaskNotification: " + title + " " + content);
     }
 }
