@@ -13,16 +13,16 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
-        <!--        <item name="android:background">@drawable/tag_bg_selector</item>-->
-        <!--        <item name="android:textColor">@drawable/tag_text_selector</item>-->
-        <!--        <item name="android:textSize">15sp</item>-->
+        <!--        <CourseItem name="android:background">@drawable/tag_bg_selector</CourseItem>-->
+        <!--        <CourseItem name="android:textColor">@drawable/tag_text_selector</CourseItem>-->
+        <!--        <CourseItem name="android:textSize">15sp</CourseItem>-->
         <item name="android:button">@null</item>
 
         <item name="windowActionBar">false</item>
 
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-        <!--    <item name="android:titleMarginTop">20dp</item>-->
+        <!--    <CourseItem name="android:titleMarginTop">20dp</CourseItem>-->
     </style>
 
     <style name="Widget.CalendarView.Custom" parent="Theme.AppCompat.DayNight">
@@ -46,9 +46,9 @@
 
     <style name="Widget.TimeFlow.AppWidget.Container" parent="android:Widget">
         <item name="android:id">@android:id/background</item>
-<!--        <item name="cornerRadius">-->
+<!--        <CourseItem name="cornerRadius">-->
 <!--            -->
-<!--        </item>-->
+<!--        </CourseItem>-->
         <item name="android:background">?android:attr/colorBackground</item>
     </style>
 

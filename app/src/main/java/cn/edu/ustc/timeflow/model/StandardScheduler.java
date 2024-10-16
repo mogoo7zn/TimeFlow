@@ -61,7 +61,7 @@ public class StandardScheduler extends Scheduler{
 
                     FixedTimeRestriction fixedTimeRestriction = (FixedTimeRestriction) restriction;
 
-                    switch (fixedTimeRestriction.getType()) {//0:daily,1:weekly,2:monthly,3:yearly
+                    switch (fixedTimeRestriction.getType()) {//0:daily,1:weekly,2:monthly,3:yearly，4:once
                         case 0:
                             AddFixedTask(timeTable, date, action, fixedTimeRestriction);
                             break;
@@ -79,6 +79,9 @@ public class StandardScheduler extends Scheduler{
                             if (fixedTimeRestriction.getDays().contains(date.getDayOfYear()))
                                 AddFixedTask(timeTable, date, action, fixedTimeRestriction);
                             break;
+                        case 4:
+                                AddFixedTask(timeTable, date, action, fixedTimeRestriction);
+                            break;
                     }
                 }
             }
@@ -91,21 +94,24 @@ public class StandardScheduler extends Scheduler{
             LocalDateTime start1 = LocalDateTime.of(date, fixedTimeRestriction.getStart());
             LocalDateTime end1 = LocalDateTime.of(date, LocalTime.of(23, 59, 0));
             Task task = new Task(action, start1, end1);
-            if(new RestrictionChecker(context, action, task).RestrictionCheck())
-                timeTable.addTask(task);
+            if(timeTable.getTasks().contains(task) || !new RestrictionChecker(context, action, task).RestrictionCheck())
+                return;
+            timeTable.addTask(task);
 
             LocalDateTime start2 = LocalDateTime.of(date, LocalTime.of(0, 0, 1));
             LocalDateTime end2 = LocalDateTime.of(date, fixedTimeRestriction.getEnd());
             Task task2 = new Task(action, start2, end2);
-            if(new RestrictionChecker(context, action, task2).RestrictionCheck())
-                timeTable.addTask(task2);
-
+            if(timeTable.getTasks().contains(task2) || !new RestrictionChecker(context, action, task2).RestrictionCheck())
+                return;
+            timeTable.addTask(task2);
         }
         else {
+            //不跨天
             LocalDateTime start1 = LocalDateTime.of(date, fixedTimeRestriction.getStart());
             LocalDateTime end1 = LocalDateTime.of(date, fixedTimeRestriction.getEnd());
             Task task = new Task(action, start1, end1);
-            if(new RestrictionChecker(context, action, task).RestrictionCheck())
+            //如果timetable中没有这个任务，且符合限制，则加入
+            if(!timeTable.getTasks().contains(task) && new RestrictionChecker(context, action, task).RestrictionCheck())
                 timeTable.addTask(task);
         }
     }

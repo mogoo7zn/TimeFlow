@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import cn.edu.ustc.timeflow.converter.DateTimeConverter;
 
@@ -190,5 +191,14 @@ public class  Task {
 
     public void setRemind(Boolean remind) {
         this.remind = remind;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Task) {
+            Task task = (Task) obj;
+            return (task.content.equals(this.content)) && (task.start.toString().equals(this.start.toString())) && (task.end.toString().equals(this.end.toString()));
+        }
+        return false;
     }
 }

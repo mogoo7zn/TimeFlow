@@ -98,13 +98,13 @@ public class DayListFragment extends Fragment {
         long starting_time = task.getStart().toEpochSecond(ZoneOffset.of("+8")) * 1000;
         long ending_time = task.getEnd().toEpochSecond(ZoneOffset.of("+8")) * 1000;
 
-        // Calculate the height of the task item based on its duration
+        // Calculate the height of the task CourseItem based on its duration
         double height = 1.01 * (Math.abs(ending_time - starting_time)) / 72000;
 
         // Calculate the start of the day in milliseconds, adjusted for GMT+8 timezone
         long day_start_temp = ((starting_time + 8 * 3600 * 1000) / (86400 * 1000)) * (86400 * 1000) - 8 * 3600 * 1000;
 
-        // Calculate the position of the task item in the layout
+        // Calculate the position of the task CourseItem in the layout
         // 6.5 is an offset to account for the layout's top margin
         double pos = 1.01 * (Math.min(starting_time, ending_time) - day_start_temp) / 72000 + 6.5;
 
@@ -240,7 +240,7 @@ public class DayListFragment extends Fragment {
     }
 
     public void deleteTask(Integer taskId) {
-        // Delete the task item from the database
+        // Delete the task CourseItem from the database
         timeTable.deleteTask(taskId);
         clean_schedule();
         show_schedule();
@@ -248,14 +248,14 @@ public class DayListFragment extends Fragment {
 
 
     public void changeTaskTime(Integer taskId, LocalTime localTime) {
-        // Change the task item's time in the database
+        // Change the task CourseItem's time in the database
         timeTable.changeTaskTime(taskId, localTime);
         clean_schedule();
         show_schedule();
     }
 
     public void changeTaskFinished(Integer taskId, boolean checked) {
-        // Change the task item's finished status in the database
+        // Change the task CourseItem's finished status in the database
         timeTable.changeTaskFinished(taskId, checked);
         clean_schedule();
         show_schedule();

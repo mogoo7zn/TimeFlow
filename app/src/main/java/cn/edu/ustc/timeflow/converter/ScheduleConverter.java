@@ -15,8 +15,8 @@ public class ScheduleConverter {
         this.code = code;
     }
 
-    public List<item> parse() {
-        List<item> items = new ArrayList<>();
+    public List<CourseItem> parse() {
+        List<CourseItem> CourseItems = new ArrayList<>();
         if (code.contains("\n")) {
             code = code.replace("\n", " ");
         }
@@ -25,7 +25,7 @@ public class ScheduleConverter {
         for (String course : courses) {
             if(course.isEmpty())
                 continue;
-            item i = new item();
+            CourseItem i = new CourseItem();
             String[] parts = course.split(" ");
             String[] weeks = parts[0].split(",");
             for (String week : weeks) {
@@ -49,12 +49,12 @@ public class ScheduleConverter {
             i.Room = parts[1];
             i.Time = parts[2].split(":")[1];
             i.Teacher = parts[3];
-            items.add(i);
+            CourseItems.add(i);
         }
-        return items;
+        return CourseItems;
     }
 
-    public static class item {
+    public static class CourseItem {
         public List<Integer> StartWeeks = new ArrayList<>();
         public List<Integer> EndWeeks = new ArrayList<>();
 
@@ -73,7 +73,7 @@ public class ScheduleConverter {
         public String toString() {
             StringBuilder s= new StringBuilder();
             for (int i = 0; i < StartWeeks.size(); i++) {
-                s.append("item{" + "StartWeek=").append(StartWeeks.get(i)).append(", EndWeek=").append(EndWeeks.get(i)).append(", EvenOrOddWeek=").append(EvenOrOddWeeks.get(i)).append(", Room='").append(Room).append('\'').append(", Time='").append(Time).append('\'').append(", Teacher='").append(Teacher).append('\'').append('}');
+                s.append("CourseItem{" + "StartWeek=").append(StartWeeks.get(i)).append(", EndWeek=").append(EndWeeks.get(i)).append(", EvenOrOddWeek=").append(EvenOrOddWeeks.get(i)).append(", Room='").append(Room).append('\'').append(", Time='").append(Time).append('\'').append(", Teacher='").append(Teacher).append('\'').append('}');
             }
             return s.toString();
         }

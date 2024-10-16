@@ -55,7 +55,7 @@ class GoalOverviewFragment : Fragment() {
             showAddActionDialog()
         }
 
-        // Set up item click listeners
+        // Set up CourseItem click listeners
         adapter.setOnItemClickListener(object : FragmentGoalOverviewRecyclerItemAdapter.OnItemClickListener {
             override fun onItemClick(action: Action) {
                 showEditActionDialog(action)

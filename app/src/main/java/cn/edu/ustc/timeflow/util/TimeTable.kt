@@ -78,8 +78,6 @@ class TimeTable {
     }
 
     fun addTask(task: Task) {
-        // TODO:更新Action.Restriction
-
         tasks.add(task)
     }
 

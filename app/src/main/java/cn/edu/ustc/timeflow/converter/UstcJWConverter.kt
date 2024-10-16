@@ -36,7 +36,7 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
 
         var courseGoal = goalDao.getByContent("课程表")
         if (courseGoal==null) {
-            val goal = Goal("课程表",null,null,"",0)
+            val goal = Goal("课程表",null,null,"通过获取网络数据自动生成，不建议修改。若要添加新的课程，请创建新目标",0)
             goalDao.insert(goal)
         }
 
@@ -51,12 +51,12 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
         val actionDao = ActionDB.getDatabase(context).actionDao()
 
         actionDao.deleteByGoalId(goal)
-        actionDao.insertAll(actions)
+        actionDao.insertAll(actions.flatten())
 
 
-        actions = actionDao.getByGoalId(goal)
+        val actions1 = actionDao.getByGoalId(goal)
         var str1 = ""
-        for (action in actions) {
+        for (action in actions1) {
             str1 += action.toString() + "\n"
         }
 
@@ -75,6 +75,7 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
 
     }
 
+    //解析课程表
     private fun parseCourses(html: String): List<Course> {
         val courses = mutableListOf<Course>()
         val doc: Document = Jsoup.parse(html)
@@ -101,8 +102,10 @@ class UstcJWConverter(html: String?,context: Context) : CourseTableWebConverter(
         return courses
     }
 }
+//将课程转换为Action
+fun convertCourseToAction(context: Context, course: Course,goal: Int): MutableList<Action> {
 
-fun convertCourseToAction(context: Context, course: Course,goal: Int): Action {
+    var result = mutableListOf<Action>()
 
     val note : String = "${course.teachers}  ${course.courseType}  ${course.department}"
 
@@ -121,34 +124,36 @@ fun convertCourseToAction(context: Context, course: Course,goal: Int): Action {
 
     val restrictions = mutableListOf<Restriction>()
 
-    val its =  ScheduleConverter(course.schedule).parse()
+    val courseItems =  ScheduleConverter(course.schedule).parse()
 
-    for (it in its) {
-        restrictions.add(TimeConverter().convert(it.Time))
+    for (courseItem in courseItems) {
+        //添加时间限制
+        restrictions.clear()
+        restrictions.add(TimeConverter().convert(courseItem.Time))
         Log.d(TAG, "convertCourseToAction: ${restrictions[restrictions.size - 1].coding()}")
-        for (i in 0..<it.StartWeeks.size) {
-            restrictions.addAll(WeekToDateConverter(context).convert(it.StartWeeks[i], it.EndWeeks[i], it.EvenOrOddWeeks[i]))
+        for (i in 0..<courseItem.StartWeeks.size) {
+            restrictions.addAll(WeekToDateConverter(context).convert(courseItem.StartWeeks[i], courseItem.EndWeeks[i], courseItem.EvenOrOddWeeks[i]))
             Log.d(TAG, "convertCourseToAction: ${restrictions[restrictions.size - 1].coding()}")
         }
+        //restrictions去重
+        val set = restrictions.map { it.coding() }.toSet()
+        val list = set.toList()
+        val newRestrictions = list.map { RestrictionFactory(it).create() }
+
+        result.add(Action(
+            0, goal,
+            course.courseName,
+            Duration.ofHours(course.scheduledHours.toLong()),
+            location,
+            note,
+            false,
+            "Fixed",
+            false,
+            newRestrictions
+        ))
     }
 
-    //restrictions去重
-    val set = restrictions.map { it.coding() }.toSet()
-    val list = set.toList()
-    val newRestrictions = list.map { RestrictionFactory(it).create() }
-
-
-    return Action(
-        0, goal,// Set appropriate goal_id
-        course.courseName,
-        Duration.ofHours(course.scheduledHours.toLong()),
-        location,
-        note,
-        false,
-        "Fixed",
-        false,
-        newRestrictions
-    )
+    return result
 }
 
 
@@ -178,7 +183,8 @@ class WeekToDateConverter(var context: Context) {
     }
 
     fun convert(week: Int): TimeRestriction {
-        val start = startDate!!.plusWeeks(week.toLong())
+
+        val start = startDate!!.plusWeeks(week.toLong()-1)// Convert to 0-based index
         val end = start.plusDays(6)
         return TimeRestriction(LocalDateTime.of(start, LocalTime.of(0, 0, 1)), LocalDateTime.of(end, LocalTime.of(23, 59, 59)))
     }

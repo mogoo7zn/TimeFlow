@@ -29,7 +29,7 @@ public class RestrictionChecker {
         if(task.getEnd().isBefore(LocalDateTime.now()))
             return false;
 
-
+        // 处理AmountRestriction
         for (Restriction restriction : action.getRestrictions("AmountRestriction")) {
             AmountRestriction amountRestriction = (AmountRestriction) restriction;
             int total = amountRestriction.getTotal();
@@ -40,7 +40,7 @@ public class RestrictionChecker {
             }
         }
 
-
+        // 处理IntervalRestriction
         for (Restriction restriction : action.getRestrictions("IntervalRestriction")) {
             IntervalRestriction intervalRestriction = (IntervalRestriction) restriction;
             TaskDao taskDao = new DBHelper(context).getTaskDao();
@@ -49,6 +49,7 @@ public class RestrictionChecker {
             }
         }
 
+        // 处理TimeRestriction，有一个符合即可
         boolean tag = action.getRestrictions("TimeRestriction").isEmpty();
 
         for (Restriction restriction : action.getRestrictions("TimeRestriction")) {
