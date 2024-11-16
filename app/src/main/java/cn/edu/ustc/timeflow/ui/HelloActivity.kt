@@ -1,5 +1,6 @@
 package cn.edu.ustc.timeflow.ui
 
+import android.app.UiModeManager
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import cn.edu.ustc.MainActivity
 import cn.edu.ustc.timeflow.model.StandardScheduler
 import cn.edu.ustc.timeflow.model.StandardValuer
@@ -38,6 +40,14 @@ class HelloActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }, 1500) // 3 seconds delay
+
+        // 切换为浅色模式
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val uiModeManager = getSystemService(UI_MODE_SERVICE) as UiModeManager
+            uiModeManager.setApplicationNightMode(UiModeManager.MODE_NIGHT_NO)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
 
         // 初次使用
         if (!SharedPreferenceHelper.getBoolean(this, "notFirst", false)) {
